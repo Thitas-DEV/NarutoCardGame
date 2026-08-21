@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://tr75tuqx1n1o"
+path="res://.godot/imported/sasukequeja.mp3-002e8c5be26e0887f0ad05e95e6957f6.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/sasukequeja.mp3"
+dest_files=["res://.godot/imported/sasukequeja.mp3-002e8c5be26e0887f0ad05e95e6957f6.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

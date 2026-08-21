@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b4xliefj4jidb"
+path="res://.godot/imported/shinra 2.mp3-37a4560e7d1b37f27aaf120956be7655.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/shinra 2.mp3"
+dest_files=["res://.godot/imported/shinra 2.mp3-37a4560e7d1b37f27aaf120956be7655.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dgcdyvafatddw"
+path="res://.godot/imported/espada pain.mp3-dd7ca09d814406a901d2c1227ddf5013.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/espada pain.mp3"
+dest_files=["res://.godot/imported/espada pain.mp3-dd7ca09d814406a901d2c1227ddf5013.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c1j25e7ri13q5"
+path="res://.godot/imported/Hinatas_Jutsu.mp3-394a3f9f3a0959c3ef0d0e03a3348796.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/Hinatas_Jutsu.mp3"
+dest_files=["res://.godot/imported/Hinatas_Jutsu.mp3-394a3f9f3a0959c3ef0d0e03a3348796.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

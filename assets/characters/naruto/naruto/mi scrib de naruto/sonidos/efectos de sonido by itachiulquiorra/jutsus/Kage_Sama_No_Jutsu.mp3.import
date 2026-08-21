@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bm0pfdr3fq841"
+path="res://.godot/imported/Kage_Sama_No_Jutsu.mp3-4ce3efebefac9b1709f0201cbfcd35f5.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/Kage_Sama_No_Jutsu.mp3"
+dest_files=["res://.godot/imported/Kage_Sama_No_Jutsu.mp3-4ce3efebefac9b1709f0201cbfcd35f5.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

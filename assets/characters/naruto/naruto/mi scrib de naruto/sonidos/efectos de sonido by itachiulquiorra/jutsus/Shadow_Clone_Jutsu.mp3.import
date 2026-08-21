@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://il6x6sqfj4nm"
+path="res://.godot/imported/Shadow_Clone_Jutsu.mp3-1deb487bd799e4b7c28f818a8f069887.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/Shadow_Clone_Jutsu.mp3"
+dest_files=["res://.godot/imported/Shadow_Clone_Jutsu.mp3-1deb487bd799e4b7c28f818a8f069887.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

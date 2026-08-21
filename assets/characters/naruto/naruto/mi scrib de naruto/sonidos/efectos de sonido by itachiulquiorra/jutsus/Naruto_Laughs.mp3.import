@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cib8vvbjvnoeo"
+path="res://.godot/imported/Naruto_Laughs.mp3-c9b31bd7e13d71e058f04baa5dd5088d.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/Naruto_Laughs.mp3"
+dest_files=["res://.godot/imported/Naruto_Laughs.mp3-c9b31bd7e13d71e058f04baa5dd5088d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

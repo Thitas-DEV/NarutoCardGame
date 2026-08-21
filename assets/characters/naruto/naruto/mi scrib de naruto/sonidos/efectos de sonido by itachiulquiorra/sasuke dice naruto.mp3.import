@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ctrbpbnsjarh0"
+path="res://.godot/imported/sasuke dice naruto.mp3-5d0f6942ece70a2855e71ce7aba4bb14.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/sasuke dice naruto.mp3"
+dest_files=["res://.godot/imported/sasuke dice naruto.mp3-5d0f6942ece70a2855e71ce7aba4bb14.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

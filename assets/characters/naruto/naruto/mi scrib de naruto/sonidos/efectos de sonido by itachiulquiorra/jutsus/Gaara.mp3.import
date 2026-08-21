@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://rymxlloybhtd"
+path="res://.godot/imported/Gaara.mp3-bb55c6a4bc14ec9faf23b816e2b93fbb.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/Gaara.mp3"
+dest_files=["res://.godot/imported/Gaara.mp3-bb55c6a4bc14ec9faf23b816e2b93fbb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cj22jla116phc"
+path="res://.godot/imported/desaparece invocacion.mp3-e3eb096245121b82b92616f16cb94a24.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/desaparece invocacion.mp3"
+dest_files=["res://.godot/imported/desaparece invocacion.mp3-e3eb096245121b82b92616f16cb94a24.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

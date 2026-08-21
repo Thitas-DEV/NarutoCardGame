@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d3jfbmbresyje"
+path="res://.godot/imported/kuchiyose pain.mp3-517c13113dbdd39519dc21892e12051b.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/kuchiyose pain.mp3"
+dest_files=["res://.godot/imported/kuchiyose pain.mp3-517c13113dbdd39519dc21892e12051b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

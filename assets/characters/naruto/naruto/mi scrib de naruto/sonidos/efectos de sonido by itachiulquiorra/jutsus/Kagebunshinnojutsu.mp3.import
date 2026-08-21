@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dqtmqvb8hl6j8"
+path="res://.godot/imported/Kagebunshinnojutsu.mp3-37f2ec8c71dc990ea0d78717812f9077.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/Kagebunshinnojutsu.mp3"
+dest_files=["res://.godot/imported/Kagebunshinnojutsu.mp3-37f2ec8c71dc990ea0d78717812f9077.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

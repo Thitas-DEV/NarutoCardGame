@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://f2dsh48sumcq"
+path="res://.godot/imported/pein genjutsu.mp3-c077f0789d7a152d3a4e219f0cbf7f73.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/pein genjutsu.mp3"
+dest_files=["res://.godot/imported/pein genjutsu.mp3-c077f0789d7a152d3a4e219f0cbf7f73.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

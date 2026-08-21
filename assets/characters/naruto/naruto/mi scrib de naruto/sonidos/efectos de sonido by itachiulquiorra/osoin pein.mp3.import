@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ccs4u2eenq7h4"
+path="res://.godot/imported/osoin pein.mp3-39e8107f727a75c348f981f35807fd57.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/osoin pein.mp3"
+dest_files=["res://.godot/imported/osoin pein.mp3-39e8107f727a75c348f981f35807fd57.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

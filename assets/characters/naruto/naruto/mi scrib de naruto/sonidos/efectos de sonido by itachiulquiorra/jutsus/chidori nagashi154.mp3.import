@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://docwwg8q38adr"
+path="res://.godot/imported/chidori nagashi154.mp3-7ef5e84c99a6fea0571b852e7c96c9de.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/chidori nagashi154.mp3"
+dest_files=["res://.godot/imported/chidori nagashi154.mp3-7ef5e84c99a6fea0571b852e7c96c9de.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

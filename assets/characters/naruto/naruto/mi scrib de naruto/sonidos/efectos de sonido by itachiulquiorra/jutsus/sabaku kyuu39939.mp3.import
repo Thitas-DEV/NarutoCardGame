@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b5og11q3cufcp"
+path="res://.godot/imported/sabaku kyuu39939.mp3-d5bf915be4c3fef5d40844ccb88b3b12.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/sabaku kyuu39939.mp3"
+dest_files=["res://.godot/imported/sabaku kyuu39939.mp3-d5bf915be4c3fef5d40844ccb88b3b12.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

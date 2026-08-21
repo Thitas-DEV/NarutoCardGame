@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dpy1id2g62586"
+path="res://.godot/imported/agua limpia.mp3-c1ef66946a7a0fbe697cb72e6945d73e.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/agua limpia.mp3"
+dest_files=["res://.godot/imported/agua limpia.mp3-c1ef66946a7a0fbe697cb72e6945d73e.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

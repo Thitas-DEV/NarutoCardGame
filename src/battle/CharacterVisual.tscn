@@ -1,0 +1,451 @@
+[gd_scene format=3 uid="uid://d3m7yqvf56u1n"]
+
+[ext_resource type="Script" uid="uid://ehlnloesiqey" path="res://src/battle/CharacterVisual.gd" id="1_cvs"]
+[ext_resource type="Texture2D" uid="uid://1wdqe6xff88j" path="res://assets/characters/naruto/naruto/damage/ifrog1.bmp" id="2_p04ko"]
+[ext_resource type="Texture2D" uid="uid://bvdd42m24ysfn" path="res://assets/characters/naruto/naruto/damage/ifrog2.bmp" id="3_oaplg"]
+[ext_resource type="Texture2D" uid="uid://bqw7nebkujfbp" path="res://assets/characters/naruto/naruto/damage/ifrog3.bmp" id="4_g7s6o"]
+[ext_resource type="Texture2D" uid="uid://c8ko3dcbebfe5" path="res://assets/characters/naruto/naruto/damage/ifrog4.bmp" id="5_8yat2"]
+[ext_resource type="Texture2D" uid="uid://dcltknjn45yvj" path="res://assets/characters/naruto/naruto/damage/ifrog5.bmp" id="6_w82j2"]
+[ext_resource type="Texture2D" uid="uid://bhv04gl5it2ny" path="res://assets/characters/naruto/naruto/damage/ifrog6.bmp" id="7_5jivg"]
+[ext_resource type="Texture2D" uid="uid://c108esdpct3fv" path="res://assets/characters/naruto/naruto/clones/omfgo1.bmp" id="8_ecfb3"]
+[ext_resource type="Texture2D" uid="uid://6opohnh7j4j1" path="res://assets/characters/naruto/naruto/clones/omfgo2.bmp" id="9_36n4f"]
+[ext_resource type="Texture2D" uid="uid://dq3h25o4x1xg6" path="res://assets/characters/naruto/naruto/clones/gspgpk1.bmp" id="10_bv5yq"]
+[ext_resource type="Texture2D" uid="uid://bwunc33npdgi0" path="res://assets/characters/naruto/naruto/clones/gspgpk2.bmp" id="11_r1njn"]
+[ext_resource type="Texture2D" uid="uid://dko6pn2eymp40" path="res://assets/characters/naruto/naruto/clones/gspgpk3.bmp" id="12_n1ir4"]
+[ext_resource type="Texture2D" uid="uid://bk0lvkmssrrxt" path="res://assets/characters/naruto/naruto/clones/gspgpk4.bmp" id="13_114go"]
+[ext_resource type="Texture2D" uid="uid://ba57vr2rmch1m" path="res://assets/characters/naruto/naruto/clones/gspgpk5.bmp" id="14_o0l0f"]
+[ext_resource type="Texture2D" uid="uid://pkjn3gu26pwx" path="res://assets/characters/naruto/naruto/stansefffs1.bmp" id="15_x1y8a"]
+[ext_resource type="Texture2D" uid="uid://dne0070kqk0cb" path="res://assets/characters/naruto/naruto/stansefffs2.bmp" id="16_dt6at"]
+[ext_resource type="Texture2D" uid="uid://bt6bax6xfet5l" path="res://assets/characters/naruto/naruto/stansefffs3.bmp" id="17_dbixd"]
+[ext_resource type="Texture2D" uid="uid://hnmp1k8lp5nn" path="res://assets/characters/naruto/naruto/stansefffs4.bmp" id="18_cb4n1"]
+[ext_resource type="Texture2D" uid="uid://b13s387fy7js6" path="res://assets/characters/naruto/naruto/stansefffs5.bmp" id="19_104px"]
+[ext_resource type="Texture2D" uid="uid://uuhboqq34rqk" path="res://assets/characters/naruto/naruto/stansefffs6.bmp" id="20_qypb5"]
+[ext_resource type="Texture2D" uid="uid://bvkmi661hb12f" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/1.bmp" id="21_53cyx"]
+[ext_resource type="Texture2D" uid="uid://d2676e1w30msq" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/2.bmp" id="22_f5rx7"]
+[ext_resource type="Texture2D" uid="uid://dduo3alovaf2a" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/3.bmp" id="23_7g3xc"]
+[ext_resource type="Texture2D" uid="uid://cv6masvmm54do" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/4.bmp" id="24_3pheo"]
+[ext_resource type="Texture2D" uid="uid://cxh5s3xmehmmj" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/5.bmp" id="25_aeu2c"]
+[ext_resource type="Texture2D" uid="uid://cb7yycubppdg3" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/6.bmp" id="26_rb0bn"]
+[ext_resource type="Texture2D" uid="uid://p1ny5nw7qx2v" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/7.bmp" id="27_xj871"]
+[ext_resource type="Texture2D" uid="uid://3q3li3ysthe4" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/8.bmp" id="28_kbn8e"]
+[ext_resource type="Texture2D" uid="uid://baydpg1jpqvr8" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/9.bmp" id="29_60fig"]
+[ext_resource type="Texture2D" uid="uid://bb4rjhy7o3244" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/10.bmp" id="30_phvwm"]
+[ext_resource type="Texture2D" uid="uid://c47shdcdd7lyl" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/aparecen 2.bmp" id="31_m0krv"]
+[ext_resource type="Texture2D" uid="uid://dt58poxa4y6ip" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/aparecen 3.bmp" id="32_l25ry"]
+[ext_resource type="Texture2D" uid="uid://ccajwl1naogs0" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/aparecen 4.bmp" id="33_jbada"]
+[ext_resource type="Texture2D" uid="uid://bua4wrr17xbur" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/aparecen 5.bmp" id="34_qcm4x"]
+[ext_resource type="Texture2D" uid="uid://b7axin1bui6fd" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/aparecen.bmp" id="35_h4wbk"]
+[ext_resource type="Texture2D" uid="uid://hwm50arfsoba" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/crash 2.bmp" id="36_1nha6"]
+[ext_resource type="Texture2D" uid="uid://vru4fu4bwfjh" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/crash 3.bmp" id="37_0wlrf"]
+[ext_resource type="Texture2D" uid="uid://oqxanvwavv2g" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/crash 4.bmp" id="38_107js"]
+[ext_resource type="Texture2D" uid="uid://bis8q10shwmdw" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/crash 5.bmp" id="39_sac0u"]
+[ext_resource type="Texture2D" uid="uid://x5nsne6mpjf8" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/crash 6.bmp" id="40_28a5a"]
+[ext_resource type="Texture2D" uid="uid://0mpf4c1fhmko" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/crash final 2.bmp" id="41_oljwl"]
+[ext_resource type="Texture2D" uid="uid://bvnsfc87oty42" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/crash final.bmp" id="42_wb15e"]
+[ext_resource type="Texture2D" uid="uid://03xi1g8se7y2" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/crash y llevar 2.bmp" id="43_nqxfh"]
+[ext_resource type="Texture2D" uid="uid://btvat1nyc7lw6" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/crash y llevar 3.bmp" id="44_h4cks"]
+[ext_resource type="Texture2D" uid="uid://do2y5o1aot0pl" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/crash y llevar 4.bmp" id="45_cg1qo"]
+[ext_resource type="Texture2D" uid="uid://b5728rcl6wc5w" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/crash y llevar 5.bmp" id="46_8mlmq"]
+[ext_resource type="Texture2D" uid="uid://c8o60fhy67fc5" path="res://assets/characters/naruto/naruto/mi scrib de naruto/naruto/rasen shuriken/crash y llevar.bmp" id="47_js6c4"]
+[ext_resource type="Texture2D" uid="uid://djj1kr6x1b4gk" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn1.bmp" id="48_4yqg2"]
+[ext_resource type="Texture2D" uid="uid://bqupht8bpbq3d" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn2.bmp" id="49_0o1ea"]
+[ext_resource type="Texture2D" uid="uid://bcsmuekrm7os2" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn3.bmp" id="50_ifl11"]
+[ext_resource type="Texture2D" uid="uid://bmp28rxwsmmvl" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn4.bmp" id="51_s7co2"]
+[ext_resource type="Texture2D" uid="uid://b4t1ye4h1o3pg" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn5.bmp" id="52_76ogl"]
+[ext_resource type="Texture2D" uid="uid://p1pl3jkjywqh" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn6.bmp" id="53_6ln8c"]
+[ext_resource type="Texture2D" uid="uid://4ivubqrftg0v" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn7.bmp" id="54_gjrqw"]
+[ext_resource type="Texture2D" uid="uid://bdlxr3rj4qq8e" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn8.bmp" id="55_r5s73"]
+[ext_resource type="Texture2D" uid="uid://btyv6su2x3t06" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn9.bmp" id="56_w57t1"]
+[ext_resource type="Texture2D" uid="uid://caidycuprh7lb" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn10.bmp" id="57_gt0dm"]
+[ext_resource type="Texture2D" uid="uid://j6l081cr7o8j" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn11.bmp" id="58_wbli4"]
+[ext_resource type="Texture2D" uid="uid://buindvbb38gcv" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn12.bmp" id="59_xlpi2"]
+[ext_resource type="Texture2D" uid="uid://cjeabksbwxphb" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn13.bmp" id="60_vtdks"]
+[ext_resource type="Texture2D" uid="uid://c73htn5y0dfla" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn14.bmp" id="61_wqn2x"]
+[ext_resource type="Texture2D" uid="uid://c27r2xodrhxls" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn15.bmp" id="62_l1qr8"]
+[ext_resource type="Texture2D" uid="uid://dismm4xbrblw" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn16.bmp" id="63_0yq4m"]
+[ext_resource type="Texture2D" uid="uid://bql0nm2x41jm" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn17.bmp" id="64_2xuqs"]
+[ext_resource type="Texture2D" uid="uid://mkv4ea4h3rke" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn18.bmp" id="65_tsym2"]
+[ext_resource type="Texture2D" uid="uid://ct3fu3dyjmb6r" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn19.bmp" id="66_yr5n3"]
+[ext_resource type="Texture2D" uid="uid://duvyw6cj6pp1h" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn20.bmp" id="67_nlblr"]
+[ext_resource type="Texture2D" uid="uid://bqqqdwempwffo" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn21.bmp" id="68_ittf3"]
+[ext_resource type="Texture2D" uid="uid://c5upju1go40as" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn22.bmp" id="69_g660d"]
+[ext_resource type="Texture2D" uid="uid://c5ivuih8686ps" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn23.bmp" id="70_mksyr"]
+[ext_resource type="Texture2D" uid="uid://bmegoywv47lg7" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn24.bmp" id="71_atrsi"]
+[ext_resource type="Texture2D" uid="uid://j6p8g066gsjt" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn25.bmp" id="72_gsjgw"]
+[ext_resource type="Texture2D" uid="uid://bf86kt747gh1h" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn26.bmp" id="73_b0wfk"]
+[ext_resource type="Texture2D" uid="uid://dhg82cxjxao7k" path="res://assets/characters/naruto/naruto/especiales/rasengan/gfsogn27.bmp" id="74_isduo"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fqboc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_p04ko")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_oaplg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_g7s6o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_8yat2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_w82j2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_5jivg")
+}],
+"loop": 1,
+"name": &"damage",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_ecfb3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_36n4f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_bv5yq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_r1njn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_n1ir4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_114go")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_o0l0f")
+}],
+"loop": 1,
+"name": &"kagebuchi",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_x1y8a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_dt6at")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_dbixd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_cb4n1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_104px")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_qypb5")
+}],
+"loop": 1,
+"name": &"kiet",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("21_53cyx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_f5rx7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_7g3xc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_3pheo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_aeu2c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_rb0bn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_xj871")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_kbn8e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_60fig")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_phvwm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_m0krv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_l25ry")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_jbada")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_qcm4x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_h4wbk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_1nha6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_0wlrf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_107js")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_sac0u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_28a5a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_oljwl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_wb15e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_nqxfh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_h4cks")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_cg1qo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_8mlmq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_js6c4")
+}],
+"loop": 1,
+"name": &"new_animation",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("48_4yqg2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_0o1ea")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_ifl11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_s7co2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_76ogl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_6ln8c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_gjrqw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_r5s73")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_w57t1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_gt0dm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_wbli4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_xlpi2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_vtdks")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_wqn2x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_l1qr8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_0yq4m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_2xuqs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_tsym2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_yr5n3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_nlblr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_ittf3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_g660d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_mksyr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("71_atrsi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_gsjgw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73_b0wfk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_isduo")
+}],
+"loop": 1,
+"name": &"rasengan",
+"speed": 13.0
+}]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_bg"]
+bg_color = Color(0.12, 0.12, 0.15, 0.85)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_fill"]
+bg_color = Color(0.15, 0.75, 0.35, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_shield_fill"]
+bg_color = Color(0.2, 0.55, 0.95, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="CharacterVisual" type="Node2D" unique_id=109775093]
+script = ExtResource("1_cvs")
+
+[node name="VisualRoot" type="Node2D" parent="." unique_id=1668661970]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VisualRoot" unique_id=348510650]
+position = Vector2(0, -35)
+sprite_frames = SubResource("SpriteFrames_fqboc")
+animation = &"kiet"
+frame_progress = 0.8631233
+
+[node name="UIContainer" type="Control" parent="." unique_id=833348873]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -75.0
+offset_top = -140.0
+offset_right = 75.0
+offset_bottom = -75.0
+
+[node name="NameLabel" type="Label" parent="UIContainer" unique_id=102416411]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 20.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_font_sizes/font_size = 14
+text = "Naruto Uzumaki"
+horizontal_alignment = 1
+
+[node name="HPBar" type="ProgressBar" parent="UIContainer" unique_id=1567557347]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 22.0
+offset_bottom = 34.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hp_fill")
+max_value = 80.0
+value = 80.0
+show_percentage = false
+
+[node name="HPLabel" type="Label" parent="UIContainer/HPBar" unique_id=1342322568]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 10
+text = "80 / 80"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ShieldBar" type="ProgressBar" parent="UIContainer" unique_id=814810839]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 36.0
+offset_bottom = 44.0
+grow_horizontal = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_shield_fill")
+max_value = 80.0
+value = 10.0
+show_percentage = false
+
+[node name="ChakraContainer" type="HBoxContainer" parent="UIContainer" unique_id=1036021547]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -18.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="StatusContainer" type="HBoxContainer" parent="UIContainer" unique_id=217681517]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -22.0
+offset_bottom = -2.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="IntentContainer" type="HBoxContainer" parent="UIContainer" unique_id=1775923663]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -42.0
+offset_bottom = -20.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="IntentLabel" type="Label" parent="UIContainer/IntentContainer" unique_id=1389170572]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 13
+text = "⚔️ 12 DMG"
+horizontal_alignment = 1

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b5t7g1vwid4r4"
+path="res://.godot/imported/kunai, velocidad.mp3-d5bec937d1bb2b3355dc38dcf7f0537e.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/kunai, velocidad.mp3"
+dest_files=["res://.godot/imported/kunai, velocidad.mp3-d5bec937d1bb2b3355dc38dcf7f0537e.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

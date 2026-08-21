@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cfastuw3b86hv"
+path="res://.godot/imported/Gokakyu_No_Jutsu.mp3-0cc9c1f3e945fedb13f1c5c3bc929506.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/Gokakyu_No_Jutsu.mp3"
+dest_files=["res://.godot/imported/Gokakyu_No_Jutsu.mp3-0cc9c1f3e945fedb13f1c5c3bc929506.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

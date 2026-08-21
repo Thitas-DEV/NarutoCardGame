@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bcgvrxqv28kii"
+path="res://.godot/imported/esconbro ropa akatsuki.mp3-5429e9a6ca0be452a6c3e4c1f8153ee0.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/esconbro ropa akatsuki.mp3"
+dest_files=["res://.godot/imported/esconbro ropa akatsuki.mp3-5429e9a6ca0be452a6c3e4c1f8153ee0.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

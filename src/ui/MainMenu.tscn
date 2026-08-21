@@ -1,0 +1,199 @@
+[gd_scene load_steps=7 format=3 uid="uid://dm8x1k4y2v9p0"]
+
+[ext_resource type="Script" path="res://src/ui/MainMenu.gd" id="1_mm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_menu_bg"]
+bg_color = Color(0.06, 0.08, 0.12, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_story"]
+bg_color = Color(0.9, 0.45, 0.1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.8, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_sub"]
+bg_color = Color(0.15, 0.2, 0.3, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3, 0.5, 0.7, 0.8)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hero_box"]
+bg_color = Color(0.08, 0.1, 0.15, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.5, 0.15, 0.8)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hero_btn"]
+bg_color = Color(0.12, 0.15, 0.22, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mm")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_menu_bg")
+
+[node name="TitleBox" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 40.0
+offset_bottom = 140.0
+grow_horizontal = 2
+alignment = 1
+
+[node name="MainTitle" type="Label" parent="TitleBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.65, 0.1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 38
+text = "NARUTO: SHINOBI CLASH"
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="TitleBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.85, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "JOGO DE CARTAS TÁTICO ESTILO SLAY THE SPIRE"
+horizontal_alignment = 1
+
+[node name="VBoxButtons" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 80.0
+offset_top = -60.0
+offset_right = 440.0
+offset_bottom = 160.0
+grow_vertical = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="StoryModeBtn" type="Button" parent="VBoxButtons"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_story")
+text = "📜 MODO HISTÓRIA (NARUTO CLÁSSICO)"
+
+[node name="QuickBattleBtn" type="Button" parent="VBoxButtons"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_sub")
+text = "⚡ BATALHA: LEE VS GAARA (5 PORTÕES)"
+
+[node name="DeckBuilderBtn" type="Button" parent="VBoxButtons"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_sub")
+text = "🎴 DECK BUILDER / COLEÇÃO"
+
+[node name="HeroSelect" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = -120.0
+offset_right = -80.0
+offset_bottom = 180.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hero_box")
+
+[node name="Header" type="Label" parent="HeroSelect"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 15.0
+offset_bottom = 38.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
+theme_override_font_sizes/font_size = 15
+text = "SELECIONE SEU NINJA INICIAL"
+horizontal_alignment = 1
+
+[node name="HBox" type="HBoxContainer" parent="HeroSelect"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 20.0
+offset_top = 50.0
+offset_right = -20.0
+offset_bottom = 95.0
+grow_horizontal = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="HeroNaruto" type="Button" parent="HeroSelect/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_hero_btn")
+text = "🍥 Naruto"
+
+[node name="HeroSasuke" type="Button" parent="HeroSelect/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_hero_btn")
+text = "⚡ Sasuke"
+
+[node name="HeroLee" type="Button" parent="HeroSelect/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_hero_btn")
+text = "🥋 Rock Lee"
+
+[node name="HeroDesc" type="RichTextLabel" parent="HeroSelect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 110.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 13
+theme_override_font_sizes/bold_font_size = 14
+bbcode_enabled = true
+text = "Descrição do ninja..."

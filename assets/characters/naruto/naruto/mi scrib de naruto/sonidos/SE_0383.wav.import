@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://4hrqrs63p27t"
+path="res://.godot/imported/SE_0383.wav-af91f1c57593761d99ab4a6578471b6c.sample"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/SE_0383.wav"
+dest_files=["res://.godot/imported/SE_0383.wav-af91f1c57593761d99ab4a6578471b6c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

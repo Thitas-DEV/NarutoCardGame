@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cco5cja5twrxe"
+path="res://.godot/imported/Nejis_Attack.mp3-5d2a2b78d601517a26c58b6b91df3ecd.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/Nejis_Attack.mp3"
+dest_files=["res://.godot/imported/Nejis_Attack.mp3-5d2a2b78d601517a26c58b6b91df3ecd.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

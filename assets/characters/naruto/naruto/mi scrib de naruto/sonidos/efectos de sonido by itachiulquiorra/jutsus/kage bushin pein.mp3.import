@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://jcfubnos4qnc"
+path="res://.godot/imported/kage bushin pein.mp3-ecbccc701ca0118b8883a0678db38d60.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/kage bushin pein.mp3"
+dest_files=["res://.godot/imported/kage bushin pein.mp3-ecbccc701ca0118b8883a0678db38d60.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

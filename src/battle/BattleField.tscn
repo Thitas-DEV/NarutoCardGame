@@ -1,0 +1,352 @@
+[gd_scene load_steps=12 format=3 uid="uid://cx4j1q9pm3kv2"]
+
+[ext_resource type="Script" path="res://src/battle/BattleField.gd" id="1_bf"]
+[ext_resource type="PackedScene" uid="uid://d3m7yqvf56u1n" path="res://src/battle/CharacterVisual.tscn" id="2_cv"]
+[ext_resource type="PackedScene" uid="uid://dmv28p1j3l9k1" path="res://src/battle/ComboMeter.tscn" id="3_cm"]
+[ext_resource type="PackedScene" uid="uid://ctvyu3c8q1n4p" path="res://src/battle/QTEOverlay.tscn" id="4_qte"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.08, 0.1, 0.14, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bottom_bar"]
+bg_color = Color(0.06, 0.07, 0.1, 0.95)
+border_width_top = 2
+border_color = Color(0.2, 0.3, 0.45, 0.8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chakra"]
+bg_color = Color(0.08, 0.55, 0.9, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.6, 0.9, 1, 1)
+corner_radius_top_left = 35
+corner_radius_top_right = 35
+corner_radius_bottom_right = 35
+corner_radius_bottom_left = 35
+shadow_color = Color(0.1, 0.6, 1, 0.5)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot"]
+bg_color = Color(0.12, 0.14, 0.2, 0.8)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9, 0.7, 0.2, 0.8)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_end_turn"]
+bg_color = Color(0.85, 0.25, 0.2, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.6, 0.5, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cutscene"]
+bg_color = Color(0.05, 0.06, 0.09, 0.96)
+border_width_top = 3
+border_color = Color(1, 0.6, 0.1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_dialog"]
+bg_color = Color(0.2, 0.5, 0.8, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="BattleField" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_bf")
+
+[node name="Arena2D" type="Node2D" parent="."]
+
+[node name="Background" type="Panel" parent="Arena2D"]
+offset_right = 1280.0
+offset_bottom = 720.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="PlayerVisual" parent="Arena2D" instance=ExtResource("2_cv")]
+position = Vector2(280, 290)
+
+[node name="EnemyVisual" parent="Arena2D" instance=ExtResource("2_cv")]
+position = Vector2(1000, 290)
+is_player = false
+character_name = "Inimigo"
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ComboMeter" parent="UI" instance=ExtResource("3_cm")]
+offset_left = 540.0
+offset_top = 30.0
+offset_right = 740.0
+offset_bottom = 105.0
+
+[node name="FieldZones" type="HBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = 40.0
+offset_right = 200.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="TrapSlot" type="Panel" parent="UI/FieldZones"]
+visible = false
+custom_minimum_size = Vector2(180, 50)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="TrapLabel" type="Label" parent="UI/FieldZones/TrapSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 12
+text = "🎴 ARMADILHA ATIVA"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SupportSlot" type="Panel" parent="UI/FieldZones"]
+visible = false
+custom_minimum_size = Vector2(180, 50)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
+
+[node name="SupportLabel" type="Label" parent="UI/FieldZones/SupportSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.4, 1, 0.5, 1)
+theme_override_font_sizes/font_size = 12
+text = "🤝 SUPORTE ATIVO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TurnBanner" type="Label" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -140.0
+offset_bottom = -90.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 28
+text = "TURNO DO JOGADOR"
+horizontal_alignment = 1
+
+[node name="HandContainer" type="Control" parent="UI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -240.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="BottomBar" type="Panel" parent="UI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -80.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bottom_bar")
+
+[node name="ChakraOrb" type="Panel" parent="UI/BottomBar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 35.0
+offset_top = -35.0
+offset_right = 105.0
+offset_bottom = 35.0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_chakra")
+
+[node name="ChakraLabel" type="Label" parent="UI/BottomBar/ChakraOrb"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "3 / 3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DrawPile" type="VBoxContainer" parent="UI/BottomBar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 130.0
+offset_top = -25.0
+offset_right = 210.0
+offset_bottom = 25.0
+grow_vertical = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="UI/BottomBar/DrawPile"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "BARALHO"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="UI/BottomBar/DrawPile"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "12"
+horizontal_alignment = 1
+
+[node name="DiscardPile" type="VBoxContainer" parent="UI/BottomBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -310.0
+offset_top = -25.0
+offset_right = -230.0
+offset_bottom = 25.0
+grow_horizontal = 0
+grow_vertical = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="UI/BottomBar/DiscardPile"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "CEMITÉRIO"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="UI/BottomBar/DiscardPile"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.4, 0.4, 1)
+theme_override_font_sizes/font_size = 16
+text = "0"
+horizontal_alignment = 1
+
+[node name="EndTurnButton" type="Button" parent="UI/BottomBar"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -25.0
+offset_right = -35.0
+offset_bottom = 25.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_end_turn")
+text = "FINALIZAR TURNO"
+
+[node name="CutscenePanel" type="Panel" parent="UI"]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -180.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_cutscene")
+
+[node name="SpeakerLabel" type="Label" parent="UI/CutscenePanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 30.0
+offset_top = 12.0
+offset_right = -30.0
+offset_bottom = 36.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 16
+text = "Rock Lee"
+
+[node name="TextLabel" type="RichTextLabel" parent="UI/CutscenePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = 45.0
+offset_right = -160.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 15
+text = "Texto da cutscene de transformação..."
+
+[node name="NextButton" type="Button" parent="UI/CutscenePanel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -140.0
+offset_top = -20.0
+offset_right = -30.0
+offset_bottom = 25.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dialog")
+text = "CONTINUAR ▶"
+
+[node name="QTEOverlay" parent="UI" instance=ExtResource("4_qte")]
+layout_mode = 1

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dl7ymtx2amnrq"
+path="res://.godot/imported/rsengan effect.mp3-35f6f96445bc4a2b03cc2511de7fe4cb.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/rsengan effect.mp3"
+dest_files=["res://.godot/imported/rsengan effect.mp3-35f6f96445bc4a2b03cc2511de7fe4cb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

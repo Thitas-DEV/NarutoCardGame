@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://tn53i5wqji2x"
+path="res://.godot/imported/voz shinra tensei.mp3-c2696b55e1c3d396ee221c3ae283f9e2.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/voz shinra tensei.mp3"
+dest_files=["res://.godot/imported/voz shinra tensei.mp3-c2696b55e1c3d396ee221c3ae283f9e2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

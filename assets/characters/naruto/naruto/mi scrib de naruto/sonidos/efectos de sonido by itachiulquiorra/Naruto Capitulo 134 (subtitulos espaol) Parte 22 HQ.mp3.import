@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://0t5fuvmub3rw"
+path="res://.godot/imported/Naruto Capitulo 134 (subtitulos espaol) Parte 22 HQ.mp3-2a4d0c86c878919df470074a209506be.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/Naruto Capitulo 134 (subtitulos espaol) Parte 22 HQ.mp3"
+dest_files=["res://.godot/imported/Naruto Capitulo 134 (subtitulos espaol) Parte 22 HQ.mp3-2a4d0c86c878919df470074a209506be.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://73na78232ldh"
+path="res://.godot/imported/chakra flullendo.mp3-2b09fb94ff8d2db826d64a74f2a3f193.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/chakra flullendo.mp3"
+dest_files=["res://.godot/imported/chakra flullendo.mp3-2b09fb94ff8d2db826d64a74f2a3f193.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cjyt1boc68eca"
+path="res://.godot/imported/itachi-katon housenka no jutso.mp3-a231acc30702a4b7f4a579e04b1eef49.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/itachi-katon housenka no jutso.mp3"
+dest_files=["res://.godot/imported/itachi-katon housenka no jutso.mp3-a231acc30702a4b7f4a579e04b1eef49.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

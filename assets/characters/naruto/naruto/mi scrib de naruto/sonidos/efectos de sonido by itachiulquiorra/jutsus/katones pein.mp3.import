@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d20af3ofrs7fk"
+path="res://.godot/imported/katones pein.mp3-401583358fe83282337aa8c2082606bc.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/katones pein.mp3"
+dest_files=["res://.godot/imported/katones pein.mp3-401583358fe83282337aa8c2082606bc.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

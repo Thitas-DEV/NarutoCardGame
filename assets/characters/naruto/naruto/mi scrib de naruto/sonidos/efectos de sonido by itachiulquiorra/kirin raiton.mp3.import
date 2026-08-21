@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bl84f5kl341w2"
+path="res://.godot/imported/kirin raiton.mp3-65e4a0c9aa6c30ea9be859f8ed3bfaf5.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/kirin raiton.mp3"
+dest_files=["res://.godot/imported/kirin raiton.mp3-65e4a0c9aa6c30ea9be859f8ed3bfaf5.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

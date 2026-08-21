@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bedpivhftu2bk"
+path="res://.godot/imported/agua golpes.mp3-03e654cc5c76ff098dec1b9571a0f12f.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/agua golpes.mp3"
+dest_files=["res://.godot/imported/agua golpes.mp3-03e654cc5c76ff098dec1b9571a0f12f.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

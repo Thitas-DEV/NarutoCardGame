@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://um83dbi5b6n2"
+path="res://.godot/imported/naruto y sasuke.mp3-8cabc8d37d35d790679b33c62fedbd2f.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/naruto y sasuke.mp3"
+dest_files=["res://.godot/imported/naruto y sasuke.mp3-8cabc8d37d35d790679b33c62fedbd2f.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

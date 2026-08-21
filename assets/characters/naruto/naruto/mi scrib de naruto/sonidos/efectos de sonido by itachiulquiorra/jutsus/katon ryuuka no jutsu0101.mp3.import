@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://g5e73nmp5gdm"
+path="res://.godot/imported/katon ryuuka no jutsu0101.mp3-1ff4223d7c281136a0baf48218f82122.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/katon ryuuka no jutsu0101.mp3"
+dest_files=["res://.godot/imported/katon ryuuka no jutsu0101.mp3-1ff4223d7c281136a0baf48218f82122.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

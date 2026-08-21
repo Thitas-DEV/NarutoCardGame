@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cni0h1doosq46"
+path="res://.godot/imported/itachi voz susa.mp3-3dee78c82d78e1460d78a005a4d9a181.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/itachi voz susa.mp3"
+dest_files=["res://.godot/imported/itachi voz susa.mp3-3dee78c82d78e1460d78a005a4d9a181.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

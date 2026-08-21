@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dq0ng7smgky0d"
+path="res://.godot/imported/nimpo ! kage mane no jutsu383332.mp3-df0b48d6d3c62c11945dca4649876f8d.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/nimpo ! kage mane no jutsu383332.mp3"
+dest_files=["res://.godot/imported/nimpo ! kage mane no jutsu383332.mp3-df0b48d6d3c62c11945dca4649876f8d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

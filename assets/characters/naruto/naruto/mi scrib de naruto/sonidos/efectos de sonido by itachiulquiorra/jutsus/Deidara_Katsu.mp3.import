@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dkbnyksxfs2rb"
+path="res://.godot/imported/Deidara_Katsu.mp3-c1521974f14935764bd5e21b89e59921.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/Deidara_Katsu.mp3"
+dest_files=["res://.godot/imported/Deidara_Katsu.mp3-c1521974f14935764bd5e21b89e59921.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bl1xd054axwxt"
+path="res://.godot/imported/Shippuden_Msg.mp3-735e2b9a25be16c911c186c588553ede.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/Shippuden_Msg.mp3"
+dest_files=["res://.godot/imported/Shippuden_Msg.mp3-735e2b9a25be16c911c186c588553ede.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

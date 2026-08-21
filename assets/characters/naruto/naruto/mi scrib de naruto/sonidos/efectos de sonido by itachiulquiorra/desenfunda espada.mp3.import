@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c81rkdmew8xg7"
+path="res://.godot/imported/desenfunda espada.mp3-48253fb35259e7b51e5483f4502a3b5a.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/desenfunda espada.mp3"
+dest_files=["res://.godot/imported/desenfunda espada.mp3-48253fb35259e7b51e5483f4502a3b5a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

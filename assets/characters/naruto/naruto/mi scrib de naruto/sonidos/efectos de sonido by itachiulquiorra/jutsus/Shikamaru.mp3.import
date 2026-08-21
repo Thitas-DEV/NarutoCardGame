@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dvfdtvlx30hgs"
+path="res://.godot/imported/Shikamaru.mp3-e0eebad4b10b9ecff1afc893769fa9ca.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/Shikamaru.mp3"
+dest_files=["res://.godot/imported/Shikamaru.mp3-e0eebad4b10b9ecff1afc893769fa9ca.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

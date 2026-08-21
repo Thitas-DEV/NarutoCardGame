@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://biqqy1rksjrcl"
+path="res://.godot/imported/golpes.mp3-5f0446c3465f9dfa1d3f52f3d079a8b6.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/golpes.mp3"
+dest_files=["res://.godot/imported/golpes.mp3-5f0446c3465f9dfa1d3f52f3d079a8b6.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://01f5tw7rjr3s"
+path="res://.godot/imported/tejido susano.mp3-5b419821ebd23b778157eb3c5783643a.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/tejido susano.mp3"
+dest_files=["res://.godot/imported/tejido susano.mp3-5b419821ebd23b778157eb3c5783643a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

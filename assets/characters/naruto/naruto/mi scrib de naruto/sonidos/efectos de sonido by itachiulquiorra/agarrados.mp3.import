@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://chy5p6edxp4ea"
+path="res://.godot/imported/agarrados.mp3-e9c11d32f3adcb23805d994ad3e7eed0.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/agarrados.mp3"
+dest_files=["res://.godot/imported/agarrados.mp3-e9c11d32f3adcb23805d994ad3e7eed0.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

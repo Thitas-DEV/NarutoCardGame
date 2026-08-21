@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://j2q4s0705icd"
+path="res://.godot/imported/Harem_No_Jutsu.mp3-f81f02f5d766fdd64deed714174378c2.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/Harem_No_Jutsu.mp3"
+dest_files=["res://.godot/imported/Harem_No_Jutsu.mp3-f81f02f5d766fdd64deed714174378c2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

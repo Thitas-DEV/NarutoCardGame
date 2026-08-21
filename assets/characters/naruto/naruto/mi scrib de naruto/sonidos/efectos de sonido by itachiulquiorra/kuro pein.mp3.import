@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://wlg7qri1bajq"
+path="res://.godot/imported/kuro pein.mp3-50cc6096230fa61151815b69fa42d6a2.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/kuro pein.mp3"
+dest_files=["res://.godot/imported/kuro pein.mp3-50cc6096230fa61151815b69fa42d6a2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

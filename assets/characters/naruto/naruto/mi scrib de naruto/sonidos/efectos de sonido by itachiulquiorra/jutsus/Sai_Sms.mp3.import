@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ckweeqenca1ag"
+path="res://.godot/imported/Sai_Sms.mp3-a877e1de1d674373270f4079e7b8b5e2.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/Sai_Sms.mp3"
+dest_files=["res://.godot/imported/Sai_Sms.mp3-a877e1de1d674373270f4079e7b8b5e2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

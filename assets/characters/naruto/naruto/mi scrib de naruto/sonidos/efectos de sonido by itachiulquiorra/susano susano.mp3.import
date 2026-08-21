@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://pkkmhd3dcfe0"
+path="res://.godot/imported/susano susano.mp3-7fbbd7af1afc1f8445b5d825f422ef7d.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/susano susano.mp3"
+dest_files=["res://.godot/imported/susano susano.mp3-7fbbd7af1afc1f8445b5d825f422ef7d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

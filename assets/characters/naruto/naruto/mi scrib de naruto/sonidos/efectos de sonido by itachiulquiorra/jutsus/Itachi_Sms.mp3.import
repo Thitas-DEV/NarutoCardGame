@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://clgbll51exvqw"
+path="res://.godot/imported/Itachi_Sms.mp3-3f4b502251e688309473d5e28728d6f8.mp3str"
+
+[deps]
+
+source_file="res://assets/characters/naruto/naruto/mi scrib de naruto/sonidos/efectos de sonido by itachiulquiorra/jutsus/Itachi_Sms.mp3"
+dest_files=["res://.godot/imported/Itachi_Sms.mp3-3f4b502251e688309473d5e28728d6f8.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
