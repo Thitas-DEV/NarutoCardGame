@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/character_data.gd" id="1_chdt"]
+
+[resource]
+script = ExtResource("1_chdt")
+id = "ninja_renegado"
+name = "Ninja Renegado"
+title = "Bandido da Vila Oculta"
+tags = Array[String]([])
+max_hp = 50
+current_hp = 50
+max_chakra = 3
+attack_modifier = 1.0
+avatar_color = Color(0.4, 0.2, 0.5, 1)
+secondary_color = Color(0.2, 0.2, 0.2, 1)
+starting_deck = Array[Resource("res://src/core/ability_data.gd")]([])

@@ -111,7 +111,7 @@ func _update_header() -> void:
 	info_hp.text = "❤️ HP: %d / %d  |  🎴 Deck: %d cartas" % [
 		GameManager.active_hero.current_hp,
 		GameManager.active_hero.max_hp,
-		GameManager.player_deck_ids.size()
+		GameManager.player_deck.size()
 	]
 
 func _build_node_ui() -> void:

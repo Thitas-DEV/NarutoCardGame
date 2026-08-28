@@ -12,7 +12,7 @@ func _ready() -> void:
 	_generate_reward_cards()
 
 func _generate_reward_cards() -> void:
-	var reward_cards = CardDatabase.get_random_reward_cards(GameManager.active_hero.character_owner, 3)
+	var reward_cards = Database.get_random_reward_cards(GameManager.active_hero, 3)
 	
 	for c_data in reward_cards:
 		var card_ui = CARD_UI_SCENE.instantiate()
@@ -23,9 +23,9 @@ func _generate_reward_cards() -> void:
 				_pick_card(c_data)
 		)
 
-func _pick_card(c_data: CardData) -> void:
-	GameManager.add_card_to_collection(c_data.id)
-	GameManager.add_card_to_deck(c_data.id)
+func _pick_card(c_data: AbilityData) -> void:
+	GameManager.add_ability_to_collection(c_data)
+	GameManager.add_ability_to_deck(c_data)
 	SoundManager.play_sfx("qte_success", 1.2)
 	_finish_rewards()
 

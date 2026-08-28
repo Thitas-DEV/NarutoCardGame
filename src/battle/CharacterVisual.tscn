@@ -102,6 +102,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("15_x1y8a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_dt6at")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_dbixd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_cb4n1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_104px")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_qypb5")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("8_ecfb3")
 }, {
 "duration": 1.0,
@@ -124,29 +147,6 @@ animations = [{
 }],
 "loop": 1,
 "name": &"kagebuchi",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("15_x1y8a")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_dt6at")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_dbixd")
-}, {
-"duration": 1.0,
-"texture": ExtResource("18_cb4n1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("19_104px")
-}, {
-"duration": 1.0,
-"texture": ExtResource("20_qypb5")
-}],
-"loop": 1,
-"name": &"kiet",
 "speed": 5.0
 }, {
 "frames": [{
@@ -351,8 +351,7 @@ script = ExtResource("1_cvs")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VisualRoot" unique_id=348510650]
 position = Vector2(0, -35)
 sprite_frames = SubResource("SpriteFrames_fqboc")
-animation = &"kiet"
-frame_progress = 0.8631233
+animation = &"damage"
 
 [node name="UIContainer" type="Control" parent="." unique_id=833348873]
 layout_mode = 3

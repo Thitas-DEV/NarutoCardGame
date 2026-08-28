@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/character_data.gd" id="1_chdt"]
+
+[resource]
+script = ExtResource("1_chdt")
+id = "kakashi"
+name = "Kakashi Hatake"
+title = "O Ninja Copiador"
+tags = Array[String]([])
+max_hp = 70
+current_hp = 70
+max_chakra = 4
+attack_modifier = 1.0
+avatar_color = Color(0.45, 0.55, 0.65, 1)
+secondary_color = Color(0.1, 0.15, 0.2, 1)
+starting_deck = Array[Resource("res://src/core/ability_data.gd")]([])

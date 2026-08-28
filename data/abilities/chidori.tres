@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/ability_data.gd" id="1_abdt"]
+
+[resource]
+script = ExtResource("1_abdt")
+id = "chidori"
+name = "Chidori: Mil Pássaros"
+description = "QTE Sucesso: 35 Dano. Falha: 12 dano próprio."
+yin_cost = 2
+yang_cost = 1
+is_exhaust = false
+ability_type = 1
+target_type = 0
+scripts = Array[Dictionary]([{"trigger": "on_qte_success", "effect": "damage", "value": 35}, {"trigger": "on_qte_failure", "effect": "self_damage", "value": 12}])
+animation_key = "chidori"
+qte_difficulty = 3
+support_name = ""
+allowed_character_ids = Array[String]([])
+allowed_tags = Array[String]([])

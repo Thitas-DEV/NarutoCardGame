@@ -61,7 +61,7 @@ func _setup_sprite_nodes() -> void:
 func setup_character(data: CharacterData) -> void:
 	character_data = data
 	name_label.text = data.name
-	update_stats(data.current_hp, data.max_hp, data.base_shield, data.max_chakra, data.max_chakra)
+	update_stats(data.current_hp, data.max_hp, 0, data.max_yin, data.max_yin)
 	queue_redraw()
 
 func update_stats(hp: int, max_hp: int, shield: int, chakra: int, max_chakra: int) -> void:

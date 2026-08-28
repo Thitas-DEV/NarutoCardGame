@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/ability_data.gd" id="1_abdt"]
+
+[resource]
+script = ExtResource("1_abdt")
+id = "rasengan"
+name = "Rasengan"
+description = "Ignora metade da guarda inimiga."
+chakra_cost = 3
+ability_type = 1
+target_type = 0
+scripts = Array[Dictionary]([{"trigger": "on_play", "effect": "damage", "value": 32, "combo": 2, "hits": 1}])
+animation_key = "rasengan"
+qte_difficulty = 3
+support_name = ""
+allowed_character_ids = Array[String]([])
+allowed_tags = Array[String]([])

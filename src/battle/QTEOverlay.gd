@@ -18,17 +18,16 @@ var perfect_inputs: int = 0
 @onready var ougi_title_label: Label = $BannerPanel/OugiTitleLabel
 
 var key_map = {
-	KEY_W: "W", KEY_UP: "W",
-	KEY_A: "A", KEY_LEFT: "A",
-	KEY_S: "S", KEY_DOWN: "S",
-	KEY_D: "D", KEY_RIGHT: "D",
-	KEY_SPACE: "SPACE", KEY_ENTER: "SPACE"
+	KEY_W: "↑", KEY_UP: "↑",
+	KEY_A: "←", KEY_LEFT: "←",
+	KEY_S: "↓", KEY_DOWN: "↓",
+	KEY_D: "→", KEY_RIGHT: "→"
 }
 
-func start_qte(card: CardData) -> void:
+func start_qte(card: AbilityData) -> void:
 	visible = true
 	is_active = true
-	ougi_title_label.text = "⚡ " + card.title.to_upper() + " ⚡"
+	ougi_title_label.text = "⚡ " + card.name.to_upper() + " ⚡"
 	banner_label.text = "奥義発動 - SINCRONIZE OS SELOS NINJA!"
 	result_label.text = ""
 	
@@ -40,7 +39,7 @@ func start_qte(card: CardData) -> void:
 	
 	# Generate random sequence from ["W", "A", "S", "D", "SPACE"]
 	target_sequence.clear()
-	var possible_keys = ["W", "A", "S", "D", "SPACE"]
+	var possible_keys = ["↑", "←", "↓", "→"]
 	for i in range(total_steps):
 		target_sequence.append(possible_keys[randi() % possible_keys.size()])
 		
@@ -113,12 +112,15 @@ func _check_input(input_key: String) -> void:
 		if current_step >= target_sequence.size():
 			_complete_qte(true)
 	else:
-		# Wrong key penalty
+		# Wrong key penalty (Immediate Failure)
 		SoundManager.play_sfx("hit", 0.6)
 		var panel = prompt_container.get_child(current_step) as Panel
 		var style = panel.get_theme_stylebox("panel") as StyleBoxFlat
 		style.bg_color = Color(0.8, 0.2, 0.2, 0.9)
-		time_left = maxf(0.0, time_left - 0.6)
+		
+		var tw = create_tween()
+		tw.tween_interval(0.3)
+		tw.tween_callback(func(): _complete_qte(false))
 
 func _complete_qte(success: bool) -> void:
 	is_active = false
@@ -135,8 +137,8 @@ func _complete_qte(success: bool) -> void:
 		multiplier = 1.25
 		SoundManager.play_sfx("qte_success", 1.0)
 	else:
-		result_label.text = "NORMAL"
-		result_label.modulate = Color(0.8, 0.8, 0.8)
+		result_label.text = "FALHOU! ❌"
+		result_label.modulate = Color(1.0, 0.2, 0.2)
 		multiplier = 1.0
 		
 	var tw = create_tween()

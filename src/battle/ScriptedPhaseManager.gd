@@ -57,11 +57,13 @@ func apply_phase_buffs(player_char: CharacterData, enemy_char: CharacterData) ->
 	if encounter == "gaara_chunin_phase1":
 		# Lee restores full HP and gets 5 Gates buffs
 		player_char.current_hp = player_char.max_hp
-		player_char.max_chakra = 4
-		GameManager.add_card_to_deck("ura_renge")
-		GameManager.add_card_to_deck("omote_renge")
+		player_char.max_yin = 4
+		player_char.max_yang = 4
+		GameManager.add_ability_to_deck(Database.get_ability("ura_renge"))
+		GameManager.add_ability_to_deck(Database.get_ability("omote_renge"))
 		
 	elif encounter == "zabuza_mist":
 		player_char.current_hp = 60
-		player_char.max_chakra = 4
-		GameManager.add_card_to_deck("ougi_rasengan")
+		player_char.max_yin = 4
+		player_char.max_yang = 4
+		GameManager.add_ability_to_deck(Database.get_ability("ougi_rasengan"))

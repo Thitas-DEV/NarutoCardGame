@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/ability_data.gd" id="1_abdt"]
+
+[resource]
+script = ExtResource("1_abdt")
+id = "iron_guard"
+name = "Defesa de Kunai"
+description = "Ganha 7 de guarda."
+chakra_cost = 1
+ability_type = 2
+target_type = 2
+scripts = Array[Dictionary]([{"trigger": "on_play", "effect": "shield", "value": 7}])
+animation_key = "guard"
+qte_difficulty = 3
+support_name = ""
+allowed_character_ids = Array[String]([])
+allowed_tags = Array[String]([])

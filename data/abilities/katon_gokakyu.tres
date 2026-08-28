@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/ability_data.gd" id="1_abdt"]
+
+[resource]
+script = ExtResource("1_abdt")
+id = "katon_gokakyu"
+name = "Katon: Bola de Fogo"
+description = "12 Dano + Queimadura."
+yin_cost = 2
+yang_cost = 0
+is_exhaust = false
+ability_type = 1
+target_type = 0
+scripts = Array[Dictionary]([{"trigger": "on_play", "effect": "damage", "value": 12}, {"trigger": "on_play", "effect": "apply_status", "status": "burn", "value": 3}])
+animation_key = "attack"
+qte_difficulty = 0
+support_name = ""
+allowed_character_ids = Array[String]([])
+allowed_tags = Array[String]([])

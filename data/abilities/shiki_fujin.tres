@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/ability_data.gd" id="1_abdt"]
+
+[resource]
+script = ExtResource("1_abdt")
+id = "shiki_fujin"
+name = "Contrato Shiki Fūjin"
+description = "Causa 50 de Dano Puro e exaure. Reduz Vida Máxima em 10."
+yin_cost = 0
+yang_cost = 0
+is_exhaust = true
+ability_type = 5
+target_type = 0
+scripts = Array[Dictionary]([{"trigger": "on_play", "effect": "damage", "value": 50}, {"trigger": "on_play", "effect": "reduce_max_hp", "value": 10}])
+animation_key = "ougi_ura_renge"
+qte_difficulty = 0
+support_name = ""
+allowed_character_ids = Array[String]([])
+allowed_tags = Array[String]([])

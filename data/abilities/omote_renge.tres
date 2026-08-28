@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/ability_data.gd" id="1_abdt"]
+
+[resource]
+script = ExtResource("1_abdt")
+id = "omote_renge"
+name = "Lótus Primária"
+description = "Queda em giro."
+chakra_cost = 2
+ability_type = 0
+target_type = 0
+scripts = Array[Dictionary]([{"trigger": "on_play", "effect": "damage", "value": 26, "combo": 3, "hits": 2}])
+animation_key = "lotus"
+qte_difficulty = 3
+support_name = ""
+allowed_character_ids = Array[String]([])
+allowed_tags = Array[String]([])

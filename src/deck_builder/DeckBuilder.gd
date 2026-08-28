@@ -40,26 +40,24 @@ func _populate_collection() -> void:
 	for child in collection_grid.get_children():
 		child.queue_free()
 		
-	for card_id in GameManager.player_collection_ids:
-		var c_data = CardDatabase.get_card(card_id)
+	for c_data in GameManager.player_collection:
 		if c_data:
 			# Check if card is usable by active hero or universal
-			if c_data.character_owner == GameManager.active_hero.character_owner or c_data.character_owner == "Universal" or c_data.character_owner == GameManager.active_hero.name or c_data.character_owner.begins_with(GameManager.active_hero.id.capitalize()):
+			if c_data.can_be_used_by(GameManager.active_hero) or c_data.allowed_character_ids.is_empty():
 				var card_ui = CARD_UI_SCENE.instantiate()
 				collection_grid.add_child(card_ui)
 				card_ui.set_card_data(c_data)
 				card_ui.gui_input.connect(func(event):
 					if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-						_add_to_deck(card_id)
+						_add_to_deck(c_data)
 				)
 
 func _populate_deck() -> void:
 	for child in deck_grid.get_children():
 		child.queue_free()
 		
-	for i in range(GameManager.player_deck_ids.size()):
-		var card_id = GameManager.player_deck_ids[i]
-		var c_data = CardDatabase.get_card(card_id)
+	for i in range(GameManager.player_deck.size()):
+		var c_data = GameManager.player_deck[i]
 		if c_data:
 			var card_ui = CARD_UI_SCENE.instantiate()
 			deck_grid.add_child(card_ui)
@@ -70,26 +68,25 @@ func _populate_deck() -> void:
 					_remove_from_deck(idx)
 			)
 
-func _add_to_deck(card_id: String) -> void:
-	if GameManager.player_deck_ids.size() >= 30:
+func _add_to_deck(ability: AbilityData) -> void:
+	if GameManager.player_deck.size() >= 30:
 		return
-	GameManager.add_card_to_deck(card_id)
+	GameManager.add_ability_to_deck(ability)
 	SoundManager.play_sfx("card_draw", 1.2)
 	_refresh_views()
 
 func _remove_from_deck(index: int) -> void:
-	if GameManager.player_deck_ids.size() <= 8:
+	if GameManager.player_deck.size() <= 8:
 		return # Minimum deck size
-	GameManager.remove_card_from_deck(index)
+	GameManager.remove_ability_from_deck(index)
 	SoundManager.play_sfx("card_draw", 0.9)
 	_refresh_views()
 
 func _update_stats() -> void:
-	var total = GameManager.player_deck_ids.size()
+	var total = GameManager.player_deck.size()
 	var total_chakra = 0
-	for cid in GameManager.player_deck_ids:
-		var c = CardDatabase.get_card(cid)
+	for c in GameManager.player_deck:
 		if c:
-			total_chakra += c.chakra_cost
+			total_chakra += c.yin_cost + c.yang_cost
 	var avg_cost = float(total_chakra) / float(maxi(1, total))
 	stats_label.text = "Cartas no Deck: %d / 30 | Custo Médio de Chakra: %.1f | Clique com botão direito na carta para remover" % [total, avg_cost]

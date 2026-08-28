@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/ability_data.gd" id="1_abdt"]
+
+[resource]
+script = ExtResource("1_abdt")
+id = "ougi_rasengan"
+name = "Ougi Rasengan"
+description = "Poder Supremo."
+chakra_cost = 4
+ability_type = 5
+target_type = 0
+scripts = Array[Dictionary]([{"trigger": "on_play", "effect": "damage", "value": 55, "combo": 5, "hits": 6}])
+animation_key = "ougi_rasengan"
+qte_difficulty = 3
+support_name = ""
+allowed_character_ids = Array[String]([])
+allowed_tags = Array[String]([])

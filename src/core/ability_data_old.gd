@@ -1,0 +1,75 @@
+class_name AbilityDataOld
+extends Resource
+
+enum AbilityType { TAIJUTSU, NINJUTSU, GENJUTSU, TRAP, SUPPORT, ULTIMATE }
+enum TargetType { SINGLE_ENEMY, ALL_ENEMIES, SELF, ALLY }
+
+@export_group("Informações Básicas")
+@export var id: String = ""
+@export var name: String = ""
+@export_multiline var description: String = ""
+@export var icon: Texture2D
+
+@export_group("Custos e Alvo")
+@export var chakra_cost: int = 0
+@export var ability_type: AbilityType = AbilityType.TAIJUTSU
+@export var target_type: TargetType = TargetType.SINGLE_ENEMY
+
+@export_group("Efeitos de Jogo")
+@export var base_damage: int = 0
+@export var base_healing: int = 0
+@export var base_shield: int = 0
+@export var chakra_gain: int = 0
+@export var combo_points: int = 1
+@export var hit_count: int = 1
+@export var draw_cards: int = 0
+# Permite adicionar efeitos modulares como sangramento, escudo, stun, etc. [{"type": "burn", "value": 2}]
+@export var status_effects: Array[Dictionary] = []
+
+@export_group("Visual e Áudio")
+## Chave para a animação do personagem (ex: "attack", "rasengan", "kawarimi")
+@export var animation_key: String = "attack"
+## Animação em sprites reproduzida ao lançar o ataque (VFX extra)
+@export var vfx_sprite_frames: SpriteFrames
+@export var sfx_sound: AudioStream
+
+@export_group("Mecânicas Específicas")
+@export var qte_difficulty: int = 3
+@export var trap_trigger: String = "on_attacked"
+@export var support_name: String = ""
+
+@export_group("Restrições de Uso")
+## Deixe vazio se for para todos os personagens.
+@export var allowed_character_ids: Array[String] = []
+## Grupos permitidos (ex: ["ninja_fogo", "suporte"]).
+@export var allowed_tags: Array[String] = []
+
+func can_be_used_by(character: CharacterData) -> bool:
+	if allowed_character_ids.is_empty() and allowed_tags.is_empty():
+		return true
+	if character.id in allowed_character_ids:
+		return true
+	for tag in allowed_tags:
+		if tag in character.tags:
+			return true
+	return false
+
+func get_type_name() -> String:
+	match ability_type:
+		AbilityType.TAIJUTSU: return "Taijutsu"
+		AbilityType.NINJUTSU: return "Ninjutsu"
+		AbilityType.GENJUTSU: return "Genjutsu"
+		AbilityType.TRAP: return "Armadilha"
+		AbilityType.SUPPORT: return "Suporte"
+		AbilityType.ULTIMATE: return "Jutsu Secreto (Ougi)"
+		_: return "Geral"
+
+func get_type_color() -> Color:
+	match ability_type:
+		AbilityType.TAIJUTSU: return Color(0.95, 0.45, 0.2)
+		AbilityType.NINJUTSU: return Color(0.2, 0.6, 0.95)
+		AbilityType.GENJUTSU: return Color(0.7, 0.3, 0.9)
+		AbilityType.TRAP: return Color(0.85, 0.75, 0.2)
+		AbilityType.SUPPORT: return Color(0.2, 0.85, 0.4)
+		AbilityType.ULTIMATE: return Color(0.95, 0.15, 0.35)
+		_: return Color.WHITE

@@ -15,10 +15,8 @@ var turn_number: int = 1
 # Combat entities
 var player_data: CharacterData
 var enemy_data: CharacterData
-var player_yin: int = 3
-var player_yang: int = 3
-var player_max_yin: int = 3
-var player_max_yang: int = 3
+var player_chakra: int = 3
+var player_max_chakra: int = 3
 var player_shield: int = 0
 var enemy_shield: int = 0
 
@@ -26,14 +24,10 @@ var enemy_shield: int = 0
 var draw_pile: Array[AbilityData] = []
 var hand_cards: Array[Node] = []
 var discard_pile: Array[AbilityData] = []
-var exhaust_pile: Array[AbilityData] = []
 
 # Trap & Support slots
 var active_trap_card: AbilityData = null
 var active_support_card: AbilityData = null
-
-# Target arrow
-var target_arrow: Line2D
 
 # Node references
 @onready var player_visual: Node2D = $Arena2D/PlayerVisual
@@ -66,14 +60,6 @@ var current_dialogue_index: int = 0
 const CARD_UI_SCENE = preload("res://src/battle/CardUI.tscn")
 
 func _ready() -> void:
-	# Add Line2D for targeting
-	target_arrow = Line2D.new()
-	target_arrow.width = 12.0
-	target_arrow.default_color = Color(1.0, 0.2, 0.2, 0.8)
-	target_arrow.visible = false
-	target_arrow.z_index = 50
-	add_child(target_arrow)
-
 	phase_manager = ScriptedPhaseManager.new()
 	phase_manager.init_phase_manager(self)
 	phase_manager.phase_cutscene_started.connect(_on_phase_cutscene_started)
@@ -92,10 +78,8 @@ func _setup_battle() -> void:
 	player_visual.setup_character(player_data)
 	enemy_visual.setup_character(enemy_data)
 	
-	player_max_yin = player_data.max_yin
-	player_max_yang = player_data.max_yang
-	player_yin = player_max_yin
-	player_yang = player_max_yang
+	player_max_chakra = player_data.max_chakra
+	player_chakra = player_max_chakra
 	
 	# Prepare draw pile
 	draw_pile = GameManager.player_deck.duplicate()
@@ -110,11 +94,9 @@ func _start_player_turn() -> void:
 	turn_banner.modulate = Color(0.2, 0.8, 1.0)
 	_animate_turn_banner()
 	
-	player_yin = player_max_yin
-	player_yang = player_max_yang
+	player_chakra = player_max_chakra
 	player_shield = 0 # Shield resets every turn
-	# Passar yin para a UI do player_visual, chakra sumiu
-	player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_yin, player_max_yin)
+	player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_chakra, player_max_chakra)
 	
 	# Draw up to 5 cards
 	draw_cards(5)
@@ -145,8 +127,6 @@ func _spawn_card_in_hand(c_data: AbilityData) -> void:
 	hand_container.add_child(card_ui)
 	card_ui.set_card_data(c_data)
 	card_ui.card_played.connect(_on_card_played)
-	card_ui.target_drag_moved.connect(_on_target_drag_moved)
-	card_ui.target_drag_ended.connect(_on_target_drag_ended)
 	hand_cards.append(card_ui)
 
 func _reorganize_hand() -> void:
@@ -161,62 +141,28 @@ func _reorganize_hand() -> void:
 	
 	for i in range(total):
 		var card = hand_cards[i]
-		
-		# Oval / Arch curve math
-		var center_offset = float(i) - (float(total - 1) / 2.0)
-		var angle = center_offset * 0.1 # Slight rotation outward
-		var height_offset = abs(center_offset) * abs(center_offset) * 8.0 # Quadratic curve for height
-		
 		var x_pos = start_x + (i * spacing)
-		card.set_hand_target(Vector2(x_pos, height_offset), angle)
-		var is_playable = player_yin >= card.card_data.yin_cost and player_yang >= card.card_data.yang_cost
-		card.set_playable_state(is_playable)
-
-func _on_target_drag_moved(card_node: Control, mouse_pos: Vector2) -> void:
-	if not target_arrow.visible:
-		target_arrow.visible = true
-		
-	var start_pos = card_node.global_position + Vector2(card_node.size.x/2, 0)
-	
-	var points = PackedVector2Array()
-	points.append(start_pos)
-	
-	# Bezier curve for the arrow
-	var control_point = Vector2(start_pos.x, mouse_pos.y)
-	for i in range(1, 11):
-		var t = float(i) / 10.0
-		var p1 = start_pos.lerp(control_point, t)
-		var p2 = control_point.lerp(mouse_pos, t)
-		points.append(p1.lerp(p2, t))
-		
-	target_arrow.points = points
-
-func _on_target_drag_ended(card_node: Control, mouse_pos: Vector2) -> void:
-	target_arrow.visible = false
-	var enemy_rect = Rect2(enemy_visual.global_position - Vector2(120, 150), Vector2(240, 300))
-	if enemy_rect.has_point(mouse_pos):
-		_on_card_played(card_node.card_data, card_node)
+		var norm_pos = float(i) / float(maxi(1, total - 1)) - 0.5
+		var y_offset = abs(norm_pos) * 20.0
+		var rot = norm_pos * 0.15
+		card.set_hand_target(Vector2(x_pos, y_offset), rot)
+		card.set_playable_state(player_chakra >= card.card_data.chakra_cost)
 
 func _on_card_played(c_data: AbilityData, card_node: Control) -> void:
-	if current_state != TurnState.PLAYER_TURN or player_yin < c_data.yin_cost or player_yang < c_data.yang_cost:
+	if current_state != TurnState.PLAYER_TURN or player_chakra < c_data.chakra_cost:
 		_reorganize_hand()
 		return
 		
-	player_yin -= c_data.yin_cost
-	player_yang -= c_data.yang_cost
+	player_chakra -= c_data.chakra_cost
 	SoundManager.play_sfx("card_play")
 	
 	# Remove card from hand
 	hand_cards.erase(card_node)
 	card_node.queue_free()
-	
-	if c_data.is_exhaust:
-		exhaust_pile.append(c_data)
-	else:
-		discard_pile.append(c_data)
+	discard_pile.append(c_data)
 	
 	# Execute Card Logic
-	if c_data.qte_difficulty > 0:
+	if c_data.ability_type == AbilityData.AbilityType.ULTIMATE:
 		pending_ultimate_card = c_data
 		current_state = TurnState.QTE_PHASE
 		qte_overlay.start_qte(c_data)
@@ -226,17 +172,39 @@ func _on_card_played(c_data: AbilityData, card_node: Control) -> void:
 	_reorganize_hand()
 	_update_ui()
 
-func _apply_card_effect(c_data: AbilityData, qte_multiplier: float = 1.0, triggers: Array[String] = ["on_play"]) -> void:
+func _apply_card_effect(c_data: AbilityData, qte_multiplier: float = 1.0) -> void:
 	var combo_mult = combo_meter.get_multiplier()
 	var final_multiplier = combo_mult * qte_multiplier
 	
-	# Motor de Triggers: Executa todos os scripts solicitados
-	for trigger in triggers:
-		for script in c_data.scripts:
-			if script.get("trigger", "") == trigger:
-				_execute_script(script, final_multiplier)
+	# 1. Efeitos Universais Baseados nos Atributos do Resource
+	var total_dmg = int(c_data.base_damage * final_multiplier)
+	if total_dmg > 0:
+		_damage_character(enemy_data, enemy_visual, total_dmg)
+		combo_meter.add_combo(c_data.combo_points, c_data.hit_count)
+		
+	if c_data.base_healing > 0:
+		player_data.current_hp = mini(player_data.max_hp, player_data.current_hp + c_data.base_healing)
+		player_visual.spawn_floating_text("+%d HP" % c_data.base_healing, Color(0.2, 0.9, 0.3))
+		
+	if c_data.base_shield > 0:
+		player_shield += c_data.base_shield
+		SoundManager.play_sfx("chakra_charge")
+		player_visual.spawn_floating_text("+%d GUARDA" % c_data.base_shield, Color(0.4, 0.7, 1.0))
+		
+	if c_data.chakra_gain > 0:
+		player_chakra = mini(player_max_chakra + 2, player_chakra + c_data.chakra_gain)
+		
+	if c_data.draw_cards > 0:
+		draw_cards(c_data.draw_cards)
+		
+	# 2. Efeitos Modulares de Status
+	for st in c_data.status_effects:
+		if st.get("type", "") == "heal":
+			var heal_val = int(st.get("value", 0))
+			player_data.current_hp = mini(player_data.max_hp, player_data.current_hp + heal_val)
+			player_visual.spawn_floating_text("+%d HP" % heal_val, Color(0.2, 0.9, 0.3))
 			
-	# Lógica Visual e Estados Específicos por Tipo
+	# 3. Lógica Visual e Estados do Campo por Tipo
 	match c_data.ability_type:
 		AbilityData.AbilityType.TAIJUTSU, AbilityData.AbilityType.NINJUTSU:
 			player_visual.play_attack_animation(enemy_visual, c_data.animation_key)
@@ -261,41 +229,6 @@ func _apply_card_effect(c_data: AbilityData, qte_multiplier: float = 1.0, trigge
 	# Check Scripted Phase triggers or Battle Win
 	_check_battle_state()
 
-func _execute_script(script: Dictionary, multiplier: float) -> void:
-	var effect = script.get("effect", "")
-	var value = script.get("value", 0)
-	
-	match effect:
-		"damage":
-			var total_dmg = int(int(value) * multiplier)
-			_damage_character(enemy_data, enemy_visual, total_dmg)
-			var combo = int(script.get("combo", 1))
-			var hits = int(script.get("hits", 1))
-			combo_meter.add_combo(combo, hits)
-		"heal":
-			player_data.current_hp = mini(player_data.max_hp, player_data.current_hp + int(value))
-			player_visual.spawn_floating_text("+%d HP" % int(value), Color(0.2, 0.9, 0.3))
-		"shield":
-			player_shield += int(value)
-			SoundManager.play_sfx("chakra_charge")
-			player_visual.spawn_floating_text("+%d GUARDA" % int(value), Color(0.4, 0.7, 1.0))
-		"lose_all_chakra":
-			player_yin = 0
-			player_yang = 0
-		"self_damage":
-			player_data.current_hp = maxi(0, player_data.current_hp - int(value))
-			player_visual.spawn_floating_text("-%d" % int(value), Color(1.0, 0.2, 0.2))
-		"reduce_max_hp":
-			player_data.max_hp = maxi(1, player_data.max_hp - int(value))
-			player_data.current_hp = mini(player_data.current_hp, player_data.max_hp)
-		"apply_status":
-			pass # Phase 3: Status effects
-			draw_cards(int(value))
-		"plant_trap":
-			# O visual da armadilha é lidado no match ability_type abaixo,
-			# mas logicamente já sabemos que foi ativada.
-			pass
-
 func _damage_character(target_data: CharacterData, target_visual: Node2D, amount: int) -> void:
 	if target_data == enemy_data and enemy_shield > 0:
 		if enemy_shield >= amount:
@@ -310,18 +243,12 @@ func _damage_character(target_data: CharacterData, target_visual: Node2D, amount
 		target_data.current_hp = maxi(0, target_data.current_hp - amount)
 		target_visual.spawn_floating_text("-%d" % amount, Color(1.0, 0.2, 0.2))
 		
-	target_visual.update_stats(target_data.current_hp, target_data.max_hp, (player_shield if target_data == player_data else enemy_shield), (player_yin if target_data == player_data else 0), target_data.max_yin)
+	target_visual.update_stats(target_data.current_hp, target_data.max_hp, (player_shield if target_data == player_data else enemy_shield), (player_chakra if target_data == player_data else 0), target_data.max_chakra)
 
 func _on_qte_finished(success: bool, multiplier: float) -> void:
 	current_state = TurnState.PLAYER_TURN
 	if pending_ultimate_card:
-		var active_triggers: Array[String] = ["on_play"]
-		if success:
-			active_triggers.append("on_qte_success")
-		else:
-			active_triggers.append("on_qte_failure")
-			
-		_apply_card_effect(pending_ultimate_card, multiplier, active_triggers)
+		_apply_card_effect(pending_ultimate_card, multiplier)
 		pending_ultimate_card = null
 		_reorganize_hand()
 		_update_ui()
@@ -373,10 +300,6 @@ func _execute_enemy_action() -> void:
 		player_visual.trigger_kawarimi_substitution()
 		active_trap_card = null
 		trap_slot.visible = false
-		
-		# Aqui, se formos puristas do Trigger Engine, chamaríamos triggers "on_attacked" das traps do jogador.
-		# Isso foi deixado manual para simplificar a demo.
-		
 		_finish_enemy_turn()
 		return
 		
@@ -403,7 +326,7 @@ func _execute_enemy_action() -> void:
 		player_data.current_hp = maxi(0, player_data.current_hp - effective_dmg)
 		player_visual.spawn_floating_text("-%d" % effective_dmg, Color(1.0, 0.2, 0.2))
 		
-	player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_yin, player_max_yin)
+	player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_chakra, player_max_chakra)
 	
 	_finish_enemy_turn()
 
@@ -444,8 +367,8 @@ func _show_current_dialogue() -> void:
 	else:
 		cutscene_panel.visible = false
 		phase_manager.apply_phase_buffs(player_data, enemy_data)
-		player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_yin, player_max_yin)
-		enemy_visual.update_stats(enemy_data.current_hp, enemy_data.max_hp, enemy_shield, 0, enemy_data.max_yin)
+		player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_chakra, player_max_chakra)
+		enemy_visual.update_stats(enemy_data.current_hp, enemy_data.max_hp, enemy_shield, 0, enemy_data.max_chakra)
 		_start_player_turn()
 
 func _on_cutscene_next_pressed() -> void:
@@ -479,10 +402,10 @@ func _trigger_defeat() -> void:
 	)
 
 func _update_ui() -> void:
-	chakra_label.text = "Y:%d Yg:%d" % [player_yin, player_yang]
+	chakra_label.text = "%d / %d" % [player_chakra, player_max_chakra]
 	draw_pile_label.text = str(draw_pile.size())
 	discard_pile_label.text = str(discard_pile.size())
-	player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_yin, player_max_yin)
+	player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_chakra, player_max_chakra)
 
 func _animate_turn_banner() -> void:
 	turn_banner.visible = true
