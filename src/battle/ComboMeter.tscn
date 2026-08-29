@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dmv28p1j3l9k1"]
+[gd_scene format=3 uid="uid://dmv28p1j3mak1"]
 
-[ext_resource type="Script" path="res://src/battle/ComboMeter.gd" id="1_cm"]
+[ext_resource type="Script" uid="uid://cs361fremdlqk" path="res://src/battle/ComboMeter.gd" id="1_cm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
 bg_color = Color(0.08, 0.09, 0.12, 0.85)
@@ -14,13 +14,6 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_fill"]
-bg_color = Color(1, 0.5, 0.1, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_flare"]
 bg_color = Color(1, 0.85, 0.3, 0.4)
 corner_radius_top_left = 8
@@ -28,7 +21,14 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="ComboMeter" type="Control"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_fill"]
+bg_color = Color(1, 0.5, 0.1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="ComboMeter" type="Control" unique_id=1185443285]
 custom_minimum_size = Vector2(200, 75)
 layout_mode = 3
 anchors_preset = 0
@@ -37,7 +37,7 @@ offset_bottom = 75.0
 pivot_offset = Vector2(100, 37)
 script = ExtResource("1_cm")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="." unique_id=622740383]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -46,7 +46,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
 
-[node name="Flare" type="Panel" parent="."]
+[node name="Flare" type="Panel" parent="." unique_id=1473296359]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -56,7 +56,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_flare")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=720323873]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -69,28 +69,28 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="HitsLabel" type="Label" parent="VBoxContainer"]
+[node name="HitsLabel" type="Label" parent="VBoxContainer" unique_id=620560620]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 14
 text = "0 HITS!"
 horizontal_alignment = 1
 
-[node name="LevelLabel" type="Label" parent="VBoxContainer"]
+[node name="LevelLabel" type="Label" parent="VBoxContainer" unique_id=615384428]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 11
 text = "COMBO: INÍCIO"
 horizontal_alignment = 1
 
-[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer"]
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer" unique_id=975158430]
 custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
 max_value = 4.0
 show_percentage = false
 
-[node name="MultiplierLabel" type="Label" parent="VBoxContainer"]
+[node name="MultiplierLabel" type="Label" parent="VBoxContainer" unique_id=2060401374]
 layout_mode = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 10

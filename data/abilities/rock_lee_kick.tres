@@ -1,18 +1,18 @@
-[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://b81gxj11vag4d"]
 
-[ext_resource type="Script" path="res://src/core/ability_data.gd" id="1_abdt"]
+[ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="1_abdt"]
 
 [resource]
 script = ExtResource("1_abdt")
 id = "rock_lee_kick"
 name = "Chute Furacão"
 description = "Chute veloz."
-chakra_cost = 1
-ability_type = 0
-target_type = 0
-scripts = Array[Dictionary]([{"trigger": "on_play", "effect": "damage", "value": 8, "combo": 2, "hits": 1}])
+scripts = Array[Dictionary]([{
+"combo": 2,
+"effect": "damage",
+"hits": 1,
+"trigger": "on_play",
+"value": 8
+}])
 animation_key = "leaf_hurricane"
 qte_difficulty = 3
-support_name = ""
-allowed_character_ids = Array[String]([])
-allowed_tags = Array[String]([])

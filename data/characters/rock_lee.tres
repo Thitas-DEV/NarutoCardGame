@@ -1,19 +1,17 @@
-[gd_resource type="Resource" script_class="CharacterData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://mbs3b1gvusao"]
 
-[ext_resource type="Script" path="res://src/core/character_data.gd" id="1_chdt"]
-[ext_resource type="Resource" path="res://data/abilities/rock_lee_kick.tres" id="rock_lee_kick"]
-[ext_resource type="Resource" path="res://data/abilities/iron_guard.tres" id="iron_guard"]
+[ext_resource type="Script" uid="uid://c2l48sfta475v" path="res://src/core/character_data.gd" id="1_chdt"]
+[ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="2_sbm00"]
+[ext_resource type="Resource" uid="uid://cl7f0tkqlf0gc" path="res://data/abilities/iron_guard.tres" id="iron_guard"]
+[ext_resource type="Resource" uid="uid://b81gxj11vag4d" path="res://data/abilities/rock_lee_kick.tres" id="rock_lee_kick"]
 
 [resource]
 script = ExtResource("1_chdt")
 id = "rock_lee"
 name = "Rock Lee"
 title = "Gênio do Esforço"
-tags = Array[String]([])
 max_hp = 85
 current_hp = 85
-max_chakra = 2
-attack_modifier = 1.0
 avatar_color = Color(0.1, 0.75, 0.3, 1)
 secondary_color = Color(0.95, 0.5, 0.1, 1)
-starting_deck = Array[Resource("res://src/core/ability_data.gd")]([ExtResource("rock_lee_kick"), ExtResource("rock_lee_kick"), ExtResource("iron_guard")])
+starting_deck = Array[ExtResource("2_sbm00")]([ExtResource("rock_lee_kick"), ExtResource("rock_lee_kick"), ExtResource("iron_guard")])

@@ -28,6 +28,16 @@ var hand_cards: Array[Node] = []
 var discard_pile: Array[AbilityData] = []
 var exhaust_pile: Array[AbilityData] = []
 
+# Enemy Deck management
+var enemy_yin: int = 3
+var enemy_yang: int = 3
+var enemy_max_yin: int = 3
+var enemy_max_yang: int = 3
+var enemy_draw_pile: Array[AbilityData] = []
+var enemy_hand_cards: Array[AbilityData] = []
+var enemy_discard_pile: Array[AbilityData] = []
+var enemy_exhaust_pile: Array[AbilityData] = []
+
 # Trap & Support slots
 var active_trap_card: AbilityData = null
 var active_support_card: AbilityData = null
@@ -97,10 +107,24 @@ func _setup_battle() -> void:
 	player_yin = player_max_yin
 	player_yang = player_max_yang
 	
+	enemy_max_yin = enemy_data.max_yin
+	enemy_max_yang = enemy_data.max_yang
+	enemy_yin = enemy_max_yin
+	enemy_yang = enemy_max_yang
+	
 	# Prepare draw pile
 	draw_pile = GameManager.player_deck.duplicate()
 	draw_pile.shuffle()
 	discard_pile.clear()
+	hand_cards.clear()
+	
+	enemy_draw_pile = enemy_data.starting_deck.duplicate()
+	enemy_draw_pile.shuffle()
+	enemy_discard_pile.clear()
+	enemy_hand_cards.clear()
+	
+	draw_cards(5)
+	_enemy_draw_cards(5)
 	
 	_start_player_turn()
 
@@ -115,12 +139,12 @@ func _start_player_turn() -> void:
 	player_shield = 0 # Shield resets every turn
 	# Passar yin para a UI do player_visual, chakra sumiu
 	player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_yin, player_max_yin)
+	enemy_visual.update_stats(enemy_data.current_hp, enemy_data.max_hp, enemy_shield, enemy_yin, enemy_max_yin)
 	
-	# Draw up to 5 cards
-	draw_cards(5)
+	# Draw up to 1 card at start of turn
+	draw_cards(1)
 	
-	# Decide enemy intent for this turn
-	_plan_enemy_intent()
+	# O intent do inimigo agora é resolvido no turno dele dinamicamente com base nas cartas da mão
 	
 	combo_meter.reset_combo()
 	_update_ui()
@@ -139,6 +163,19 @@ func draw_cards(amount: int) -> void:
 			_spawn_card_in_hand(card_data)
 			
 	_reorganize_hand()
+
+func _enemy_draw_cards(amount: int) -> void:
+	for i in range(amount):
+		if enemy_draw_pile.is_empty():
+			if enemy_discard_pile.is_empty():
+				break
+			enemy_draw_pile = enemy_discard_pile.duplicate()
+			enemy_discard_pile.clear()
+			enemy_draw_pile.shuffle()
+			
+		var card_data = enemy_draw_pile.pop_back()
+		if card_data:
+			enemy_hand_cards.append(card_data)
 
 func _spawn_card_in_hand(c_data: AbilityData) -> void:
 	var card_ui = CARD_UI_SCENE.instantiate()
@@ -226,81 +263,108 @@ func _on_card_played(c_data: AbilityData, card_node: Control) -> void:
 	_reorganize_hand()
 	_update_ui()
 
-func _apply_card_effect(c_data: AbilityData, qte_multiplier: float = 1.0, triggers: Array[String] = ["on_play"]) -> void:
-	var combo_mult = combo_meter.get_multiplier()
+func _apply_card_effect(c_data: AbilityData, qte_multiplier: float = 1.0, triggers: Array[String] = ["on_play"], is_player: bool = true) -> void:
+	var combo_mult = combo_meter.get_multiplier() if is_player else 1.0
 	var final_multiplier = combo_mult * qte_multiplier
 	
 	# Motor de Triggers: Executa todos os scripts solicitados
 	for trigger in triggers:
 		for script in c_data.scripts:
 			if script.get("trigger", "") == trigger:
-				_execute_script(script, final_multiplier)
+				_execute_script(script, final_multiplier, is_player)
 			
+	var caster_visual = player_visual if is_player else enemy_visual
+	var target_visual = enemy_visual if is_player else player_visual
+	
 	# Lógica Visual e Estados Específicos por Tipo
 	match c_data.ability_type:
 		AbilityData.AbilityType.TAIJUTSU, AbilityData.AbilityType.NINJUTSU:
-			player_visual.play_attack_animation(enemy_visual, c_data.animation_key)
+			caster_visual.play_attack_animation(target_visual, c_data.animation_key)
 			
 		AbilityData.AbilityType.GENJUTSU:
 			pass
 				
 		AbilityData.AbilityType.TRAP:
-			active_trap_card = c_data
-			trap_slot.visible = true
-			trap_label.text = "🎴 ARMADILHA ATIVA"
+			if is_player:
+				active_trap_card = c_data
+				trap_slot.visible = true
+				trap_label.text = "🎴 ARMADILHA ATIVA"
 			SoundManager.play_sfx("kawarimi")
 			
 		AbilityData.AbilityType.SUPPORT:
-			active_support_card = c_data
-			support_slot.visible = true
-			support_label.text = "🤝 " + c_data.support_name.to_upper()
+			if is_player:
+				active_support_card = c_data
+				support_slot.visible = true
+				support_label.text = "🤝 " + c_data.support_name.to_upper()
 				
 		AbilityData.AbilityType.ULTIMATE:
-			player_visual.play_attack_animation(enemy_visual, c_data.animation_key)
+			caster_visual.play_attack_animation(target_visual, c_data.animation_key)
 
 	# Check Scripted Phase triggers or Battle Win
 	_check_battle_state()
 
-func _execute_script(script: Dictionary, multiplier: float) -> void:
+func _execute_script(script: Dictionary, multiplier: float, is_player: bool = true) -> void:
 	var effect = script.get("effect", "")
 	var value = script.get("value", 0)
+	
+	var caster_data = player_data if is_player else enemy_data
+	var caster_visual = player_visual if is_player else enemy_visual
+	var target_data = enemy_data if is_player else player_data
+	var target_visual = enemy_visual if is_player else player_visual
 	
 	match effect:
 		"damage":
 			var total_dmg = int(int(value) * multiplier)
-			_damage_character(enemy_data, enemy_visual, total_dmg)
-			var combo = int(script.get("combo", 1))
-			var hits = int(script.get("hits", 1))
-			combo_meter.add_combo(combo, hits)
+			_damage_character(target_data, target_visual, total_dmg, not is_player)
+			if is_player:
+				var combo = int(script.get("combo", 1))
+				var hits = int(script.get("hits", 1))
+				combo_meter.add_combo(combo, hits)
 		"heal":
-			player_data.current_hp = mini(player_data.max_hp, player_data.current_hp + int(value))
-			player_visual.spawn_floating_text("+%d HP" % int(value), Color(0.2, 0.9, 0.3))
+			caster_data.current_hp = mini(caster_data.max_hp, caster_data.current_hp + int(value))
+			caster_visual.spawn_floating_text("+%d HP" % int(value), Color(0.2, 0.9, 0.3))
 		"shield":
-			player_shield += int(value)
+			if is_player:
+				player_shield += int(value)
+			else:
+				enemy_shield += int(value)
 			SoundManager.play_sfx("chakra_charge")
-			player_visual.spawn_floating_text("+%d GUARDA" % int(value), Color(0.4, 0.7, 1.0))
+			caster_visual.spawn_floating_text("+%d GUARDA" % int(value), Color(0.4, 0.7, 1.0))
 		"lose_all_chakra":
-			player_yin = 0
-			player_yang = 0
+			if is_player:
+				player_yin = 0
+				player_yang = 0
+			else:
+				enemy_yin = 0
+				enemy_yang = 0
 		"self_damage":
-			player_data.current_hp = maxi(0, player_data.current_hp - int(value))
-			player_visual.spawn_floating_text("-%d" % int(value), Color(1.0, 0.2, 0.2))
+			caster_data.current_hp = maxi(0, caster_data.current_hp - int(value))
+			caster_visual.spawn_floating_text("-%d" % int(value), Color(1.0, 0.2, 0.2))
 		"reduce_max_hp":
-			player_data.max_hp = maxi(1, player_data.max_hp - int(value))
-			player_data.current_hp = mini(player_data.current_hp, player_data.max_hp)
+			caster_data.max_hp = maxi(1, caster_data.max_hp - int(value))
+			caster_data.current_hp = mini(caster_data.current_hp, caster_data.max_hp)
 		"apply_status":
 			pass # Phase 3: Status effects
-			draw_cards(int(value))
+			if is_player:
+				draw_cards(int(value))
+			else:
+				_enemy_draw_cards(int(value))
 		"plant_trap":
-			# O visual da armadilha é lidado no match ability_type abaixo,
-			# mas logicamente já sabemos que foi ativada.
 			pass
 
-func _damage_character(target_data: CharacterData, target_visual: Node2D, amount: int) -> void:
-	if target_data == enemy_data and enemy_shield > 0:
+func _damage_character(target_data: CharacterData, target_visual: Node2D, amount: int, is_target_player: bool) -> void:
+	if is_target_player and player_shield > 0:
+		if player_shield >= amount:
+			player_shield -= amount
+			target_visual.spawn_floating_text("BLOQUEADO!", Color(0.4, 0.8, 1.0))
+			amount = 0
+		else:
+			amount -= player_shield
+			player_shield = 0
+	elif not is_target_player and enemy_shield > 0:
 		if enemy_shield >= amount:
 			enemy_shield -= amount
-			target_visual.spawn_floating_text("-%d DEF" % amount, Color(0.5, 0.7, 1.0))
+			target_visual.spawn_floating_text("BLOQUEADO!", Color(0.5, 0.7, 1.0))
 			amount = 0
 		else:
 			amount -= enemy_shield
@@ -310,7 +374,7 @@ func _damage_character(target_data: CharacterData, target_visual: Node2D, amount
 		target_data.current_hp = maxi(0, target_data.current_hp - amount)
 		target_visual.spawn_floating_text("-%d" % amount, Color(1.0, 0.2, 0.2))
 		
-	target_visual.update_stats(target_data.current_hp, target_data.max_hp, (player_shield if target_data == player_data else enemy_shield), (player_yin if target_data == player_data else 0), target_data.max_yin)
+	target_visual.update_stats(target_data.current_hp, target_data.max_hp, (player_shield if is_target_player else enemy_shield), (player_yin if is_target_player else enemy_yin), (player_max_yin if is_target_player else enemy_max_yin))
 
 func _on_qte_finished(success: bool, multiplier: float) -> void:
 	current_state = TurnState.PLAYER_TURN
@@ -329,12 +393,6 @@ func _on_qte_finished(success: bool, multiplier: float) -> void:
 func _on_end_turn_pressed() -> void:
 	if current_state != TurnState.PLAYER_TURN:
 		return
-		
-	# Discard remaining hand
-	for c in hand_cards:
-		discard_pile.append(c.card_data)
-		c.queue_free()
-	hand_cards.clear()
 	
 	_start_enemy_turn()
 
@@ -344,68 +402,85 @@ func _start_enemy_turn() -> void:
 	turn_banner.modulate = Color(1.0, 0.3, 0.3)
 	_animate_turn_banner()
 	
+	enemy_yin = enemy_max_yin
+	enemy_yang = enemy_max_yang
+	enemy_shield = 0
+	
+	_enemy_draw_cards(1)
+	
 	var tw = create_tween()
 	tw.tween_interval(0.8)
-	tw.tween_callback(_execute_enemy_action)
+	tw.tween_callback(_play_next_enemy_card)
 
-func _plan_enemy_intent() -> void:
-	var enemy_id = enemy_data.id
-	match enemy_id:
-		"gaara":
-			if turn_number % 2 == 1:
-				enemy_visual.set_intent("shield", 14)
-			else:
-				enemy_visual.set_intent("attack", 18)
-		"kakashi":
-			enemy_visual.set_intent("jutsu", 15)
-		"zabuza":
-			enemy_visual.set_intent("attack", 16)
-		_:
-			enemy_visual.set_intent("attack", 10)
-
-func _execute_enemy_action() -> void:
-	if enemy_data.current_hp <= 0:
-		return
-		
-	# Check if Player has active Kawarimi Trap!
-	if active_trap_card and active_trap_card.id == "kawarimi_trap":
-		enemy_visual.play_attack_animation(player_visual, "attack")
-		player_visual.trigger_kawarimi_substitution()
-		active_trap_card = null
-		trap_slot.visible = false
-		
-		# Aqui, se formos puristas do Trigger Engine, chamaríamos triggers "on_attacked" das traps do jogador.
-		# Isso foi deixado manual para simplificar a demo.
-		
+func _play_next_enemy_card() -> void:
+	if enemy_data.current_hp <= 0 or current_state == TurnState.GAME_OVER:
 		_finish_enemy_turn()
 		return
 		
-	# Execute Enemy Attack
-	enemy_visual.play_attack_animation(player_visual, "attack")
-	var dmg = 12
-	if enemy_data.id == "gaara":
-		dmg = 18
-	elif enemy_data.id == "kakashi":
-		dmg = 15
-		
-	# Apply damage to player
-	var effective_dmg = dmg
-	if player_shield > 0:
-		if player_shield >= effective_dmg:
-			player_shield -= effective_dmg
-			player_visual.spawn_floating_text("BLOQUEADO!", Color(0.4, 0.8, 1.0))
-			effective_dmg = 0
-		else:
-			effective_dmg -= player_shield
-			player_shield = 0
+	# Evaluate playable cards
+	var playable: Array[AbilityData] = []
+	for c in enemy_hand_cards:
+		if enemy_yin >= c.yin_cost and enemy_yang >= c.yang_cost:
+			playable.append(c)
 			
-	if effective_dmg > 0:
-		player_data.current_hp = maxi(0, player_data.current_hp - effective_dmg)
-		player_visual.spawn_floating_text("-%d" % effective_dmg, Color(1.0, 0.2, 0.2))
+	if playable.is_empty():
+		_finish_enemy_turn()
+		return
 		
-	player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_yin, player_max_yin)
+	# Sort playable cards by logic
+	var best_card: AbilityData = playable[0]
+	var best_score = -999
+	var is_critical_hp = (enemy_data.current_hp < enemy_data.max_hp * 0.5)
 	
-	_finish_enemy_turn()
+	for c in playable:
+		var score = c.yin_cost + c.yang_cost
+		if is_critical_hp and (c.ability_type == AbilityData.AbilityType.SUPPORT or c.ability_type == AbilityData.AbilityType.TRAP):
+			score += 10
+		if c.ability_type == AbilityData.AbilityType.ULTIMATE:
+			score += 5
+			
+		if score > best_score:
+			best_score = score
+			best_card = c
+			
+	# Play best_card
+	enemy_yin -= best_card.yin_cost
+	enemy_yang -= best_card.yang_cost
+	enemy_hand_cards.erase(best_card)
+	
+	if best_card.is_exhaust:
+		enemy_exhaust_pile.append(best_card)
+	else:
+		enemy_discard_pile.append(best_card)
+		
+	var success = true
+	var multiplier = 1.0
+	if best_card.qte_difficulty > 0:
+		success = randf() > 0.4 # 60% chance of success for NPC
+		if not success:
+			multiplier = 0.5
+			
+	var triggers: Array[String] = ["on_play"]
+	if best_card.qte_difficulty > 0:
+		if success:
+			triggers.append("on_qte_success")
+		else:
+			triggers.append("on_qte_failure")
+			
+	# Update intent visually
+	if best_card.ability_type == AbilityData.AbilityType.SUPPORT:
+		enemy_visual.set_intent("shield", 0)
+	elif best_card.ability_type == AbilityData.AbilityType.NINJUTSU or best_card.ability_type == AbilityData.AbilityType.ULTIMATE:
+		enemy_visual.set_intent("jutsu", 0)
+	else:
+		enemy_visual.set_intent("attack", 0)
+			
+	_apply_card_effect(best_card, multiplier, triggers, false)
+	_update_ui()
+	
+	var tw = create_tween()
+	tw.tween_interval(1.5)
+	tw.tween_callback(_play_next_enemy_card)
 
 func _finish_enemy_turn() -> void:
 	var tw = create_tween()

@@ -1,17 +1,20 @@
-[gd_resource type="Resource" script_class="CharacterData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://c0s7gssq5hht2"]
 
-[ext_resource type="Script" path="res://src/core/character_data.gd" id="1_chdt"]
+[ext_resource type="Script" uid="uid://c2l48sfta475v" path="res://src/core/character_data.gd" id="1_chdt"]
+[ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="2_wr4m2"]
+[ext_resource type="Resource" path="res://data/abilities/naruto_punch.tres" id="4_ab"]
+[ext_resource type="Resource" path="res://data/abilities/iron_guard.tres" id="6_ab"]
+[ext_resource type="Resource" path="res://data/abilities/katon_gokakyu.tres" id="8_ab"]
+[ext_resource type="Resource" path="res://data/abilities/kawarimi_trap.tres" id="9_ab"]
+[ext_resource type="Resource" path="res://data/abilities/chidori.tres" id="10_ab"]
 
 [resource]
 script = ExtResource("1_chdt")
 id = "kakashi"
 name = "Kakashi Hatake"
 title = "O Ninja Copiador"
-tags = Array[String]([])
 max_hp = 70
 current_hp = 70
-max_chakra = 4
-attack_modifier = 1.0
 avatar_color = Color(0.45, 0.55, 0.65, 1)
 secondary_color = Color(0.1, 0.15, 0.2, 1)
-starting_deck = Array[Resource("res://src/core/ability_data.gd")]([])
+starting_deck = Array[ExtResource("2_wr4m2")]([ExtResource("4_ab"), ExtResource("4_ab"), ExtResource("4_ab"), ExtResource("6_ab"), ExtResource("6_ab"), ExtResource("8_ab"), ExtResource("8_ab"), ExtResource("9_ab"), ExtResource("10_ab")])

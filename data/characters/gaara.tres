@@ -1,6 +1,15 @@
 [gd_resource type="Resource" script_class="CharacterData" load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://src/core/character_data.gd" id="1_chdt"]
+[ext_resource type="Resource" path="res://data/abilities/naruto_punch.tres" id="2_ab"]
+[ext_resource type="Resource" path="res://data/abilities/naruto_punch.tres" id="3_ab"]
+[ext_resource type="Resource" path="res://data/abilities/naruto_punch.tres" id="4_ab"]
+[ext_resource type="Resource" path="res://data/abilities/iron_guard.tres" id="5_ab"]
+[ext_resource type="Resource" path="res://data/abilities/iron_guard.tres" id="6_ab"]
+[ext_resource type="Resource" path="res://data/abilities/katon_gokakyu.tres" id="7_ab"]
+[ext_resource type="Resource" path="res://data/abilities/katon_gokakyu.tres" id="8_ab"]
+[ext_resource type="Resource" path="res://data/abilities/kawarimi_trap.tres" id="9_ab"]
+[ext_resource type="Resource" path="res://data/abilities/chidori.tres" id="10_ab"]
 
 [resource]
 script = ExtResource("1_chdt")
@@ -14,4 +23,4 @@ max_chakra = 4
 attack_modifier = 1.0
 avatar_color = Color(0.75, 0.35, 0.25, 1)
 secondary_color = Color(0.85, 0.7, 0.45, 1)
-starting_deck = Array[Resource("res://src/core/ability_data.gd")]([])
+starting_deck = Array[Resource("res://src/core/ability_data.gd")]([ExtResource("2_ab"), ExtResource("3_ab"), ExtResource("4_ab"), ExtResource("5_ab"), ExtResource("6_ab"), ExtResource("7_ab"), ExtResource("8_ab"), ExtResource("9_ab"), ExtResource("10_ab")])
