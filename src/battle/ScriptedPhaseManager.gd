@@ -55,15 +55,12 @@ func apply_phase_buffs(player_char: CharacterData, enemy_char: CharacterData) ->
 	var encounter = GameManager.active_encounter_id
 	
 	if encounter == "gaara_chunin_phase1":
-		# Lee restores full HP and gets 5 Gates buffs
+		# Lee restaura HP total e recebe cartas da Lótus dos 5 Portões
 		player_char.current_hp = player_char.max_hp
-		player_char.max_yin = 4
-		player_char.max_yang = 4
 		GameManager.add_ability_to_deck(Database.get_ability("ura_renge"))
 		GameManager.add_ability_to_deck(Database.get_ability("omote_renge"))
 		
 	elif encounter == "zabuza_mist":
+		# Naruto desperta o Manto da Raposa e ganha Ougi Rasengan
 		player_char.current_hp = 60
-		player_char.max_yin = 4
-		player_char.max_yang = 4
 		GameManager.add_ability_to_deck(Database.get_ability("ougi_rasengan"))

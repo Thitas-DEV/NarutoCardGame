@@ -15,12 +15,26 @@ var turn_number: int = 1
 # Combat entities
 var player_data: CharacterData
 var enemy_data: CharacterData
-var player_yin: int = 3
-var player_yang: int = 3
-var player_max_yin: int = 3
-var player_max_yang: int = 3
 var player_shield: int = 0
 var enemy_shield: int = 0
+
+# Reservas de Chakra Elemental (Estilo Pokémon TCG)
+# Mapeia ChakraElement.Type -> quantidade acumulada
+var player_chakra_pool: Dictionary = {
+	ChakraElement.Type.WATER: 0,
+	ChakraElement.Type.FIRE: 0,
+	ChakraElement.Type.WIND: 0,
+	ChakraElement.Type.EARTH: 0,
+	ChakraElement.Type.LIGHTNING: 0
+}
+
+var enemy_chakra_pool: Dictionary = {
+	ChakraElement.Type.WATER: 0,
+	ChakraElement.Type.FIRE: 0,
+	ChakraElement.Type.WIND: 0,
+	ChakraElement.Type.EARTH: 0,
+	ChakraElement.Type.LIGHTNING: 0
+}
 
 # Deck management
 var draw_pile: Array[AbilityData] = []
@@ -29,10 +43,6 @@ var discard_pile: Array[AbilityData] = []
 var exhaust_pile: Array[AbilityData] = []
 
 # Enemy Deck management
-var enemy_yin: int = 3
-var enemy_yang: int = 3
-var enemy_max_yin: int = 3
-var enemy_max_yang: int = 3
 var enemy_draw_pile: Array[AbilityData] = []
 var enemy_hand_cards: Array[AbilityData] = []
 var enemy_discard_pile: Array[AbilityData] = []
@@ -40,6 +50,7 @@ var enemy_exhaust_pile: Array[AbilityData] = []
 
 # Trap & Support slots
 var active_trap_card: AbilityData = null
+var active_enemy_trap_card: AbilityData = null
 var active_support_card: AbilityData = null
 
 # Target arrow
@@ -60,7 +71,7 @@ var target_arrow: Line2D
 @onready var trap_label: Label = $UI/FieldZones/TrapSlot/TrapLabel
 @onready var support_slot: Panel = $UI/FieldZones/SupportSlot
 @onready var support_label: Label = $UI/FieldZones/SupportSlot/SupportLabel
-@onready var arena_bg: CanvasItem = $Arena2D/Background
+@onready var arena_bg: TextureRect = $Arena2D/Background
 
 # Cutscene dialog
 @onready var cutscene_panel: Panel = $UI/CutscenePanel
@@ -89,44 +100,97 @@ func _ready() -> void:
 	phase_manager.phase_cutscene_started.connect(_on_phase_cutscene_started)
 	add_child(phase_manager)
 	
+	# Instancia o gerenciador de efeitos visuais na Arena2D
+	var battle_vfx = BattleVFX.new()
+	battle_vfx.name = "BattleVFX"
+	$Arena2D.add_child(battle_vfx)
+	
 	qte_overlay.qte_finished.connect(_on_qte_finished)
 	end_turn_btn.pressed.connect(_on_end_turn_pressed)
 	cutscene_next_btn.pressed.connect(_on_cutscene_next_pressed)
 	
 	_setup_battle()
 
+func shake_arena(intensity: float = 8.0, duration: float = 0.25) -> void:
+	var arena = $Arena2D
+	var original_pos = Vector2.ZERO
+	var tw = create_tween()
+	var steps = maxi(2, int(duration / 0.04))
+	var cur_intensity = intensity
+	for i in range(steps):
+		var offset = Vector2(randf_range(-cur_intensity, cur_intensity), randf_range(-cur_intensity, cur_intensity))
+		cur_intensity = maxf(0.0, cur_intensity - (intensity / float(steps)))
+		tw.tween_property(arena, "position", offset, 0.04)
+	tw.tween_property(arena, "position", original_pos, 0.04)
+
 func _setup_battle() -> void:
-	player_data = GameManager.active_hero.duplicate(true)
-	enemy_data = GameManager.active_enemy_data.duplicate(true) if GameManager.active_enemy_data else CharacterData.new()
+	if GameManager.active_hero:
+		player_data = GameManager.active_hero.duplicate(true)
+	elif Database.get_character("naruto"):
+		player_data = Database.get_character("naruto").duplicate(true)
+	else:
+		player_data = CharacterData.new()
+		
+	if GameManager.active_enemy_data:
+		enemy_data = GameManager.active_enemy_data.duplicate(true)
+	elif Database.get_character("sasuke"):
+		enemy_data = Database.get_character("sasuke").duplicate(true)
+	else:
+		enemy_data = CharacterData.new()
 	
 	player_visual.setup_character(player_data)
 	enemy_visual.setup_character(enemy_data)
 	
-	player_max_yin = player_data.max_yin
-	player_max_yang = player_data.max_yang
-	player_yin = player_max_yin
-	player_yang = player_max_yang
+	_setup_background()
+	_reset_chakra_pools()
+
+## Carrega o cenário de fundo com base no encontro ativo ou ID da fase
+func _setup_background() -> void:
+	var bg_path = ""
+	match GameManager.active_encounter_id:
+		"kakashi_bell_test":
+			bg_path = "res://assets/backgrounds/naruto_stage.bmp"
+		"zabuza_mist":
+			bg_path = "res://assets/backgrounds/sasuke_stage.bmp"
+		"gaara_chunin_phase1":
+			bg_path = "res://assets/backgrounds/chunin_arena.png"
+		"valley_of_the_end":
+			bg_path = "res://assets/backgrounds/valley_of_the_end.png"
+		"forest_of_death":
+			bg_path = "res://assets/backgrounds/forest_of_death.png"
+		_:
+			bg_path = "res://assets/backgrounds/forest_of_death.png"
+			
+	if ResourceLoader.exists(bg_path):
+		arena_bg.texture = load(bg_path)
+	elif ResourceLoader.exists("res://assets/backgrounds/konoha_training - Copia.png"):
+		arena_bg.texture = load("res://assets/backgrounds/konoha_training - Copia.png")
+	elif ResourceLoader.exists("res://assets/backgrounds/florest.bmp"):
+		arena_bg.texture = load("res://assets/backgrounds/florest.bmp")
 	
-	enemy_max_yin = enemy_data.max_yin
-	enemy_max_yang = enemy_data.max_yang
-	enemy_yin = enemy_max_yin
-	enemy_yang = enemy_max_yang
-	
-	# Prepare draw pile
+	# Prepare draw piles
 	draw_pile = GameManager.player_deck.duplicate()
 	draw_pile.shuffle()
 	discard_pile.clear()
+	exhaust_pile.clear()
 	hand_cards.clear()
 	
 	enemy_draw_pile = enemy_data.starting_deck.duplicate()
 	enemy_draw_pile.shuffle()
 	enemy_discard_pile.clear()
+	enemy_exhaust_pile.clear()
 	enemy_hand_cards.clear()
 	
+	# Mão inicial
 	draw_cards(5)
 	_enemy_draw_cards(5)
 	
 	_start_player_turn()
+
+func _reset_chakra_pools() -> void:
+	for elem in [ChakraElement.Type.WATER, ChakraElement.Type.FIRE, ChakraElement.Type.WIND, ChakraElement.Type.EARTH, ChakraElement.Type.LIGHTNING]:
+		player_chakra_pool[elem] = 0
+		enemy_chakra_pool[elem] = 0
 
 func _start_player_turn() -> void:
 	current_state = TurnState.PLAYER_TURN
@@ -134,20 +198,39 @@ func _start_player_turn() -> void:
 	turn_banner.modulate = Color(0.2, 0.8, 1.0)
 	_animate_turn_banner()
 	
-	player_yin = player_max_yin
-	player_yang = player_max_yang
-	player_shield = 0 # Shield resets every turn
-	# Passar yin para a UI do player_visual, chakra sumiu
-	player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_yin, player_max_yin)
-	enemy_visual.update_stats(enemy_data.current_hp, enemy_data.max_hp, enemy_shield, enemy_yin, enemy_max_yin)
+	player_shield = 0 # Shield reseta a cada turno
 	
-	# Draw up to 1 card at start of turn
+	# Sorteia 1 energia elemental aleatória de acordo com as afinidades do ninja (Estilo Pokémon TCG)
+	_gain_random_chakra(true)
+	
+	# Compra 1 carta por turno
 	draw_cards(1)
-	
-	# O intent do inimigo agora é resolvido no turno dele dinamicamente com base nas cartas da mão
 	
 	combo_meter.reset_combo()
 	_update_ui()
+	_reorganize_hand()
+
+func _gain_random_chakra(is_player: bool) -> void:
+	var char_data = player_data if is_player else enemy_data
+	var pool = player_chakra_pool if is_player else enemy_chakra_pool
+	var visual = player_visual if is_player else enemy_visual
+	
+	if char_data.chakra_affinities.is_empty():
+		# Especialista em Taijutsu (ex: Rock Lee): Não usa chakra elemental
+		if is_player:
+			visual.spawn_floating_text("🥋 Foco em Taijutsu!", Color(0.95, 0.6, 0.2))
+		return
+		
+	var chosen_element: ChakraElement.Type = char_data.chakra_affinities[randi() % char_data.chakra_affinities.size()]
+	pool[chosen_element] = pool.get(chosen_element, 0) + 1
+	
+	var elem_name = ChakraElement.get_element_short_name(chosen_element)
+	var elem_icon = ChakraElement.get_element_icon(chosen_element)
+	var elem_color = ChakraElement.get_element_color(chosen_element)
+	
+	visual.spawn_floating_text("+1 %s %s" % [elem_icon, elem_name], elem_color)
+	if is_player:
+		SoundManager.play_sfx("chakra_charge", 1.2)
 
 func draw_cards(amount: int) -> void:
 	for i in range(amount):
@@ -199,14 +282,22 @@ func _reorganize_hand() -> void:
 	for i in range(total):
 		var card = hand_cards[i]
 		
-		# Oval / Arch curve math
+		# Curva da mão em leque
 		var center_offset = float(i) - (float(total - 1) / 2.0)
-		var angle = center_offset * 0.1 # Slight rotation outward
-		var height_offset = abs(center_offset) * abs(center_offset) * 8.0 # Quadratic curve for height
+		var angle = center_offset * 0.1
+		var height_offset = abs(center_offset) * abs(center_offset) * 8.0
 		
 		var x_pos = start_x + (i * spacing)
 		card.set_hand_target(Vector2(x_pos, height_offset), angle)
-		var is_playable = player_yin >= card.card_data.yin_cost and player_yang >= card.card_data.yang_cost
+		
+		# Validação de jogabilidade: Taijutsu não exige chakra elemental; Ninjutsu exige elemento >= custo
+		var is_playable = false
+		if card.card_data.required_element == ChakraElement.Type.NONE or card.card_data.element_cost == 0:
+			is_playable = true
+		else:
+			var current_elem_chakra = player_chakra_pool.get(card.card_data.required_element, 0)
+			is_playable = (current_elem_chakra >= card.card_data.element_cost)
+			
 		card.set_playable_state(is_playable)
 
 func _on_target_drag_moved(card_node: Control, mouse_pos: Vector2) -> void:
@@ -218,7 +309,7 @@ func _on_target_drag_moved(card_node: Control, mouse_pos: Vector2) -> void:
 	var points = PackedVector2Array()
 	points.append(start_pos)
 	
-	# Bezier curve for the arrow
+	# Curva de Bézier para a flecha
 	var control_point = Vector2(start_pos.x, mouse_pos.y)
 	for i in range(1, 11):
 		var t = float(i) / 10.0
@@ -235,15 +326,24 @@ func _on_target_drag_ended(card_node: Control, mouse_pos: Vector2) -> void:
 		_on_card_played(card_node.card_data, card_node)
 
 func _on_card_played(c_data: AbilityData, card_node: Control) -> void:
-	if current_state != TurnState.PLAYER_TURN or player_yin < c_data.yin_cost or player_yang < c_data.yang_cost:
+	# Validação de Custo Elemental
+	var has_chakra = false
+	if c_data.required_element == ChakraElement.Type.NONE or c_data.element_cost == 0:
+		has_chakra = true
+	else:
+		has_chakra = (player_chakra_pool.get(c_data.required_element, 0) >= c_data.element_cost)
+		
+	if current_state != TurnState.PLAYER_TURN or not has_chakra:
 		_reorganize_hand()
 		return
 		
-	player_yin -= c_data.yin_cost
-	player_yang -= c_data.yang_cost
+	# Consome o chakra elemental necessário
+	if c_data.required_element != ChakraElement.Type.NONE and c_data.element_cost > 0:
+		player_chakra_pool[c_data.required_element] -= c_data.element_cost
+		
 	SoundManager.play_sfx("card_play")
 	
-	# Remove card from hand
+	# Remove carta da mão
 	hand_cards.erase(card_node)
 	card_node.queue_free()
 	
@@ -252,7 +352,7 @@ func _on_card_played(c_data: AbilityData, card_node: Control) -> void:
 	else:
 		discard_pile.append(c_data)
 	
-	# Execute Card Logic
+	# Se for Ultimate com QTE, inicia minigame
 	if c_data.qte_difficulty > 0:
 		pending_ultimate_card = c_data
 		current_state = TurnState.QTE_PHASE
@@ -267,41 +367,43 @@ func _apply_card_effect(c_data: AbilityData, qte_multiplier: float = 1.0, trigge
 	var combo_mult = combo_meter.get_multiplier() if is_player else 1.0
 	var final_multiplier = combo_mult * qte_multiplier
 	
-	# Motor de Triggers: Executa todos os scripts solicitados
-	for trigger in triggers:
-		for script in c_data.scripts:
-			if script.get("trigger", "") == trigger:
-				_execute_script(script, final_multiplier, is_player)
-			
 	var caster_visual = player_visual if is_player else enemy_visual
 	var target_visual = enemy_visual if is_player else player_visual
 	
+	# Sincronização do impacto visual: executa triggers e scripts no momento exato do impacto!
+	var on_impact_callback = func():
+		for trigger in triggers:
+			for script in c_data.scripts:
+				if script.get("trigger", "") == trigger:
+					_execute_script(script, final_multiplier, is_player)
+		_check_battle_state()
+	
 	# Lógica Visual e Estados Específicos por Tipo
 	match c_data.ability_type:
-		AbilityData.AbilityType.TAIJUTSU, AbilityData.AbilityType.NINJUTSU:
-			caster_visual.play_attack_animation(target_visual, c_data.animation_key)
+		AbilityData.AbilityType.TAIJUTSU, AbilityData.AbilityType.NINJUTSU, AbilityData.AbilityType.ULTIMATE:
+			caster_visual.execute_ability(c_data, target_visual, on_impact_callback)
 			
 		AbilityData.AbilityType.GENJUTSU:
-			pass
+			on_impact_callback.call()
 				
 		AbilityData.AbilityType.TRAP:
 			if is_player:
 				active_trap_card = c_data
 				trap_slot.visible = true
-				trap_label.text = "🎴 ARMADILHA ATIVA"
-			SoundManager.play_sfx("kawarimi")
+				trap_label.text = "🎴 " + c_data.name.to_upper()
+			else:
+				active_enemy_trap_card = c_data
+			caster_visual.execute_ability(c_data, target_visual, on_impact_callback)
 			
 		AbilityData.AbilityType.SUPPORT:
 			if is_player:
 				active_support_card = c_data
 				support_slot.visible = true
 				support_label.text = "🤝 " + c_data.support_name.to_upper()
-				
-		AbilityData.AbilityType.ULTIMATE:
-			caster_visual.play_attack_animation(target_visual, c_data.animation_key)
-
-	# Check Scripted Phase triggers or Battle Win
-	_check_battle_state()
+			caster_visual.execute_ability(c_data, target_visual, on_impact_callback)
+			
+		_:
+			caster_visual.execute_ability(c_data, target_visual, on_impact_callback)
 
 func _execute_script(script: Dictionary, multiplier: float, is_player: bool = true) -> void:
 	var effect = script.get("effect", "")
@@ -331,12 +433,9 @@ func _execute_script(script: Dictionary, multiplier: float, is_player: bool = tr
 			SoundManager.play_sfx("chakra_charge")
 			caster_visual.spawn_floating_text("+%d GUARDA" % int(value), Color(0.4, 0.7, 1.0))
 		"lose_all_chakra":
-			if is_player:
-				player_yin = 0
-				player_yang = 0
-			else:
-				enemy_yin = 0
-				enemy_yang = 0
+			var pool = player_chakra_pool if is_player else enemy_chakra_pool
+			for k in pool.keys():
+				pool[k] = 0
 		"self_damage":
 			caster_data.current_hp = maxi(0, caster_data.current_hp - int(value))
 			caster_visual.spawn_floating_text("-%d" % int(value), Color(1.0, 0.2, 0.2))
@@ -344,7 +443,6 @@ func _execute_script(script: Dictionary, multiplier: float, is_player: bool = tr
 			caster_data.max_hp = maxi(1, caster_data.max_hp - int(value))
 			caster_data.current_hp = mini(caster_data.current_hp, caster_data.max_hp)
 		"apply_status":
-			pass # Phase 3: Status effects
 			if is_player:
 				draw_cards(int(value))
 			else:
@@ -353,6 +451,18 @@ func _execute_script(script: Dictionary, multiplier: float, is_player: bool = tr
 			pass
 
 func _damage_character(target_data: CharacterData, target_visual: Node2D, amount: int, is_target_player: bool) -> void:
+	# Armadilha de Substituição (Kawarimi) é acionada quando o oponente ataca!
+	if is_target_player and active_trap_card != null:
+		active_trap_card = null
+		trap_slot.visible = false
+		target_visual.trigger_kawarimi_substitution()
+		return
+	elif not is_target_player and active_enemy_trap_card != null:
+		active_enemy_trap_card = null
+		target_visual.trigger_kawarimi_substitution()
+		return
+		
+	# Absorção de escudo
 	if is_target_player and player_shield > 0:
 		if player_shield >= amount:
 			player_shield -= amount
@@ -374,7 +484,9 @@ func _damage_character(target_data: CharacterData, target_visual: Node2D, amount
 		target_data.current_hp = maxi(0, target_data.current_hp - amount)
 		target_visual.spawn_floating_text("-%d" % amount, Color(1.0, 0.2, 0.2))
 		
-	target_visual.update_stats(target_data.current_hp, target_data.max_hp, (player_shield if is_target_player else enemy_shield), (player_yin if is_target_player else enemy_yin), (player_max_yin if is_target_player else enemy_max_yin))
+	var shield = player_shield if is_target_player else enemy_shield
+	var pool = player_chakra_pool if is_target_player else enemy_chakra_pool
+	target_visual.update_stats(target_data.current_hp, target_data.max_hp, shield, pool)
 
 func _on_qte_finished(success: bool, multiplier: float) -> void:
 	current_state = TurnState.PLAYER_TURN
@@ -402,11 +514,9 @@ func _start_enemy_turn() -> void:
 	turn_banner.modulate = Color(1.0, 0.3, 0.3)
 	_animate_turn_banner()
 	
-	enemy_yin = enemy_max_yin
-	enemy_yang = enemy_max_yang
 	enemy_shield = 0
-	
 	_enemy_draw_cards(1)
+	_gain_random_chakra(false)
 	
 	var tw = create_tween()
 	tw.tween_interval(0.8)
@@ -417,35 +527,38 @@ func _play_next_enemy_card() -> void:
 		_finish_enemy_turn()
 		return
 		
-	# Evaluate playable cards
+	# Avalia cartas viáveis com base nas energias e Taijutsu
 	var playable: Array[AbilityData] = []
 	for c in enemy_hand_cards:
-		if enemy_yin >= c.yin_cost and enemy_yang >= c.yang_cost:
+		if c.required_element == ChakraElement.Type.NONE or c.element_cost == 0:
+			playable.append(c)
+		elif enemy_chakra_pool.get(c.required_element, 0) >= c.element_cost:
 			playable.append(c)
 			
 	if playable.is_empty():
 		_finish_enemy_turn()
 		return
 		
-	# Sort playable cards by logic
+	# Seleciona melhor carta
 	var best_card: AbilityData = playable[0]
 	var best_score = -999
 	var is_critical_hp = (enemy_data.current_hp < enemy_data.max_hp * 0.5)
 	
 	for c in playable:
-		var score = c.yin_cost + c.yang_cost
+		var score = c.element_cost * 2
 		if is_critical_hp and (c.ability_type == AbilityData.AbilityType.SUPPORT or c.ability_type == AbilityData.AbilityType.TRAP):
 			score += 10
 		if c.ability_type == AbilityData.AbilityType.ULTIMATE:
-			score += 5
+			score += 6
 			
 		if score > best_score:
 			best_score = score
 			best_card = c
 			
-	# Play best_card
-	enemy_yin -= best_card.yin_cost
-	enemy_yang -= best_card.yang_cost
+	# Consome chakra da IA se for elemental
+	if best_card.required_element != ChakraElement.Type.NONE and best_card.element_cost > 0:
+		enemy_chakra_pool[best_card.required_element] -= best_card.element_cost
+		
 	enemy_hand_cards.erase(best_card)
 	
 	if best_card.is_exhaust:
@@ -456,7 +569,7 @@ func _play_next_enemy_card() -> void:
 	var success = true
 	var multiplier = 1.0
 	if best_card.qte_difficulty > 0:
-		success = randf() > 0.4 # 60% chance of success for NPC
+		success = randf() > 0.35
 		if not success:
 			multiplier = 0.5
 			
@@ -467,11 +580,11 @@ func _play_next_enemy_card() -> void:
 		else:
 			triggers.append("on_qte_failure")
 			
-	# Update intent visually
+	# Atualiza intenção visual
 	if best_card.ability_type == AbilityData.AbilityType.SUPPORT:
 		enemy_visual.set_intent("shield", 0)
 	elif best_card.ability_type == AbilityData.AbilityType.NINJUTSU or best_card.ability_type == AbilityData.AbilityType.ULTIMATE:
-		enemy_visual.set_intent("jutsu", 0)
+		enemy_visual.set_intent("jutsu", best_card.element_cost)
 	else:
 		enemy_visual.set_intent("attack", 0)
 			
@@ -479,7 +592,7 @@ func _play_next_enemy_card() -> void:
 	_update_ui()
 	
 	var tw = create_tween()
-	tw.tween_interval(1.5)
+	tw.tween_interval(1.4)
 	tw.tween_callback(_play_next_enemy_card)
 
 func _finish_enemy_turn() -> void:
@@ -493,7 +606,6 @@ func _finish_enemy_turn() -> void:
 	)
 
 func _check_battle_state() -> void:
-	# Check scripted phase
 	if phase_manager.check_phase_triggers(player_data.current_hp, enemy_data.current_hp):
 		return
 		
@@ -519,8 +631,8 @@ func _show_current_dialogue() -> void:
 	else:
 		cutscene_panel.visible = false
 		phase_manager.apply_phase_buffs(player_data, enemy_data)
-		player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_yin, player_max_yin)
-		enemy_visual.update_stats(enemy_data.current_hp, enemy_data.max_hp, enemy_shield, 0, enemy_data.max_yin)
+		player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_chakra_pool)
+		enemy_visual.update_stats(enemy_data.current_hp, enemy_data.max_hp, enemy_shield, enemy_chakra_pool)
 		_start_player_turn()
 
 func _on_cutscene_next_pressed() -> void:
@@ -533,6 +645,10 @@ func _trigger_victory() -> void:
 	turn_banner.text = "VITÓRIA SHINOBI! 🏆"
 	turn_banner.modulate = Color(0.2, 1.0, 0.4)
 	_animate_turn_banner()
+	
+	# Salva o nó de história como concluído
+	if not GameManager.completed_nodes.has(GameManager.active_encounter_id):
+		GameManager.completed_nodes.append(GameManager.active_encounter_id)
 	
 	var tw = create_tween()
 	tw.tween_interval(1.5)
@@ -554,10 +670,23 @@ func _trigger_defeat() -> void:
 	)
 
 func _update_ui() -> void:
-	chakra_label.text = "Y:%d Yg:%d" % [player_yin, player_yang]
+	# Atualiza texto das naturezas de chakra
+	var chakra_strs: Array[String] = []
+	if player_data.chakra_affinities.is_empty():
+		chakra_strs.append("🥋 Taijutsu Puro")
+	else:
+		for aff in player_data.chakra_affinities:
+			var icon = ChakraElement.get_element_icon(aff)
+			var short_name = ChakraElement.get_element_short_name(aff)
+			var count = player_chakra_pool.get(aff, 0)
+			chakra_strs.append("%s %s: %d" % [icon, short_name, count])
+			
+	chakra_label.text = "  |  ".join(chakra_strs)
 	draw_pile_label.text = str(draw_pile.size())
 	discard_pile_label.text = str(discard_pile.size())
-	player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_yin, player_max_yin)
+	
+	player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_chakra_pool)
+	enemy_visual.update_stats(enemy_data.current_hp, enemy_data.max_hp, enemy_shield, enemy_chakra_pool)
 
 func _animate_turn_banner() -> void:
 	turn_banner.visible = true

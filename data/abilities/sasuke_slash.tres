@@ -5,14 +5,18 @@
 [resource]
 script = ExtResource("1_abdt")
 id = "sasuke_slash"
-name = "Corte de Kunai"
-description = "Corte veloz."
-chakra_cost = 1
+name = "Ataque Rápido de Kunai"
+description = "Ataque cortante que pressiona o oponente."
+required_element = 0
+element_cost = 0
+is_exhaust = false
 ability_type = 0
 target_type = 0
-scripts = Array[Dictionary]([{"trigger": "on_play", "effect": "damage", "value": 7, "combo": 1, "hits": 1}])
+scripts = Array[Dictionary]([{"trigger": "on_play", "effect": "damage", "value": 8, "combo": 1, "hits": 1}])
 animation_key = "attack"
-qte_difficulty = 3
+delivery_type = 0
+screen_shake_intensity = 3.0
+qte_difficulty = 0
 support_name = ""
 allowed_character_ids = Array[String]([])
 allowed_tags = Array[String]([])

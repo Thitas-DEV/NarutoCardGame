@@ -1,0 +1,110 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://nic7wnu7bab2"]
+
+[ext_resource type="Texture2D" uid="uid://dofkj66phn1hh" path="res://assets/characters/naruto/naruto/narut shipudeo/naruto senin/golpear/arriba/arriba 2.bmp" id="1_qtc1r"]
+[ext_resource type="Texture2D" uid="uid://bo8f4t24i1sgq" path="res://assets/characters/naruto/naruto/narut shipudeo/naruto senin/golpear/arriba/arriba 3.bmp" id="2_dp25b"]
+[ext_resource type="Texture2D" uid="uid://drmnkpc7wwobe" path="res://assets/characters/naruto/naruto/narut shipudeo/naruto senin/golpear/arriba/arriba 4.bmp" id="3_3q2w2"]
+[ext_resource type="Texture2D" uid="uid://pj6ddb4mg4hs" path="res://assets/characters/naruto/naruto/narut shipudeo/naruto senin/golpear/arriba/arriba.bmp" id="4_7buvq"]
+[ext_resource type="Texture2D" uid="uid://ct4ups4x53i6d" path="res://assets/effects/jutsus/substituicao/substitution_jutsu_sheet.png" id="5_dp25b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13hvk"]
+atlas = ExtResource("5_dp25b")
+region = Rect2(0, 0, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p4o5u"]
+atlas = ExtResource("5_dp25b")
+region = Rect2(0, 96, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fyun2"]
+atlas = ExtResource("5_dp25b")
+region = Rect2(0, 192, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pf2dp"]
+atlas = ExtResource("5_dp25b")
+region = Rect2(0, 288, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2smm"]
+atlas = ExtResource("5_dp25b")
+region = Rect2(0, 384, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xgykd"]
+atlas = ExtResource("5_dp25b")
+region = Rect2(0, 480, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fe3dk"]
+atlas = ExtResource("5_dp25b")
+region = Rect2(0, 576, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1n356"]
+atlas = ExtResource("5_dp25b")
+region = Rect2(0, 672, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gomcq"]
+atlas = ExtResource("5_dp25b")
+region = Rect2(0, 768, 64, 96)
+
+[resource]
+animations = [{
+"frames": [],
+"loop": 1,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"chidori",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"damage",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_qtc1r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_dp25b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_3q2w2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_7buvq")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13hvk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p4o5u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fyun2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pf2dp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2smm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xgykd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fe3dk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1n356")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gomcq")
+}],
+"loop": 1,
+"name": &"kawarimi",
+"speed": 8.0
+}]

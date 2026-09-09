@@ -99,69 +99,82 @@ func play_custom_animation(anim_name: String) -> void:
 
 ---
 
-## 4. Sistema de Cartas e Chakra
+## 4. Sistema de Cartas e Naturezas de Chakra (Estilo Pokémon TCG)
 
-- **Chakra**: Recurso de energia por turno (base: 3 a 4). Cartas consomem de 0 a 4 de Chakra.
-- **Tipos de Cartas (`CardData.CardType`)**:
-  - `TAIJUTSU`: Ataques físicos, constroem multiplicador de combo e hits.
-  - `NINJUTSU`: Habilidades elementais de dano concentrado e queima/paralisia.
-  - `GENJUTSU`: Escudos, atordoamento e recarga de chakra.
-  - `TRAP` (Armadilha): Jogadas viradas para baixo no campo; ativam no turno do oponente (ex: *Jutsu de Substituição* anula o ataque e invoca o tronco).
-  - `SUPPORT` (Suporte): Convocação de parceiro ninja para cura ou assistência de ataque.
-  - `ULTIMATE` (Jutsu Secreto / Ougi): Ativa o modo cinematográfico de **Quick Time Event (QTE)**.
+O jogo utiliza o sistema canônico das **5 Naturezas Básicas de Chakra** (*Godai Seishitsu Henka*):
+- 💧 **Água (Suiton)**
+- 🔥 **Fogo (Katon)**
+- 🌪️ **Vento (Fuuton)**
+- ⛰️ **Terra (Doton)**
+- ⚡ **Raio (Raiton)**
+
+### Regras de Energia e Afinidade:
+1. **Afinidades dos Ninjas**: Cada personagem pode dominar de **0 até 5 elementos** (definido em `chakra_affinities` de `CharacterData`).
+   - *Rock Lee*: 0 elementos (especialista puro em Taijutsu).
+   - *Naruto*: Vento (*Fuuton*).
+   - *Sasuke*: Fogo (*Katon*) e Raio (*Raiton*).
+   - *Kakashi*: Raio (*Raiton*), Terra (*Doton*) e Água (*Suiton*).
+   - *Gaara*: Terra (*Doton*) e Vento (*Fuuton*).
+   - *Zabuza*: Água (*Suiton*).
+2. **Geração por Turno**: A cada início de turno, o jogador ganha **1 carta** e sorteia **1 ponto de energia aleatório** dentre os elementos dominados por seu ninja (acumulado na reserva `player_chakra_pool`).
+3. **Taijutsu Universal**: Golpes de Taijutsu (`required_element = NONE`, `element_cost = 0`) não consomem chakra elemental e são básicos de todos os ninjas.
+4. **Condição de Lançamento**: Jutsus elementais só podem ser jogados se a reserva do elemento exigido for **igual ou maior** que o custo da carta (`reserva[elemento] >= element_cost`). Ao jogar, consome o chakra correspondente.
 
 ---
 
 ## 5. Como Adicionar Novas Cartas e Jutsus
 
-Para registrar uma nova carta, abra `res://src/autoload/CardDatabase.gd` e utilize a função auxiliar `_add_card(...)`.
+As cartas são recursos `AbilityData` salvos na pasta `res://data/abilities/<id>.tres` e carregados automaticamente pelo `Database.gd`.
 
-### Exemplo: Adicionando o Jutsu *Katon: Goukakyuu no Jutsu*
-```gdscript
-_add_card(
-    "katon_goukakyuu",                       # ID único da carta
-    "Katon: Jutsu Bola de Fogo",             # Título exibido
-    "Dispara uma imensa esfera de chamas que incinera o alvo.", # Descrição
-    2,                                       # Custo de Chakra
-    CardData.CardType.NINJUTSU,              # Tipo da carta
-    CardData.TargetType.SINGLE_ENEMY,        # Alvo
-    CardData.Rarity.UNCOMMON,                # Raridade
-    "Sasuke",                                # Personagem dono (ou "Universal")
-    18,                                      # Dano Base
-    1,                                       # Quantidade de Hits
-    0,                                       # Escudo fornecido
-    1,                                       # Pontos para o medidor de Combo
-    0,                                       # Chakra gerado
-    0,                                       # Cartas compradas
-    [{"type": "burn", "value": 4}],          # Efeitos de status aplicados
-    "katon"                                  # Chave de animação / VFX
-)
+### Exemplo de recurso `.tres`:
+```ini
+[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/ability_data.gd" id="1_abdt"]
+
+[resource]
+script = ExtResource("1_abdt")
+id = "katon_gokakyu"
+name = "Katon: Bola de Fogo"
+description = "Dispara uma esfera massiva de chamas ardentes."
+required_element = 2 # ChakraElement.Type.FIRE
+element_cost = 2
+is_exhaust = false
+ability_type = 1 # NINJUTSU
+target_type = 0 # SINGLE_ENEMY
+scripts = Array[Dictionary]([{"trigger": "on_play", "effect": "damage", "value": 22, "combo": 1, "hits": 1}])
+animation_key = "katon"
+qte_difficulty = 0
+support_name = ""
+allowed_character_ids = Array[String]([])
+allowed_tags = Array[String]([])
 ```
 
 ---
 
 ## 6. Como Adicionar Novos Ninjas e Inimigos
 
-Para criar um novo personagem jogável ou inimigo, abra `res://src/autoload/GameManager.gd` ou defina um novo `CharacterData.gd`.
+Crie um arquivo `.tres` em `res://data/characters/<id>.tres` utilizando a classe `CharacterData`:
 
-```gdscript
-var neji = CharacterData.new()
-neji.id = "neji"
-neji.name = "Neji Hyuga"
-neji.title = "Gênio dos Hyuga (Byakugan)"
-neji.max_hp = 80
-neji.current_hp = 80
-neji.max_chakra = 3
-neji.avatar_color = Color(0.85, 0.85, 0.95) # Branco/Lilás
-neji.secondary_color = Color(0.2, 0.2, 0.3)
-neji.starting_deck_ids = [
-    "neji_gentle_fist",
-    "neji_gentle_fist",
-    "neji_palm_strike",
-    "byakugan_focus",
-    "kaiten_shield",
-    "ougi_64_palms"
-]
+```ini
+[gd_resource type="Resource" script_class="CharacterData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/core/character_data.gd" id="1_chdt"]
+[ext_resource type="Resource" path="res://data/abilities/naruto_punch.tres" id="2_punch"]
+
+[resource]
+script = ExtResource("1_chdt")
+id = "neji"
+name = "Neji Hyuga"
+title = "Gênio dos Hyuga (Byakugan)"
+tags = Array[String]([])
+max_hp = 80
+current_hp = 80
+attack_modifier = 1.0
+avatar_color = Color(0.85, 0.85, 0.95, 1)
+secondary_color = Color(0.2, 0.2, 0.3, 1)
+chakra_affinities = Array[int]([]) # Neji no clássico foca em Taijutsu Juuken
+starting_deck = Array[Resource("res://src/core/ability_data.gd")]([ExtResource("2_punch")])
 ```
 
 ---

@@ -116,6 +116,7 @@ vertical_alignment = 1
 text_overrun_behavior = 3
 
 [node name="Illustration" type="Panel" parent="CardFrame"]
+clip_contents = true
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -126,6 +127,17 @@ offset_bottom = 110.0
 grow_horizontal = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_illus")
+
+[node name="Icon" type="TextureRect" parent="CardFrame/Illustration"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
 
 [node name="TypeLabel" type="Label" parent="CardFrame"]
 layout_mode = 1

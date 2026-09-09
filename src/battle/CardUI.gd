@@ -22,6 +22,7 @@ var original_rot: float = 0.0
 @onready var type_label: Label = $CardFrame/TypeLabel
 @onready var frame_panel: Panel = $CardFrame
 @onready var illustration_panel: Panel = $CardFrame/Illustration
+@onready var icon_rect: TextureRect = $CardFrame/Illustration/Icon if has_node("CardFrame/Illustration/Icon") else null
 @onready var glow_panel: Panel = $GlowEffect
 
 func _ready() -> void:
@@ -43,16 +44,20 @@ func update_card_display() -> void:
 		return
 		
 	title_label.text = card_data.name
-	
-	var cost_text = ""
-	if card_data.yin_cost > 0: cost_text += "%d Yin " % card_data.yin_cost
-	if card_data.yang_cost > 0: cost_text += "%d Yang" % card_data.yang_cost
-	if cost_text == "": cost_text = "0"
-	cost_label.text = cost_text
+	cost_label.text = card_data.get_cost_display()
+	cost_label.modulate = card_data.get_element_color()
 	
 	type_label.text = card_data.get_type_name().to_upper()
 	type_label.modulate = card_data.get_type_color()
 	desc_label.text = card_data.description
+	
+	if icon_rect:
+		if card_data.icon:
+			icon_rect.texture = card_data.icon
+			icon_rect.visible = true
+		else:
+			icon_rect.texture = null
+			icon_rect.visible = false
 
 func set_playable_state(playable: bool) -> void:
 	is_playable = playable

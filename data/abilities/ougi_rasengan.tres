@@ -1,19 +1,28 @@
-[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://c3cke7dd1awrp"]
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://cqifntsvfypr2"]
 
 [ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="1_abdt"]
 
 [resource]
 script = ExtResource("1_abdt")
 id = "ougi_rasengan"
-name = "Ougi Rasengan"
-description = "Poder Supremo."
+name = "Ougi: Rasengan da Raposa"
+description = "Impacto supremo amplificado pelo chakra do redemoinho."
+required_element = 3
+element_cost = 3
 ability_type = 5
+screen_shake_intensity = 14.0
 scripts = Array[Dictionary]([{
 "combo": 5,
 "effect": "damage",
-"hits": 6,
-"trigger": "on_play",
+"hits": 5,
+"trigger": "on_qte_success",
 "value": 55
+}, {
+"combo": 2,
+"effect": "damage",
+"hits": 2,
+"trigger": "on_qte_failure",
+"value": 25
 }])
-animation_key = "ougi_rasengan"
+animation_key = "rasengan"
 qte_difficulty = 3

@@ -5,13 +5,17 @@
 [resource]
 script = ExtResource("1_abdt")
 id = "ura_renge"
-name = "Lótus Oculta"
-description = "Poder esmagador."
-chakra_cost = 3
+name = "Lótus Oculta (5 Portões)"
+description = "Taijutsu supremo proibido em alta velocidade."
+required_element = 0
+element_cost = 0
+is_exhaust = false
 ability_type = 5
 target_type = 0
-scripts = Array[Dictionary]([{"trigger": "on_play", "effect": "damage", "value": 65, "combo": 6, "hits": 8}])
-animation_key = "ougi_ura_renge"
+scripts = Array[Dictionary]([{"trigger": "on_play", "effect": "damage", "value": 55, "combo": 6, "hits": 6}, {"trigger": "on_qte_success", "effect": "damage", "value": 15}])
+animation_key = "lotus"
+delivery_type = 0
+screen_shake_intensity = 14.0
 qte_difficulty = 3
 support_name = ""
 allowed_character_ids = Array[String]([])

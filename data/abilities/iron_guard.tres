@@ -1,18 +1,20 @@
 [gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://cl7f0tkqlf0gc"]
 
 [ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="1_abdt"]
+[ext_resource type="Texture2D" uid="uid://ddp85b450s1ed" path="res://assets/cards/iron_guard.png" id="1_uojcu"]
 
 [resource]
 script = ExtResource("1_abdt")
 id = "iron_guard"
 name = "Defesa de Kunai"
-description = "Ganha 7 de guarda."
+description = "Bloqueia ataques recebidos concedendo 9 de Guarda."
+icon = ExtResource("1_uojcu")
 ability_type = 2
 target_type = 2
+delivery_type = 5
 scripts = Array[Dictionary]([{
 "effect": "shield",
 "trigger": "on_play",
-"value": 7
+"value": 9
 }])
 animation_key = "guard"
-qte_difficulty = 3

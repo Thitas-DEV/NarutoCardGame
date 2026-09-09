@@ -1,20 +1,25 @@
-[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://doisgqgaqok5m"]
 
-[ext_resource type="Script" path="res://src/core/ability_data.gd" id="1_abdt"]
+[ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="1_abdt"]
+[ext_resource type="Texture2D" uid="uid://dguifac1xa5if" path="res://assets/cards/katon_gokakyu.png" id="1_eq0bt"]
 
 [resource]
 script = ExtResource("1_abdt")
 id = "katon_gokakyu"
 name = "Katon: Bola de Fogo"
-description = "12 Dano + Queimadura."
-yin_cost = 2
-yang_cost = 0
-is_exhaust = false
+description = "Dispara uma esfera massiva de chamas ardentes."
+icon = ExtResource("1_eq0bt")
+required_element = 2
+element_cost = 2
 ability_type = 1
-target_type = 0
-scripts = Array[Dictionary]([{"trigger": "on_play", "effect": "damage", "value": 12}, {"trigger": "on_play", "effect": "apply_status", "status": "burn", "value": 3}])
-animation_key = "attack"
-qte_difficulty = 0
-support_name = ""
-allowed_character_ids = Array[String]([])
-allowed_tags = Array[String]([])
+delivery_type = 1
+projectile_color = Color(1, 0.35, 0.08, 1)
+projectile_speed = 950.0
+screen_shake_intensity = 7.0
+scripts = Array[Dictionary]([{
+"combo": 1,
+"effect": "damage",
+"hits": 1,
+"trigger": "on_play",
+"value": 22
+}])

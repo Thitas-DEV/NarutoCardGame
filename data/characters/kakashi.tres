@@ -1,20 +1,23 @@
-[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://c0s7gssq5hht2"]
+[gd_resource type="Resource" script_class="CharacterData" load_steps=8 format=3]
 
-[ext_resource type="Script" uid="uid://c2l48sfta475v" path="res://src/core/character_data.gd" id="1_chdt"]
-[ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="2_wr4m2"]
-[ext_resource type="Resource" path="res://data/abilities/naruto_punch.tres" id="4_ab"]
-[ext_resource type="Resource" path="res://data/abilities/iron_guard.tres" id="6_ab"]
-[ext_resource type="Resource" path="res://data/abilities/katon_gokakyu.tres" id="8_ab"]
-[ext_resource type="Resource" path="res://data/abilities/kawarimi_trap.tres" id="9_ab"]
-[ext_resource type="Resource" path="res://data/abilities/chidori.tres" id="10_ab"]
+[ext_resource type="Script" path="res://src/core/character_data.gd" id="1_chdt"]
+[ext_resource type="Resource" path="res://data/abilities/chidori.tres" id="2_chidori"]
+[ext_resource type="Resource" path="res://data/abilities/doton_wall.tres" id="3_doton_wall"]
+[ext_resource type="Resource" path="res://data/abilities/iron_guard.tres" id="4_iron_guard"]
+[ext_resource type="Resource" path="res://data/abilities/kawarimi_trap.tres" id="5_kawarimi_trap"]
+[ext_resource type="Resource" path="res://data/abilities/sasuke_slash.tres" id="6_sasuke_slash"]
+[ext_resource type="Resource" path="res://data/abilities/suiton_suiryuudan.tres" id="7_suiton_suiryuudan"]
 
 [resource]
 script = ExtResource("1_chdt")
 id = "kakashi"
 name = "Kakashi Hatake"
-title = "O Ninja Copiador"
-max_hp = 70
-current_hp = 70
-avatar_color = Color(0.45, 0.55, 0.65, 1)
-secondary_color = Color(0.1, 0.15, 0.2, 1)
-starting_deck = Array[ExtResource("2_wr4m2")]([ExtResource("4_ab"), ExtResource("4_ab"), ExtResource("4_ab"), ExtResource("6_ab"), ExtResource("6_ab"), ExtResource("8_ab"), ExtResource("8_ab"), ExtResource("9_ab"), ExtResource("10_ab")])
+title = "O Ninja que Copia (Raio, Terra & Água)"
+tags = Array[String]([])
+max_hp = 85
+current_hp = 85
+attack_modifier = 1.0
+avatar_color = Color(0.3, 0.4, 0.5, 1)
+secondary_color = Color(0.15, 0.2, 0.3, 1)
+chakra_affinities = Array[int]([5, 4, 1])
+starting_deck = Array[Resource("res://src/core/ability_data.gd")]([ExtResource("6_sasuke_slash"), ExtResource("6_sasuke_slash"), ExtResource("4_iron_guard"), ExtResource("4_iron_guard"), ExtResource("5_kawarimi_trap"), ExtResource("3_doton_wall"), ExtResource("7_suiton_suiryuudan"), ExtResource("2_chidori")])

@@ -16,9 +16,9 @@ func load_all_abilities(path: String) -> void:
 		while file_name != "":
 			if file_name.ends_with(".tres") or file_name.ends_with(".remap"):
 				var res_path = path + file_name.trim_suffix(".remap")
-				var ability: AbilityData = load(res_path)
-				if ability:
-					abilities_db[ability.id] = ability
+				var res = load(res_path)
+				if res is AbilityData:
+					abilities_db[res.id] = res
 			file_name = dir.get_next()
 
 func load_all_characters(path: String) -> void:
@@ -29,9 +29,9 @@ func load_all_characters(path: String) -> void:
 		while file_name != "":
 			if file_name.ends_with(".tres") or file_name.ends_with(".remap"):
 				var res_path = path + file_name.trim_suffix(".remap")
-				var character: CharacterData = load(res_path)
-				if character:
-					characters_db[character.id] = character
+				var res = load(res_path)
+				if res is CharacterData:
+					characters_db[res.id] = res
 			file_name = dir.get_next()
 
 ## Retorna todas as cartas disponíveis para um personagem específico

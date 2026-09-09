@@ -1,18 +1,22 @@
-[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://b81gxj11vag4d"]
+[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3]
 
-[ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="1_abdt"]
+[ext_resource type="Script" path="res://src/core/ability_data.gd" id="1_abdt"]
 
 [resource]
 script = ExtResource("1_abdt")
 id = "rock_lee_kick"
-name = "Chute Furacão"
-description = "Chute veloz."
-scripts = Array[Dictionary]([{
-"combo": 2,
-"effect": "damage",
-"hits": 1,
-"trigger": "on_play",
-"value": 8
-}])
+name = "Chute Furacão da Folha"
+description = "Chute veloz de Taijutsu puro que eleva o ritmo do combate."
+required_element = 0
+element_cost = 0
+is_exhaust = false
+ability_type = 0
+target_type = 0
+scripts = Array[Dictionary]([{"trigger": "on_play", "effect": "damage", "value": 9, "combo": 2, "hits": 1}])
 animation_key = "leaf_hurricane"
-qte_difficulty = 3
+delivery_type = 0
+screen_shake_intensity = 4.0
+qte_difficulty = 0
+support_name = ""
+allowed_character_ids = Array[String]([])
+allowed_tags = Array[String]([])

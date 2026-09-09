@@ -3,15 +3,11 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://pkjn3gu26pwx"
-path="res://.godot/imported/stansefffs1.bmp-aace12d66d0eb2e87336a315dda98549.ctex"
-metadata={
-"vram_texture": false
-}
+valid=false
 
 [deps]
 
 source_file="res://assets/characters/naruto/naruto/stansefffs1.bmp"
-dest_files=["res://.godot/imported/stansefffs1.bmp-aace12d66d0eb2e87336a315dda98549.ctex"]
 
 [params]
 

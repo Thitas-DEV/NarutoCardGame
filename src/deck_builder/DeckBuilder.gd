@@ -42,8 +42,8 @@ func _populate_collection() -> void:
 		
 	for c_data in GameManager.player_collection:
 		if c_data:
-			# Check if card is usable by active hero or universal
-			if c_data.can_be_used_by(GameManager.active_hero) or c_data.allowed_character_ids.is_empty():
+			# Verifica se a carta pode ser usada pelo herói (afinidade ou Taijutsu)
+			if c_data.can_be_used_by(GameManager.active_hero):
 				var card_ui = CARD_UI_SCENE.instantiate()
 				collection_grid.add_child(card_ui)
 				card_ui.set_card_data(c_data)
@@ -87,6 +87,17 @@ func _update_stats() -> void:
 	var total_chakra = 0
 	for c in GameManager.player_deck:
 		if c:
-			total_chakra += c.yin_cost + c.yang_cost
+			total_chakra += c.element_cost
 	var avg_cost = float(total_chakra) / float(maxi(1, total))
-	stats_label.text = "Cartas no Deck: %d / 30 | Custo Médio de Chakra: %.1f | Clique com botão direito na carta para remover" % [total, avg_cost]
+	
+	var aff_strs: Array[String] = []
+	if GameManager.active_hero.chakra_affinities.is_empty():
+		aff_strs.append("🥋 Taijutsu Puro")
+	else:
+		for aff in GameManager.active_hero.chakra_affinities:
+			aff_strs.append(ChakraElement.get_element_icon(aff) + " " + ChakraElement.get_element_short_name(aff))
+	var aff_text = " | ".join(aff_strs)
+	
+	stats_label.text = "Afinidade: [%s] | Deck: %d/30 | Custo Médio: %.1f | Botão Direito: Remover" % [
+		aff_text, total, avg_cost
+	]

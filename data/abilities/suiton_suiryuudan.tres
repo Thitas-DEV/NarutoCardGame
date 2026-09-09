@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/ability_data.gd" id="1_abdt"]
+
+[resource]
+script = ExtResource("1_abdt")
+id = "suiton_suiryuudan"
+name = "Suiton: Dragão de Água"
+description = "Cria um dragão torrencial que ataca e envolve o usuário em névoa protetora."
+required_element = 1
+element_cost = 2
+is_exhaust = false
+ability_type = 1
+target_type = 0
+scripts = Array[Dictionary]([{"trigger": "on_play", "effect": "damage", "value": 18, "combo": 1, "hits": 2}, {"trigger": "on_play", "effect": "shield", "value": 8}])
+animation_key = "attack"
+delivery_type = 1
+projectile_color = Color(0.2, 0.65, 1, 1)
+projectile_speed = 900.0
+screen_shake_intensity = 6.0
+qte_difficulty = 0
+support_name = ""
+allowed_character_ids = Array[String]([])
+allowed_tags = Array[String]([])

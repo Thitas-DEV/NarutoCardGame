@@ -1,20 +1,23 @@
-[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://drstxiy8kc5r"]
 
-[ext_resource type="Script" path="res://src/core/ability_data.gd" id="1_abdt"]
+[ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="1_abdt"]
+[ext_resource type="Texture2D" uid="uid://bjbn5331x3cpq" path="res://assets/cards/doton_wall.png" id="1_mv0kh"]
 
 [resource]
 script = ExtResource("1_abdt")
 id = "doton_wall"
 name = "Doton: Parede de Terra"
-description = "Concede 16 de Escudo."
-yin_cost = 1
-yang_cost = 1
-is_exhaust = false
+description = "Ergue uma muralha sólida de pedra protetora."
+icon = ExtResource("1_mv0kh")
+required_element = 4
+element_cost = 1
 ability_type = 1
 target_type = 2
-scripts = Array[Dictionary]([{"trigger": "on_play", "effect": "shield", "value": 16}])
+delivery_type = 5
+screen_shake_intensity = 4.0
+scripts = Array[Dictionary]([{
+"effect": "shield",
+"trigger": "on_play",
+"value": 16
+}])
 animation_key = "guard"
-qte_difficulty = 0
-support_name = ""
-allowed_character_ids = Array[String]([])
-allowed_tags = Array[String]([])

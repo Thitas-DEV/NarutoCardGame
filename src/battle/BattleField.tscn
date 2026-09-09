@@ -1,31 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://cx4j1q9pm3kv2"]
+[gd_scene format=3 uid="uid://cx4j1rapm3kv2"]
 
-[ext_resource type="Script" path="res://src/battle/BattleField.gd" id="1_bf"]
+[ext_resource type="Script" uid="uid://ktxubqtgptdo" path="res://src/battle/BattleField.gd" id="1_bf"]
 [ext_resource type="PackedScene" uid="uid://d3m7yqvf56u1n" path="res://src/battle/CharacterVisual.tscn" id="2_cv"]
-[ext_resource type="PackedScene" uid="uid://dmv28p1j3l9k1" path="res://src/battle/ComboMeter.tscn" id="3_cm"]
+[ext_resource type="PackedScene" uid="uid://dmv28p1j3mak1" path="res://src/battle/ComboMeter.tscn" id="3_cm"]
 [ext_resource type="PackedScene" uid="uid://ctvyu3c8q1n4p" path="res://src/battle/QTEOverlay.tscn" id="4_qte"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
-bg_color = Color(0.08, 0.1, 0.14, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bottom_bar"]
-bg_color = Color(0.06, 0.07, 0.1, 0.95)
-border_width_top = 2
-border_color = Color(0.2, 0.3, 0.45, 0.8)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chakra"]
-bg_color = Color(0.08, 0.55, 0.9, 1)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.6, 0.9, 1, 1)
-corner_radius_top_left = 35
-corner_radius_top_right = 35
-corner_radius_bottom_right = 35
-corner_radius_bottom_left = 35
-shadow_color = Color(0.1, 0.6, 1, 0.5)
-shadow_size = 8
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot"]
 bg_color = Color(0.12, 0.14, 0.2, 0.8)
@@ -38,6 +16,25 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bottom_bar"]
+bg_color = Color(0.06, 0.07, 0.1, 0.95)
+border_width_top = 2
+border_color = Color(0.2, 0.3, 0.45, 0.8)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chakra"]
+bg_color = Color(0.1, 0.14, 0.22, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.3, 0.65, 1, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.1, 0.5, 1, 0.3)
+shadow_size = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_end_turn"]
 bg_color = Color(0.85, 0.25, 0.2, 1)
@@ -63,7 +60,7 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="BattleField" type="Control"]
+[node name="BattleField" type="Control" unique_id=386237318]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -73,23 +70,24 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_bf")
 
-[node name="Arena2D" type="Node2D" parent="."]
+[node name="Arena2D" type="Node2D" parent="." unique_id=1968229976]
 
-[node name="Background" type="Panel" parent="Arena2D"]
+[node name="Background" type="TextureRect" parent="Arena2D" unique_id=720224144]
 offset_right = 1280.0
 offset_bottom = 720.0
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="PlayerVisual" parent="Arena2D" instance=ExtResource("2_cv")]
+[node name="PlayerVisual" parent="Arena2D" unique_id=737772200 instance=ExtResource("2_cv")]
 position = Vector2(280, 290)
 
-[node name="EnemyVisual" parent="Arena2D" instance=ExtResource("2_cv")]
+[node name="EnemyVisual" parent="Arena2D" unique_id=959455138 instance=ExtResource("2_cv")]
 position = Vector2(1000, 290)
 is_player = false
 character_name = "Inimigo"
 
-[node name="UI" type="Control" parent="."]
+[node name="UI" type="Control" parent="." unique_id=61176716]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -98,13 +96,14 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="ComboMeter" parent="UI" instance=ExtResource("3_cm")]
+[node name="ComboMeter" parent="UI" unique_id=2046254166 instance=ExtResource("3_cm")]
+layout_mode = 0
 offset_left = 540.0
 offset_top = 30.0
 offset_right = 740.0
 offset_bottom = 105.0
 
-[node name="FieldZones" type="HBoxContainer" parent="UI"]
+[node name="FieldZones" type="HBoxContainer" parent="UI" unique_id=330569185]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -120,13 +119,13 @@ grow_vertical = 2
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="TrapSlot" type="Panel" parent="UI/FieldZones"]
+[node name="TrapSlot" type="Panel" parent="UI/FieldZones" unique_id=1891353473]
 visible = false
 custom_minimum_size = Vector2(180, 50)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="TrapLabel" type="Label" parent="UI/FieldZones/TrapSlot"]
+[node name="TrapLabel" type="Label" parent="UI/FieldZones/TrapSlot" unique_id=1811779818]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -139,13 +138,13 @@ text = "🎴 ARMADILHA ATIVA"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SupportSlot" type="Panel" parent="UI/FieldZones"]
+[node name="SupportSlot" type="Panel" parent="UI/FieldZones" unique_id=1336154826]
 visible = false
 custom_minimum_size = Vector2(180, 50)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_slot")
 
-[node name="SupportLabel" type="Label" parent="UI/FieldZones/SupportSlot"]
+[node name="SupportLabel" type="Label" parent="UI/FieldZones/SupportSlot" unique_id=1112692381]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -158,7 +157,7 @@ text = "🤝 SUPORTE ATIVO"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TurnBanner" type="Label" parent="UI"]
+[node name="TurnBanner" type="Label" parent="UI" unique_id=78796021]
 visible = false
 layout_mode = 1
 anchors_preset = 14
@@ -174,7 +173,7 @@ theme_override_font_sizes/font_size = 28
 text = "TURNO DO JOGADOR"
 horizontal_alignment = 1
 
-[node name="HandContainer" type="Control" parent="UI"]
+[node name="HandContainer" type="Control" parent="UI" unique_id=1655919754]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -186,7 +185,7 @@ grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 
-[node name="BottomBar" type="Panel" parent="UI"]
+[node name="BottomBar" type="Panel" parent="UI" unique_id=1937035693]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -198,19 +197,19 @@ grow_vertical = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bottom_bar")
 
-[node name="ChakraOrb" type="Panel" parent="UI/BottomBar"]
+[node name="ChakraOrb" type="Panel" parent="UI/BottomBar" unique_id=1147740059]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 35.0
-offset_top = -35.0
-offset_right = 105.0
-offset_bottom = 35.0
+offset_left = 20.0
+offset_top = -28.0
+offset_right = 330.0
+offset_bottom = 28.0
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_chakra")
 
-[node name="ChakraLabel" type="Label" parent="UI/BottomBar/ChakraOrb"]
+[node name="ChakraLabel" type="Label" parent="UI/BottomBar/ChakraOrb" unique_id=299939617]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -218,37 +217,37 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 20
-text = "3 / 3"
+theme_override_font_sizes/font_size = 13
+text = "Chakra"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DrawPile" type="VBoxContainer" parent="UI/BottomBar"]
+[node name="DrawPile" type="VBoxContainer" parent="UI/BottomBar" unique_id=1338156492]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 130.0
+offset_left = 350.0
 offset_top = -25.0
-offset_right = 210.0
+offset_right = 430.0
 offset_bottom = 25.0
 grow_vertical = 2
 alignment = 1
 
-[node name="Title" type="Label" parent="UI/BottomBar/DrawPile"]
+[node name="Title" type="Label" parent="UI/BottomBar/DrawPile" unique_id=544264102]
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 text = "BARALHO"
 horizontal_alignment = 1
 
-[node name="Label" type="Label" parent="UI/BottomBar/DrawPile"]
+[node name="Label" type="Label" parent="UI/BottomBar/DrawPile" unique_id=2124469619]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.4, 0.8, 1, 1)
 theme_override_font_sizes/font_size = 16
 text = "12"
 horizontal_alignment = 1
 
-[node name="DiscardPile" type="VBoxContainer" parent="UI/BottomBar"]
+[node name="DiscardPile" type="VBoxContainer" parent="UI/BottomBar" unique_id=1580284972]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -263,20 +262,20 @@ grow_horizontal = 0
 grow_vertical = 2
 alignment = 1
 
-[node name="Title" type="Label" parent="UI/BottomBar/DiscardPile"]
+[node name="Title" type="Label" parent="UI/BottomBar/DiscardPile" unique_id=184913299]
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 text = "CEMITÉRIO"
 horizontal_alignment = 1
 
-[node name="Label" type="Label" parent="UI/BottomBar/DiscardPile"]
+[node name="Label" type="Label" parent="UI/BottomBar/DiscardPile" unique_id=759364334]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.8, 0.4, 0.4, 1)
 theme_override_font_sizes/font_size = 16
 text = "0"
 horizontal_alignment = 1
 
-[node name="EndTurnButton" type="Button" parent="UI/BottomBar"]
+[node name="EndTurnButton" type="Button" parent="UI/BottomBar" unique_id=981158190]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -293,7 +292,7 @@ theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_end_turn")
 text = "FINALIZAR TURNO"
 
-[node name="CutscenePanel" type="Panel" parent="UI"]
+[node name="CutscenePanel" type="Panel" parent="UI" unique_id=587834463]
 visible = false
 layout_mode = 1
 anchors_preset = 12
@@ -305,7 +304,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_cutscene")
 
-[node name="SpeakerLabel" type="Label" parent="UI/CutscenePanel"]
+[node name="SpeakerLabel" type="Label" parent="UI/CutscenePanel" unique_id=1198395608]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -318,7 +317,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 16
 text = "Rock Lee"
 
-[node name="TextLabel" type="RichTextLabel" parent="UI/CutscenePanel"]
+[node name="TextLabel" type="RichTextLabel" parent="UI/CutscenePanel" unique_id=1031990871]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -332,7 +331,7 @@ grow_vertical = 2
 theme_override_font_sizes/normal_font_size = 15
 text = "Texto da cutscene de transformação..."
 
-[node name="NextButton" type="Button" parent="UI/CutscenePanel"]
+[node name="NextButton" type="Button" parent="UI/CutscenePanel" unique_id=361454267]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -348,5 +347,5 @@ grow_vertical = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_dialog")
 text = "CONTINUAR ▶"
 
-[node name="QTEOverlay" parent="UI" instance=ExtResource("4_qte")]
+[node name="QTEOverlay" parent="UI" unique_id=2112905477 instance=ExtResource("4_qte")]
 layout_mode = 1

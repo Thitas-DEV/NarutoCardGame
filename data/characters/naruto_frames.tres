@@ -1,0 +1,118 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://0ju0ldyqr44c"]
+
+[ext_resource type="Texture2D" uid="uid://b83v05lkb23x4" path="res://assets/characters/naruto/naruto/narut shipudeo/lda1.bmp" id="1_gqq2h"]
+[ext_resource type="Texture2D" uid="uid://brvmg2hid2eee" path="res://assets/characters/naruto/naruto/narut shipudeo/lda2.bmp" id="2_y7fca"]
+[ext_resource type="Texture2D" uid="uid://bby0vet5f2ian" path="res://assets/characters/naruto/naruto/narut shipudeo/lda3.bmp" id="3_13hvk"]
+[ext_resource type="Texture2D" uid="uid://cj3hnfx4xw30e" path="res://assets/characters/naruto/naruto/narut shipudeo/lda4.bmp" id="4_p4o5u"]
+[ext_resource type="Texture2D" uid="uid://ossm1k3b6b7x" path="res://assets/characters/naruto/naruto/narut shipudeo/lda5.bmp" id="5_fyun2"]
+[ext_resource type="Texture2D" uid="uid://dm32py02leoe8" path="res://assets/characters/naruto/naruto/narut shipudeo/lda6.bmp" id="6_pf2dp"]
+[ext_resource type="Texture2D" uid="uid://ct4ups4x53i6d" path="res://assets/effects/jutsus/substituicao/substitution_jutsu_sheet.png" id="7_y7fca"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13hvk"]
+atlas = ExtResource("7_y7fca")
+region = Rect2(0, 0, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p4o5u"]
+atlas = ExtResource("7_y7fca")
+region = Rect2(0, 96, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fyun2"]
+atlas = ExtResource("7_y7fca")
+region = Rect2(0, 192, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pf2dp"]
+atlas = ExtResource("7_y7fca")
+region = Rect2(0, 288, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2smm"]
+atlas = ExtResource("7_y7fca")
+region = Rect2(0, 384, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xgykd"]
+atlas = ExtResource("7_y7fca")
+region = Rect2(0, 480, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fe3dk"]
+atlas = ExtResource("7_y7fca")
+region = Rect2(0, 576, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1n356"]
+atlas = ExtResource("7_y7fca")
+region = Rect2(0, 672, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gomcq"]
+atlas = ExtResource("7_y7fca")
+region = Rect2(0, 768, 64, 96)
+
+[resource]
+animations = [{
+"frames": [],
+"loop": 1,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"chidori",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"damage",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_gqq2h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_y7fca")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_13hvk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_p4o5u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_fyun2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_pf2dp")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13hvk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p4o5u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fyun2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pf2dp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2smm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xgykd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fe3dk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1n356")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gomcq")
+}],
+"loop": 1,
+"name": &"kawarimi",
+"speed": 8.0
+}]

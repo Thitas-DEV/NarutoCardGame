@@ -1,20 +1,27 @@
-[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://cvvoinawcmtws"]
 
-[ext_resource type="Script" path="res://src/core/ability_data.gd" id="1_abdt"]
+[ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="1_abdt"]
 
 [resource]
 script = ExtResource("1_abdt")
 id = "kirin"
 name = "Kirin: Descarga Celestial"
-description = "QTE Sucesso: 48 Dano em área. Falha: 20 dano e zera Chakra."
-yin_cost = 3
-yang_cost = 0
-is_exhaust = false
-ability_type = 1
+description = "Invocação de raio dos céus com poder destrutivo imenso."
+required_element = 5
+element_cost = 3
+ability_type = 5
 target_type = 1
-scripts = Array[Dictionary]([{"trigger": "on_qte_success", "effect": "damage", "value": 48}, {"trigger": "on_qte_failure", "effect": "self_damage", "value": 20}, {"trigger": "on_qte_failure", "effect": "lose_all_chakra", "value": 0}])
-animation_key = "ougi_rasengan"
+delivery_type = 2
+projectile_color = Color(0.75, 0.9, 1, 1)
+screen_shake_intensity = 16.0
+scripts = Array[Dictionary]([{
+"effect": "damage",
+"trigger": "on_qte_success",
+"value": 54
+}, {
+"effect": "self_damage",
+"trigger": "on_qte_failure",
+"value": 15
+}])
+animation_key = "chidori"
 qte_difficulty = 4
-support_name = ""
-allowed_character_ids = Array[String]([])
-allowed_tags = Array[String]([])

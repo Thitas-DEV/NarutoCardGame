@@ -58,6 +58,8 @@ func start_story_battle(encounter_id: String) -> void:
 		"gaara_chunin_phase1":
 			enemy_base = Database.get_character("gaara")
 			is_scripted_phase = true
+		"valley_of_the_end":
+			enemy_base = Database.get_character("sasuke")
 		_:
 			enemy_base = Database.get_character("ninja_renegado")
 			

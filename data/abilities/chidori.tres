@@ -1,20 +1,26 @@
-[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://dkyddc3qhqini"]
 
-[ext_resource type="Script" path="res://src/core/ability_data.gd" id="1_abdt"]
+[ext_resource type="Texture2D" uid="uid://cqwk7vd36c5up" path="res://assets/cards/chidori.png" id="1_5hiq7"]
+[ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="1_abdt"]
 
 [resource]
 script = ExtResource("1_abdt")
 id = "chidori"
 name = "Chidori: Mil Pássaros"
-description = "QTE Sucesso: 35 Dano. Falha: 12 dano próprio."
-yin_cost = 2
-yang_cost = 1
-is_exhaust = false
+description = "Golpe perfurante de relâmpago. Requer QTE preciso!"
+icon = ExtResource("1_5hiq7")
+required_element = 5
+element_cost = 2
 ability_type = 1
-target_type = 0
-scripts = Array[Dictionary]([{"trigger": "on_qte_success", "effect": "damage", "value": 35}, {"trigger": "on_qte_failure", "effect": "self_damage", "value": 12}])
+screen_shake_intensity = 10.0
+scripts = Array[Dictionary]([{
+"effect": "damage",
+"trigger": "on_qte_success",
+"value": 36
+}, {
+"effect": "self_damage",
+"trigger": "on_qte_failure",
+"value": 10
+}])
 animation_key = "chidori"
 qte_difficulty = 3
-support_name = ""
-allowed_character_ids = Array[String]([])
-allowed_tags = Array[String]([])

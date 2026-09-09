@@ -10,6 +10,7 @@ var character_data: CharacterData
 var target_pos: Vector2
 var base_pos: Vector2
 var is_animating: bool = false
+var is_substituting: bool = false
 
 # Visual state
 var breathing_time: float = 0.0
@@ -61,10 +62,54 @@ func _setup_sprite_nodes() -> void:
 func setup_character(data: CharacterData) -> void:
 	character_data = data
 	name_label.text = data.name
-	update_stats(data.current_hp, data.max_hp, 0, data.max_yin, data.max_yin)
+	_setup_character_animations(data)
+	update_stats(data.current_hp, data.max_hp, 0, {})
 	queue_redraw()
 
-func update_stats(hp: int, max_hp: int, shield: int, chakra: int, max_chakra: int) -> void:
+func _setup_character_animations(data: CharacterData) -> void:
+	if not animated_sprite:
+		return
+		
+	# 1. Se o CharacterData tiver um SpriteFrames exclusivo configurado
+	if data.sprite_frames:
+		animated_sprite.sprite_frames = data.sprite_frames
+		animated_sprite.visible = true
+		animated_sprite.flip_h = not is_player
+		play_custom_animation("idle")
+	# 2. Convenção automática em res://data/characters/<id>_frames.tres
+	elif ResourceLoader.exists("res://data/characters/%s_frames.tres" % data.id):
+		var frames = load("res://data/characters/%s_frames.tres" % data.id)
+		if frames:
+			animated_sprite.sprite_frames = frames
+			animated_sprite.visible = true
+			animated_sprite.flip_h = not is_player
+			play_custom_animation("idle")
+	# 3. Convenção automática em res://assets/characters/<id>/<id>_frames.tres
+	elif ResourceLoader.exists("res://assets/characters/%s/%s_frames.tres" % [data.id, data.id]):
+		var frames = load("res://assets/characters/%s/%s_frames.tres" % [data.id, data.id])
+		if frames:
+			animated_sprite.sprite_frames = frames
+			animated_sprite.visible = true
+			animated_sprite.flip_h = not is_player
+			play_custom_animation("idle")
+	# 4. Naruto usa as animações padrões embutidas na cena
+	elif data.id == "naruto":
+		animated_sprite.visible = true
+		animated_sprite.flip_h = not is_player
+		play_custom_animation("idle")
+	# 5. Caso ainda não haja sprites para o ninja, usa o desenho procedural estilizado
+	else:
+		animated_sprite.visible = false
+
+func play_custom_animation(anim_name: String) -> void:
+	if not animated_sprite or not animated_sprite.visible or not animated_sprite.sprite_frames:
+		return
+	if animated_sprite.sprite_frames.has_animation(anim_name):
+		animated_sprite.play(anim_name)
+	elif animated_sprite.sprite_frames.has_animation("attack"):
+		animated_sprite.play("attack")
+
+func update_stats(hp: int, max_hp: int, shield: int, chakra_pool: Dictionary = {}) -> void:
 	hp_bar.max_value = max_hp
 	hp_bar.value = hp
 	hp_label.text = "%d / %d" % [hp, max_hp]
@@ -73,23 +118,36 @@ func update_stats(hp: int, max_hp: int, shield: int, chakra: int, max_chakra: in
 	shield_bar.value = shield
 	shield_bar.visible = shield > 0
 	
-	# Update chakra orbs
+	# Update chakra orbs / badges
 	for child in chakra_container.get_children():
 		child.queue_free()
 		
-	for i in range(max_chakra):
-		var orb = Panel.new()
-		orb.custom_minimum_size = Vector2(14, 14)
-		var style = StyleBoxFlat.new()
-		style.set_corner_radius_all(7)
-		if i < chakra:
-			style.bg_color = Color(0.2, 0.8, 1.0, 0.9) # Glowing cyan
-			style.shadow_color = Color(0.1, 0.6, 1.0, 0.7)
-			style.shadow_size = 4
+	if character_data:
+		if character_data.chakra_affinities.is_empty():
+			var lbl = Label.new()
+			lbl.text = "🥋 Taijutsu"
+			lbl.add_theme_font_size_override("font_size", 10)
+			lbl.modulate = Color(0.95, 0.6, 0.3)
+			chakra_container.add_child(lbl)
 		else:
-			style.bg_color = Color(0.2, 0.2, 0.3, 0.5) # Dim empty
-		orb.add_theme_stylebox_override("panel", style)
-		chakra_container.add_child(orb)
+			for aff in character_data.chakra_affinities:
+				var count = chakra_pool.get(aff, 0)
+				var badge = Panel.new()
+				badge.custom_minimum_size = Vector2(30, 18)
+				var style = StyleBoxFlat.new()
+				style.set_corner_radius_all(4)
+				style.bg_color = ChakraElement.get_element_color(aff)
+				badge.add_theme_stylebox_override("panel", style)
+				
+				var lbl = Label.new()
+				lbl.text = "%s %d" % [ChakraElement.get_element_icon(aff), count]
+				lbl.set_anchors_preset(Control.PRESET_FULL_RECT)
+				lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+				lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+				lbl.add_theme_font_size_override("font_size", 9)
+				lbl.add_theme_color_override("font_color", Color.WHITE)
+				badge.add_child(lbl)
+				chakra_container.add_child(badge)
 
 func set_intent(intent_type: String, value: int) -> void:
 	if is_player:
@@ -144,13 +202,51 @@ func spawn_floating_text(text: String, color: Color) -> void:
 
 # ==================== COMBAT ANIMATIONS ====================
 
-func play_attack_animation(target_character: Node2D, anim_key: String) -> void:
+func execute_ability(ability: AbilityData, target_character: Node2D, on_hit: Callable = Callable()) -> void:
+	if not ability:
+		return
+		
 	is_animating = true
+	match ability.delivery_type:
+		AbilityData.DeliveryType.MELEE_DASH:
+			_execute_melee_dash(ability, target_character, on_hit)
+		AbilityData.DeliveryType.PROJECTILE:
+			_execute_projectile(ability, target_character, on_hit)
+		AbilityData.DeliveryType.CELESTIAL_STRIKE:
+			_execute_celestial_strike(ability, target_character, on_hit)
+		AbilityData.DeliveryType.CLONES:
+			_execute_clones(ability, target_character, on_hit)
+		AbilityData.DeliveryType.SUMMON:
+			_execute_summon(ability, target_character, on_hit)
+		AbilityData.DeliveryType.SELF_CAST:
+			_execute_self_cast(ability, on_hit)
+		_:
+			_execute_melee_dash(ability, target_character, on_hit)
+
+func play_attack_animation(target_character: Node2D, anim_key: String) -> void:
+	# Fallback para chamadas legadas que passam apenas string
+	var fake_ability = AbilityData.new()
+	fake_ability.animation_key = anim_key
+	if anim_key in ["katon", "katon_multi"]:
+		fake_ability.delivery_type = AbilityData.DeliveryType.PROJECTILE
+		fake_ability.required_element = ChakraElement.Type.FIRE
+	elif anim_key in ["chidori", "ougi_chidori"]:
+		fake_ability.delivery_type = AbilityData.DeliveryType.MELEE_DASH
+		fake_ability.required_element = ChakraElement.Type.LIGHTNING
+	elif anim_key in ["bunshin", "bunshin_attack"]:
+		fake_ability.delivery_type = AbilityData.DeliveryType.CLONES
+	else:
+		fake_ability.delivery_type = AbilityData.DeliveryType.MELEE_DASH
+	execute_ability(fake_ability, target_character)
+
+func _execute_melee_dash(ability: AbilityData, target_character: Node2D, on_hit: Callable) -> void:
+	var anim_key = ability.animation_key
+	play_custom_animation(anim_key)
 	var tw = create_tween()
 	var dest = target_character.global_position + (Vector2(-70, 0) if is_player else Vector2(70, 0))
 	
 	match anim_key:
-		"rasengan":
+		"rasengan", "ougi_rasengan":
 			aura_active = true
 			aura_color = Color(0.1, 0.8, 1.0, 0.7)
 			SoundManager.play_sfx("rasengan")
@@ -158,8 +254,10 @@ func play_attack_animation(target_character: Node2D, anim_key: String) -> void:
 			vfx_progress = 1.0
 			tw.tween_property(self, "global_position", dest, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 			tw.tween_callback(func():
+				if on_hit.is_valid(): on_hit.call()
 				target_character.play_hit_reaction("heavy")
 				SoundManager.play_sfx("hit", 0.8)
+				_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 8.0)
 			)
 			tw.tween_interval(0.2)
 			tw.tween_property(self, "global_position", base_pos, 0.25).set_trans(Tween.TRANS_SINE)
@@ -167,6 +265,7 @@ func play_attack_animation(target_character: Node2D, anim_key: String) -> void:
 				aura_active = false
 				current_vfx = ""
 				is_animating = false
+				play_custom_animation("idle")
 				animation_finished.emit(anim_key)
 			)
 			
@@ -176,11 +275,12 @@ func play_attack_animation(target_character: Node2D, anim_key: String) -> void:
 			SoundManager.play_sfx("chidori")
 			current_vfx = "chidori"
 			vfx_progress = 1.0
-			# Flash forward instant dash
 			tw.tween_property(self, "global_position", dest, 0.18).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
 			tw.tween_callback(func():
+				if on_hit.is_valid(): on_hit.call()
 				target_character.play_hit_reaction("lightning")
 				SoundManager.play_sfx("hit", 1.3)
+				_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 8.0)
 			)
 			tw.tween_interval(0.25)
 			tw.tween_property(self, "global_position", base_pos, 0.2).set_trans(Tween.TRANS_QUAD)
@@ -188,56 +288,23 @@ func play_attack_animation(target_character: Node2D, anim_key: String) -> void:
 				aura_active = false
 				current_vfx = ""
 				is_animating = false
-				animation_finished.emit(anim_key)
-			)
-			
-		"bunshin", "bunshin_attack":
-			SoundManager.play_sfx("kawarimi")
-			clone_offsets = [Vector2(-30, -20), Vector2(30, -20), Vector2(-15, 25)]
-			current_vfx = "bunshin"
-			vfx_progress = 1.2
-			tw.tween_property(self, "global_position", dest, 0.25).set_trans(Tween.TRANS_QUAD)
-			tw.tween_callback(func():
-				target_character.play_hit_reaction("combo")
-				SoundManager.play_sfx("hit")
-			)
-			tw.tween_interval(0.2)
-			tw.tween_property(self, "global_position", base_pos, 0.2)
-			tw.tween_callback(func():
-				clone_offsets.clear()
-				current_vfx = ""
-				is_animating = false
-				animation_finished.emit(anim_key)
-			)
-			
-		"katon", "katon_multi":
-			aura_active = true
-			aura_color = Color(1.0, 0.4, 0.1, 0.8)
-			current_vfx = "fireball"
-			vfx_progress = 0.8
-			tw.tween_interval(0.3)
-			tw.tween_callback(func():
-				target_character.play_hit_reaction("burn")
-				SoundManager.play_sfx("hit", 0.9)
-			)
-			tw.tween_interval(0.3)
-			tw.tween_callback(func():
-				aura_active = false
-				current_vfx = ""
-				is_animating = false
+				play_custom_animation("idle")
 				animation_finished.emit(anim_key)
 			)
 			
 		"leaf_hurricane", "naruto_combo", "lotus":
 			tw.tween_property(self, "global_position", dest, 0.2).set_trans(Tween.TRANS_BACK)
 			tw.tween_callback(func():
+				if on_hit.is_valid(): on_hit.call()
 				target_character.play_hit_reaction("combo")
 				SoundManager.play_sfx("hit", 1.1)
+				_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 5.0)
 			)
 			tw.tween_interval(0.15)
 			tw.tween_property(self, "global_position", base_pos, 0.2)
 			tw.tween_callback(func():
 				is_animating = false
+				play_custom_animation("idle")
 				animation_finished.emit(anim_key)
 			)
 			
@@ -245,20 +312,203 @@ func play_attack_animation(target_character: Node2D, anim_key: String) -> void:
 			# Standard punch/kick
 			tw.tween_property(self, "global_position", dest, 0.18).set_trans(Tween.TRANS_QUAD)
 			tw.tween_callback(func():
+				if on_hit.is_valid(): on_hit.call()
 				target_character.play_hit_reaction("normal")
 				SoundManager.play_sfx("hit")
+				_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 3.0)
 			)
 			tw.tween_property(self, "global_position", base_pos, 0.18).set_trans(Tween.TRANS_QUAD)
 			tw.tween_callback(func():
 				is_animating = false
+				play_custom_animation("idle")
 				animation_finished.emit(anim_key)
 			)
 
+func _execute_projectile(ability: AbilityData, target_character: Node2D, on_hit: Callable) -> void:
+	var anim_key = ability.animation_key if ability.animation_key != "" else "attack"
+	play_custom_animation(anim_key)
+	
+	# O ninja permanece na base em pose de conjuração!
+	var vfx = _get_battle_vfx()
+	var flip = 1.0 if is_player else -1.0
+	var start_pos = global_position + Vector2(35 * flip, -35)
+	var end_pos = target_character.global_position + Vector2(0, -35)
+	
+	if vfx:
+		vfx.spawn_projectile(start_pos, end_pos, ability, func():
+			if on_hit.is_valid(): on_hit.call()
+			target_character.play_hit_reaction("burn" if ability.required_element == ChakraElement.Type.FIRE else "heavy")
+			SoundManager.play_sfx("hit", 0.9)
+			_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 6.0)
+		)
+	else:
+		if on_hit.is_valid(): on_hit.call()
+		target_character.play_hit_reaction("heavy")
+		
+	var tw = create_tween()
+	tw.tween_interval(0.45)
+	tw.tween_callback(func():
+		is_animating = false
+		play_custom_animation("idle")
+		animation_finished.emit(anim_key)
+	)
+
+func _execute_celestial_strike(ability: AbilityData, target_character: Node2D, on_hit: Callable) -> void:
+	var anim_key = ability.animation_key if ability.animation_key != "" else "chidori"
+	play_custom_animation(anim_key)
+	
+	aura_active = true
+	aura_color = Color(0.4, 0.7, 1.0, 0.9)
+	SoundManager.play_sfx("chidori", 0.8)
+	
+	var vfx = _get_battle_vfx()
+	var target_pos = target_character.global_position + Vector2(0, -10)
+	
+	if vfx:
+		vfx.spawn_celestial_strike(target_pos, ability, func():
+			if on_hit.is_valid(): on_hit.call()
+			target_character.play_hit_reaction("lightning")
+			SoundManager.play_sfx("hit", 1.4)
+			_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 14.0, 0.4)
+		)
+	else:
+		if on_hit.is_valid(): on_hit.call()
+		target_character.play_hit_reaction("lightning")
+		
+	var tw = create_tween()
+	tw.tween_interval(0.6)
+	tw.tween_callback(func():
+		aura_active = false
+		is_animating = false
+		play_custom_animation("idle")
+		animation_finished.emit(anim_key)
+	)
+
+func _execute_clones(ability: AbilityData, target_character: Node2D, on_hit: Callable) -> void:
+	var anim_key = ability.animation_key if ability.animation_key != "" else "attack"
+	play_custom_animation(anim_key)
+	
+	var vfx = _get_battle_vfx()
+	if vfx:
+		vfx.spawn_clone_rush(global_position, target_character.global_position, character_data, func():
+			if on_hit.is_valid(): on_hit.call()
+			target_character.play_hit_reaction("combo")
+			_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 5.0)
+		)
+	else:
+		if on_hit.is_valid(): on_hit.call()
+		target_character.play_hit_reaction("combo")
+		
+	var tw = create_tween()
+	tw.tween_interval(0.65)
+	tw.tween_callback(func():
+		is_animating = false
+		play_custom_animation("idle")
+		animation_finished.emit(anim_key)
+	)
+
+func _execute_summon(ability: AbilityData, target_character: Node2D, on_hit: Callable) -> void:
+	var anim_key = ability.animation_key if ability.animation_key != "" else "attack"
+	play_custom_animation(anim_key)
+	SoundManager.play_sfx("kawarimi")
+	
+	var vfx = _get_battle_vfx()
+	if vfx:
+		vfx.spawn_summon_strike(target_character.global_position, ability, func():
+			if on_hit.is_valid(): on_hit.call()
+			target_character.play_hit_reaction("heavy")
+			SoundManager.play_sfx("hit", 0.7)
+			_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 10.0, 0.3)
+		)
+	else:
+		if on_hit.is_valid(): on_hit.call()
+		target_character.play_hit_reaction("heavy")
+		
+	var tw = create_tween()
+	tw.tween_interval(0.75)
+	tw.tween_callback(func():
+		is_animating = false
+		play_custom_animation("idle")
+		animation_finished.emit(anim_key)
+	)
+
+func _execute_self_cast(ability: AbilityData, on_hit: Callable) -> void:
+	if ability.id == "kawarimi_trap":
+		# O ninja apenas prepara a armadilha no slot! A animação de Kawarimi NÃO toca agora!
+		play_custom_animation("idle")
+		spawn_floating_text("ARMADILHA PREPARADA!", Color(0.95, 0.8, 0.2))
+		SoundManager.play_sfx("card_play")
+		if on_hit.is_valid():
+			on_hit.call()
+		var tw_trap = create_tween()
+		tw_trap.tween_interval(0.3)
+		tw_trap.tween_callback(func():
+			is_animating = false
+			animation_finished.emit("trap_set")
+		)
+		return
+
+	var anim_key = ability.animation_key if ability.animation_key != "" else "guard"
+	play_custom_animation(anim_key)
+	
+	match ability.id:
+		"doton_wall":
+			var vfx = _get_battle_vfx()
+			if vfx:
+				var flip = 1.0 if is_player else -1.0
+				vfx.spawn_earth_wall(global_position + Vector2(40 * flip, 0))
+				SoundManager.play_sfx("hit", 0.6)
+			_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 4.0)
+		_:
+			aura_active = true
+			aura_color = Color(0.3, 0.8, 0.4, 0.6)
+			SoundManager.play_sfx("card_play")
+			
+	if on_hit.is_valid():
+		on_hit.call()
+		
+	var tw = create_tween()
+	tw.tween_interval(0.4)
+	tw.tween_callback(func():
+		aura_active = false
+		is_animating = false
+		play_custom_animation("idle")
+		animation_finished.emit(anim_key)
+	)
+
+func _get_battle_vfx() -> BattleVFX:
+	if get_parent():
+		var vfx = get_parent().get_node_or_null("BattleVFX") as BattleVFX
+		if vfx:
+			return vfx
+	if get_tree() and get_tree().root:
+		return get_tree().root.find_child("BattleVFX", true, false) as BattleVFX
+	return null
+
+func _get_battlefield() -> Node:
+	var cur = get_parent()
+	while cur:
+		if cur.has_method("shake_arena"):
+			return cur
+		cur = cur.get_parent()
+	return null
+
+func _trigger_screen_shake(intensity: float, duration: float = 0.25) -> void:
+	if intensity <= 0.0:
+		return
+	var bf = _get_battlefield()
+	if bf:
+		bf.shake_arena(intensity, duration)
+
 func play_hit_reaction(hit_type: String = "normal") -> void:
+	if is_substituting:
+		return
+	play_custom_animation("damage")
 	var tw = create_tween()
 	var push_dir = Vector2(-25, 0) if is_player else Vector2(25, 0)
 	tw.tween_property(self, "position", base_pos + push_dir, 0.08)
 	tw.tween_property(self, "position", base_pos, 0.12)
+	tw.tween_callback(func(): play_custom_animation("idle"))
 	
 	# Red flash on body
 	modulate = Color(1.8, 0.4, 0.4)
@@ -266,15 +516,39 @@ func play_hit_reaction(hit_type: String = "normal") -> void:
 	flash_tw.tween_property(self, "modulate", Color.WHITE, 0.25)
 
 func trigger_kawarimi_substitution() -> void:
+	is_substituting = true
 	SoundManager.play_sfx("kawarimi")
-	current_vfx = "kawarimi_log"
-	vfx_progress = 0.9
 	spawn_floating_text("SUBSTITUIÇÃO!", Color(1.0, 0.9, 0.2))
-	# Disappear and reappear
-	modulate.a = 0.0
+	
+	# Garante que o corpo e o AnimatedSprite estejam totalmente visíveis
+	modulate = Color.WHITE
+	if body_sprite:
+		body_sprite.modulate.a = 1.0
+	if animated_sprite:
+		animated_sprite.visible = true
+		
+	# Dá play na animação de sprite "kawarimi"
+	play_custom_animation("kawarimi")
+	
+	# Calcula a duração para tocar a sequência de frames do Jutsu de Substituição
+	var anim_duration = 0.8
+	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("kawarimi"):
+		var frame_count = animated_sprite.sprite_frames.get_frame_count("kawarimi")
+		var spd = animated_sprite.sprite_frames.get_animation_speed("kawarimi")
+		if spd > 0.0:
+			anim_duration = float(frame_count) / spd
+		else:
+			anim_duration = 0.8
+	
+	# Limita para uma duração dinâmica adequada em combate
+	anim_duration = clampf(anim_duration, 0.5, 3.0)
+	
 	var tw = create_tween()
-	tw.tween_interval(0.4)
-	tw.tween_property(self, "modulate:a", 1.0, 0.3)
+	tw.tween_interval(anim_duration)
+	tw.tween_callback(func():
+		is_substituting = false
+		play_custom_animation("idle")
+	)
 
 func _draw() -> void:
 	var char_col = character_data.avatar_color if character_data else Color(1.0, 0.5, 0.0)
@@ -297,8 +571,8 @@ func _draw() -> void:
 		for offset in clone_offsets:
 			_draw_ninja_silhouette(offset + Vector2(0, breath_y), char_col * 0.85, sec_col, flip)
 			
-	# Draw Main Ninja Character (Only if no sprite texture is set)
-	if not (animated_sprite and animated_sprite.sprite_frames) and not (sprite_2d and sprite_2d.texture):
+	# Draw Main Ninja Character (Only if no sprite texture is active and visible)
+	if not (animated_sprite and animated_sprite.visible and animated_sprite.sprite_frames) and not (sprite_2d and sprite_2d.visible and sprite_2d.texture):
 		_draw_ninja_figure(Vector2(0, breath_y), char_col, sec_col, flip)
 	
 	# Draw VFX (Rasengan, Chidori, Fireball, Kawarimi Log)
@@ -320,16 +594,6 @@ func _draw() -> void:
 			var p1 = c_pos + Vector2(cos(angle), sin(angle)) * randf_range(5, 12)
 			var p2 = c_pos + Vector2(cos(angle + 0.3), sin(angle + 0.3)) * randf_range(16, 28)
 			draw_line(p1, p2, Color(0.9, 0.95, 1.0, 1.0), 2.0)
-			
-	elif current_vfx == "kawarimi_log":
-		# Draw wooden log with cut marks
-		var log_rect = Rect2(-18, -50, 36, 50)
-		draw_rect(log_rect, Color(0.55, 0.35, 0.15))
-		draw_rect(log_rect, Color(0.35, 0.2, 0.08), false, 2.0)
-		draw_circle(Vector2(0, -50), 18, Color(0.7, 0.5, 0.3))
-		# Smoke ring
-		draw_circle(Vector2(0, -25), 35, Color(0.9, 0.9, 0.95, vfx_progress * 0.7))
-		
 	# Draw Floating text
 	for ft in floating_texts:
 		var font = ThemeDB.fallback_font

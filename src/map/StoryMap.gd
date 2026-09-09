@@ -114,6 +114,18 @@ func _update_header() -> void:
 		GameManager.player_deck.size()
 	]
 
+func _is_node_unlocked(idx: int) -> bool:
+	if idx == 0:
+		return true
+	var prev_node = story_nodes[idx - 1]
+	var prev_encounter = prev_node.get("encounter", "")
+	return prev_node.get("completed", false) or GameManager.completed_nodes.has(prev_encounter) or GameManager.completed_nodes.has(prev_node.get("id", ""))
+
+func _is_node_completed(idx: int) -> bool:
+	var n_data = story_nodes[idx]
+	var enc = n_data.get("encounter", "")
+	return n_data.get("completed", false) or GameManager.completed_nodes.has(enc) or GameManager.completed_nodes.has(n_data.get("id", ""))
+
 func _build_node_ui() -> void:
 	for child in node_buttons_container.get_children():
 		child.queue_free()
@@ -121,15 +133,29 @@ func _build_node_ui() -> void:
 	for i in range(story_nodes.size()):
 		var n_data = story_nodes[i]
 		var btn = Button.new()
-		btn.custom_minimum_size = Vector2(130, 45)
-		btn.position = n_data.pos - Vector2(65, 22)
-		btn.text = n_data.name
+		btn.custom_minimum_size = Vector2(140, 45)
+		btn.position = n_data.pos - Vector2(70, 22)
+		
+		var is_unlocked = _is_node_unlocked(i)
+		var is_comp = _is_node_completed(i)
 		
 		var style = StyleBoxFlat.new()
 		style.set_corner_radius_all(8)
-		style.bg_color = Color(0.15, 0.18, 0.28, 0.9)
-		style.border_color = Color(1.0, 0.65, 0.1) if (i == 0 or story_nodes[i-1].completed) else Color(0.4, 0.4, 0.4)
 		style.set_border_width_all(2)
+		
+		if is_comp:
+			style.bg_color = Color(0.12, 0.22, 0.16, 0.9)
+			style.border_color = Color(0.2, 0.9, 0.4)
+			btn.text = "✓ " + n_data.name
+		elif is_unlocked:
+			style.bg_color = Color(0.15, 0.18, 0.28, 0.9)
+			style.border_color = Color(1.0, 0.65, 0.1)
+			btn.text = n_data.name
+		else:
+			style.bg_color = Color(0.1, 0.1, 0.14, 0.8)
+			style.border_color = Color(0.3, 0.3, 0.35)
+			btn.text = "🔒 " + n_data.name
+			
 		btn.add_theme_stylebox_override("normal", style)
 		
 		btn.pressed.connect(func(): _on_node_clicked(i))
@@ -137,6 +163,10 @@ func _build_node_ui() -> void:
 
 func _on_node_clicked(node_idx: int) -> void:
 	if is_moving:
+		return
+		
+	if not _is_node_unlocked(node_idx):
+		SoundManager.play_sfx("hit", 0.6)
 		return
 		
 	var n_data = story_nodes[node_idx]
@@ -185,7 +215,10 @@ func _start_mission() -> void:
 	if selected_node_data.type == "battle":
 		GameManager.start_story_battle(selected_node_data.encounter)
 	elif selected_node_data.type == "event":
-		# Free card reward / heal
+		# Cura e recompensa de evento
 		GameManager.active_hero.current_hp = GameManager.active_hero.max_hp
+		if not GameManager.completed_nodes.has(selected_node_data.get("id", "")):
+			GameManager.completed_nodes.append(selected_node_data.get("id", ""))
 		_update_header()
+		_build_node_ui()
 		SoundManager.play_sfx("qte_success")
