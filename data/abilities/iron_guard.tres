@@ -17,4 +17,4 @@ scripts = Array[Dictionary]([{
 "trigger": "on_play",
 "value": 9
 }])
-animation_key = "guard"
+animation_key = "kunai_defense"

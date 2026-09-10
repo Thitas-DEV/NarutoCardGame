@@ -76,12 +76,63 @@ func _ready():
 	assert(bf.player_clone_visual == first_clone, 'Nao deve permitir criar um segundo clone simultaneo')
 	print('[PASS] Limite maximo de 1 clone respeitado')
 	
-	# Intercepcao de dano
+	# Intercepcao de dano com clone
 	var initial_hp = bf.player_data.current_hp
 	bf._damage_character(bf.player_data, bf.player_visual, 30, true)
 	assert(bf.player_data.current_hp == initial_hp, 'Naruto nao deve tomar dano quando clone intercepta')
 	assert(not bf.has_player_clone(), 'Clone deve morrer e desvanecer apos interceptar o golpe')
 	print('[PASS] Clone interceptou ataque com sucesso e original tomou 0 de dano')
 	
+	# 6. Verifica carta iron_guard e animação kunai_defense
+	var iron_guard = load('res://data/abilities/iron_guard.tres')
+	assert(iron_guard != null, 'iron_guard.tres deve carregar com sucesso')
+	assert(iron_guard.animation_key == 'kunai_defense', 'iron_guard deve ter animation_key == "kunai_defense"')
+	print('[PASS] iron_guard animation_key == "kunai_defense"')
+	
+	assert(naruto_frames.has_animation('kunai_defense'), 'naruto_frames deve possuir animacao kunai_defense')
+	assert(naruto_frames.get_frame_count('kunai_defense') == 3, 'kunai_defense deve ter 3 frames')
+	print('[PASS] naruto_frames possui animacao kunai_defense com 3 frames')
+	
+	# 7. Testa interacao: Clone ativo + Armadilha ativa
+	# Clone deve se sacrificar e a armadilha NAO deve ser ativada!
+	bf.summon_clone(true)
+	assert(bf.has_player_clone(), 'Clone do jogador deve estar ativo')
+	
+	var kawarimi = load('res://data/abilities/kawarimi_trap.tres')
+	assert(kawarimi != null, 'kawarimi_trap.tres deve carregar')
+	bf.active_trap_card = kawarimi
+	bf.trap_slot.visible = true
+	bf.trap_label.text = '🎴 ' + kawarimi.name.to_upper()
+	
+	# Oponente ataca: o clone deve se sacrificar e a armadilha deve PERMANECER armada!
+	bf._damage_character(bf.player_data, bf.player_visual, 25, true)
+	assert(not bf.has_player_clone(), 'Clone deve ter se sacrificado')
+	assert(bf.active_trap_card == kawarimi, 'Armadilha deve PERMANECER armada e nao ser ativada')
+	assert(bf.trap_slot.visible == true, 'Slot de armadilha deve continuar visivel')
+	assert(bf.player_data.current_hp == initial_hp, 'Naruto nao deve tomar dano pois o clone se sacrificou')
+	print('[PASS] Clone se sacrificou com sucesso e armadilha continuou ativa sem disparar')
+	
+	# Proximo ataque: agora sem clone, a armadilha deve disparar!
+	bf._damage_character(bf.player_data, bf.player_visual, 25, true)
+	assert(bf.active_trap_card == null, 'Armadilha deve ter sido consumida agora que nao ha clone')
+	assert(bf.trap_slot.visible == false, 'Slot de armadilha deve ficar invisivel')
+	assert(bf.player_data.current_hp == initial_hp, 'Naruto protegido pela armadilha de substituicao')
+	print('[PASS] Segundo ataque sem clone ativou a armadilha corretamente')
+	
+	# 8. Testa jogar a carta Kage Bunshin no Jutsu da mao via _on_card_played
+	bf.player_chakra_pool[ChakraElement.Type.WIND] = 2
+	bf._spawn_card_in_hand(kb)
+	var card_node = bf.hand_cards.back()
+	assert(card_node != null, 'CardUI do Kage Bunshin deve estar na mao')
+	bf._reorganize_hand()
+	assert(card_node.is_playable == true, 'CardUI deve ser jogavel com 2 Wind chakra')
+	bf._on_card_played(kb, card_node)
+	assert(bf.has_player_clone(), 'Clone deve ter sido invocado ao jogar a carta')
+	assert(bf.player_clone_visual.visible == true, 'Clone deve estar visivel imediatamente')
+	assert(bf.player_clone_visual.modulate.a > 0.9, 'Clone deve ter opacidade total (nao invisivel)')
+	assert(bf.player_chakra_pool[ChakraElement.Type.WIND] == 1, 'Chakra de Vento deve ter sido consumido (2 - 1 = 1)')
+	print('[PASS] Carta Kage Bunshin jogada com sucesso da mao, consumindo chakra e gerando clone visivel')
+	
 	print('=== TODOS OS TESTES PASSARAM COM SUCESSO! ===')
 	get_tree().quit(0)
+

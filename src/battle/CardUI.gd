@@ -29,8 +29,10 @@ func _ready() -> void:
 	custom_minimum_size = Vector2(160, 230)
 	pivot_offset = size / 2.0
 	
-	mouse_entered.connect(_on_mouse_entered)
-	mouse_exited.connect(_on_mouse_exited)
+	if not mouse_entered.is_connected(_on_mouse_entered):
+		mouse_entered.connect(_on_mouse_entered)
+	if not mouse_exited.is_connected(_on_mouse_exited):
+		mouse_exited.connect(_on_mouse_exited)
 	
 	if card_data:
 		update_card_display()

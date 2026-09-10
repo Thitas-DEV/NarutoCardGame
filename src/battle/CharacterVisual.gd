@@ -46,7 +46,7 @@ var status_dict: Dictionary = {} # { "burn": 2, "bleed": 1 }
 @onready var body_sprite: CanvasItem = $VisualRoot
 
 func _ready() -> void:
-	base_pos = position
+	base_pos = global_position
 	_setup_sprite_nodes()
 	queue_redraw()
 
@@ -137,8 +137,16 @@ func setup_clone(data: CharacterData, on_player_side: bool) -> void:
 	is_clone = true
 	is_player = on_player_side
 	character_data = data
-	base_pos = position
+	visible = true
+	modulate = Color(1.0, 1.0, 1.0, 0.95)
+	base_pos = global_position
 	_setup_sprite_nodes()
+	if body_sprite:
+		body_sprite.modulate = Color.WHITE
+		body_sprite.visible = true
+	if animated_sprite:
+		animated_sprite.modulate = Color.WHITE
+		animated_sprite.visible = true
 	name_label.text = "Clone das Sombras"
 	_setup_character_animations(data)
 	hp_bar.max_value = 1
@@ -149,9 +157,6 @@ func setup_clone(data: CharacterData, on_player_side: bool) -> void:
 	if intent_container:
 		intent_container.visible = false
 	spawn_floating_text("CLONE!", Color(1.0, 0.85, 0.2))
-	modulate = Color(1.0, 1.0, 1.0, 0.0)
-	var tw = create_tween()
-	tw.tween_property(self, "modulate:a", 0.95, 0.2)
 	play_smoke_overlay()
 	queue_redraw()
 
@@ -209,6 +214,10 @@ func play_custom_animation(anim_name: String) -> void:
 		return
 	if animated_sprite.sprite_frames.has_animation(anim_name) and animated_sprite.sprite_frames.get_frame_count(anim_name) > 0:
 		animated_sprite.play(anim_name)
+	elif anim_name == "kunai_defense" and animated_sprite.sprite_frames.has_animation("guard") and animated_sprite.sprite_frames.get_frame_count("guard") > 0:
+		animated_sprite.play("guard")
+	elif anim_name == "guard" and animated_sprite.sprite_frames.has_animation("kunai_defense") and animated_sprite.sprite_frames.get_frame_count("kunai_defense") > 0:
+		animated_sprite.play("kunai_defense")
 	elif anim_name != "damage" and anim_name != "idle" and animated_sprite.sprite_frames.has_animation("attack") and animated_sprite.sprite_frames.get_frame_count("attack") > 0:
 		animated_sprite.play("attack")
 
@@ -633,6 +642,10 @@ func _execute_self_cast(ability: AbilityData, on_hit: Callable) -> void:
 			_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 4.0)
 		"kagebunshin":
 			SoundManager.play_sfx("kawarimi")
+		"iron_guard":
+			aura_active = true
+			aura_color = Color(0.3, 0.7, 1.0, 0.6)
+			SoundManager.play_sfx("kunai_defense")
 		_:
 			aura_active = true
 			aura_color = Color(0.3, 0.8, 0.4, 0.6)
@@ -642,7 +655,7 @@ func _execute_self_cast(ability: AbilityData, on_hit: Callable) -> void:
 		on_hit.call()
 		
 	var tw = create_tween()
-	var cast_duration = 0.8 if ability.id == "kagebunshin" else 0.4
+	var cast_duration = 0.8 if ability.id == "kagebunshin" else (0.55 if anim_key == "kunai_defense" else 0.4)
 	tw.tween_interval(cast_duration)
 	tw.tween_callback(func():
 		aura_active = false
@@ -697,8 +710,8 @@ func play_damage_animation() -> void:
 	# Efeito de recuo físico ao levar dano
 	var tw = create_tween()
 	var push_dir = Vector2(-25, 0) if is_player else Vector2(25, 0)
-	tw.tween_property(self, "position", base_pos + push_dir, 0.08)
-	tw.tween_property(self, "position", base_pos, 0.12)
+	tw.tween_property(self, "global_position", base_pos + push_dir, 0.08)
+	tw.tween_property(self, "global_position", base_pos, 0.12)
 	
 	# Flash vermelho de impacto
 	modulate = Color(1.8, 0.4, 0.4)

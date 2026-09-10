@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpxlbylr1ja2a"
-path="res://.godot/imported/jfghreh1.bmp-1440cf019dfce4725c55e1fe9e7c9a3a.ctex"
+uid="uid://28pi0cvxfjjt"
+path="res://.godot/imported/5000-8.png-25a09e46e35bd5de8551f6fdd5101f17.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/naruto/naruto/blok/jfghreh1.bmp"
-dest_files=["res://.godot/imported/jfghreh1.bmp-1440cf019dfce4725c55e1fe9e7c9a3a.ctex"]
+source_file="res://assets/characters/kakashi/damage/5000-8.png"
+dest_files=["res://.godot/imported/5000-8.png-25a09e46e35bd5de8551f6fdd5101f17.ctex"]
 
 [params]
 

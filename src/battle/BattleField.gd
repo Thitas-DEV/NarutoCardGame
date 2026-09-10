@@ -360,9 +360,11 @@ func summon_clone(is_player_team: bool) -> void:
 		var clone = CHARACTER_VISUAL_SCENE.instantiate()
 		clone.position = player_visual.position + Vector2(100, 30)
 		clone.z_index = player_visual.z_index + 1
+		clone.visible = true
+		clone.modulate = Color(1.0, 1.0, 1.0, 0.95)
 		$Arena2D.add_child(clone)
-		clone.setup_clone(player_data, true)
 		player_clone_visual = clone
+		clone.setup_clone(player_data, true)
 	else:
 		if has_enemy_clone():
 			return
@@ -370,9 +372,11 @@ func summon_clone(is_player_team: bool) -> void:
 		var clone = CHARACTER_VISUAL_SCENE.instantiate()
 		clone.position = enemy_visual.position + Vector2(-100, 30)
 		clone.z_index = enemy_visual.z_index + 1
+		clone.visible = true
+		clone.modulate = Color(1.0, 1.0, 1.0, 0.95)
 		$Arena2D.add_child(clone)
-		clone.setup_clone(enemy_data, false)
 		enemy_clone_visual = clone
+		clone.setup_clone(enemy_data, false)
 	_reorganize_hand()
 
 func _on_target_drag_ended(card_node: Control, mouse_pos: Vector2) -> void:
@@ -554,19 +558,9 @@ func _execute_script(script: Dictionary, multiplier: float, is_player: bool = tr
 			pass
 
 func _damage_character(target_data: CharacterData, target_visual: Node2D, amount: int, is_target_player: bool) -> void:
-	# Armadilha de Substituição (Kawarimi) é acionada quando o oponente ataca!
-	if is_target_player and active_trap_card != null:
-		active_trap_card = null
-		trap_slot.visible = false
-		target_visual.trigger_kawarimi_substitution()
-		return
-	elif not is_target_player and active_enemy_trap_card != null:
-		active_enemy_trap_card = null
-		target_visual.trigger_kawarimi_substitution()
-		return
-		
 	# Intercepção pelo Kage Bunshin (Clone das Sombras)
-	# O clone possui vida de 1 hit e absorve integralmente o golpe destinado ao ninja original
+	# Caso o ninja tenha um clone ativo, ele se sacrificará primeiro para absorver o golpe,
+	# mantendo a armadilha armada (não ativa a armadilha enquanto houver clone para se sacrificar).
 	if is_target_player and has_player_clone():
 		var clone = player_clone_visual
 		player_clone_visual = null
@@ -581,6 +575,17 @@ func _damage_character(target_data: CharacterData, target_visual: Node2D, amount
 		clone.spawn_floating_text("INTERCEPTOU!", Color(1.0, 0.9, 0.2))
 		clone.dissipate_clone()
 		target_visual.spawn_floating_text("PROTEGIDO!", Color(0.4, 0.8, 1.0))
+		return
+
+	# Armadilha de Substituição (Kawarimi) é acionada quando o ninja é atacado diretamente (sem clone)
+	if is_target_player and active_trap_card != null:
+		active_trap_card = null
+		trap_slot.visible = false
+		target_visual.trigger_kawarimi_substitution()
+		return
+	elif not is_target_player and active_enemy_trap_card != null:
+		active_enemy_trap_card = null
+		target_visual.trigger_kawarimi_substitution()
 		return
 		
 	# Absorção de escudo

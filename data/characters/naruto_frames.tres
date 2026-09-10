@@ -42,6 +42,9 @@
 [ext_resource type="Texture2D" uid="uid://dsb3prdkhr6r7" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/rasdfg7.png" id="34_ras7"]
 [ext_resource type="Texture2D" uid="uid://bp17dl2lhf28r" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/rasdfg8.png" id="35_ras8"]
 [ext_resource type="Texture2D" uid="uid://ia5d6nvywbn8" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/rasdfg9.png" id="36_ras9"]
+[ext_resource type="Texture2D" uid="uid://c66g15jsrm8mm" path="res://assets/characters/naruto/naruto/blok/kqzpñ1.png" id="37_blk1"]
+[ext_resource type="Texture2D" uid="uid://bb7cfdovafw8n" path="res://assets/characters/naruto/naruto/blok/kqzpñ2.png" id="38_blk2"]
+[ext_resource type="Texture2D" uid="uid://cokxeyhheug2d" path="res://assets/characters/naruto/naruto/blok/kqzpñ3.png" id="39_blk3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_13hvk"]
 atlas = ExtResource("7_y7fca")
@@ -100,6 +103,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("18_las1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_las2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_las3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_las4")
+}],
+"loop": 1,
+"name": &"chakra_pose_clone",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("1_xgykd")
 }, {
 "duration": 1.0,
@@ -120,6 +140,20 @@ animations = [{
 "loop": 1,
 "name": &"damage",
 "speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("37_blk1")
+}, {
+"duration": 2.0,
+"texture": ExtResource("38_blk2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_blk3")
+}],
+"loop": 1,
+"name": &"guard",
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -178,71 +212,17 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("12_run1")
+"texture": ExtResource("37_blk1")
+}, {
+"duration": 2.0,
+"texture": ExtResource("38_blk2")
 }, {
 "duration": 1.0,
-"texture": ExtResource("13_run2")
-}, {
-"duration": 1.0,
-"texture": ExtResource("14_run3")
-}, {
-"duration": 1.0,
-"texture": ExtResource("15_run4")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_run5")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_run6")
+"texture": ExtResource("39_blk3")
 }],
 "loop": 1,
-"name": &"run",
-"speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("18_las1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("19_las2")
-}, {
-"duration": 1.0,
-"texture": ExtResource("20_las3")
-}, {
-"duration": 1.0,
-"texture": ExtResource("21_las4")
-}],
-"loop": 1,
-"name": &"chakra_pose_clone",
-"speed": 8.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("22_ara1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("23_ara2")
-}],
-"loop": 1,
-"name": &"rasengan_clone_generate",
+"name": &"kunai_defense",
 "speed": 6.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("24_thn1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("25_thn2")
-}, {
-"duration": 1.0,
-"texture": ExtResource("26_thn3")
-}, {
-"duration": 1.0,
-"texture": ExtResource("27_thn4")
-}],
-"loop": 1,
-"name": &"naruto_holding_rasengan",
-"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -275,4 +255,55 @@ animations = [{
 "loop": 1,
 "name": &"naruto_attack_rasengan",
 "speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("24_thn1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_thn2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_thn3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_thn4")
+}],
+"loop": 1,
+"name": &"naruto_holding_rasengan",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_ara1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_ara2")
+}],
+"loop": 1,
+"name": &"rasengan_clone_generate",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_run1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_run2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_run3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_run4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_run5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_run6")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 10.0
 }]
