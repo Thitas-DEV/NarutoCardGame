@@ -1,0 +1,30 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://crsgnexpframes1"]
+
+[ext_resource type="Texture2D" uid="uid://cfw0wlujkm5t4" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/effect/spo1.png" id="1_exp1"]
+[ext_resource type="Texture2D" uid="uid://5qw7s3lt78y4" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/effect/spo2.png" id="2_exp2"]
+[ext_resource type="Texture2D" uid="uid://cwlhlru01xxvf" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/effect/spo3.png" id="3_exp3"]
+[ext_resource type="Texture2D" uid="uid://i2xm0pfswsok" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/effect/spo4.png" id="4_exp4"]
+[ext_resource type="Texture2D" uid="uid://coxirc1bkve0c" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/effect/spo5.png" id="5_exp5"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_exp1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_exp2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_exp3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_exp4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_exp5")
+}],
+"loop": false,
+"name": &"default",
+"speed": 14.0
+}]

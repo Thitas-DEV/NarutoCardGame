@@ -6,7 +6,7 @@
 script = ExtResource("1_abdt")
 id = "ougi_rasengan"
 name = "Ougi: Rasengan da Raposa"
-description = "Impacto supremo amplificado pelo chakra do redemoinho."
+description = "Requer um Clone das Sombras em campo. Impacto supremo amplificado pelo chakra do redemoinho."
 required_element = 3
 element_cost = 3
 ability_type = 5
@@ -26,3 +26,4 @@ scripts = Array[Dictionary]([{
 }])
 animation_key = "rasengan"
 qte_difficulty = 3
+requires_clone = true

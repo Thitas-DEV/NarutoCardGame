@@ -7,7 +7,7 @@
 script = ExtResource("1_abdt")
 id = "rasengan"
 name = "Rasengan"
-description = "Esfera espiral de chakra concentrado de Vento puro."
+description = "Requer um Clone das Sombras em campo. Esfera espiral de chakra concentrado de Vento puro."
 icon = ExtResource("1_0rxcj")
 required_element = 3
 element_cost = 2
@@ -21,3 +21,4 @@ scripts = Array[Dictionary]([{
 "value": 28
 }])
 animation_key = "rasengan"
+requires_clone = true

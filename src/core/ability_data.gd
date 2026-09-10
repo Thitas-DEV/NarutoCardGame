@@ -57,6 +57,8 @@ enum DeliveryType {
 @export var support_name: String = ""
 
 @export_group("Restrições de Uso")
+## Requer a presença de um Clone das Sombras ativo em campo para ser conjurado
+@export var requires_clone: bool = false
 ## Deixe vazio se for para todos os personagens.
 @export var allowed_character_ids: Array[String] = []
 ## Grupos permitidos (ex: ["ninja_fogo", "suporte"]).

@@ -1,12 +1,47 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://0ju0ldyqr44c"]
 
-[ext_resource type="Texture2D" uid="uid://b83v05lkb23x4" path="res://assets/characters/naruto/naruto/narut shipudeo/lda1.bmp" id="1_gqq2h"]
-[ext_resource type="Texture2D" uid="uid://brvmg2hid2eee" path="res://assets/characters/naruto/naruto/narut shipudeo/lda2.bmp" id="2_y7fca"]
-[ext_resource type="Texture2D" uid="uid://bby0vet5f2ian" path="res://assets/characters/naruto/naruto/narut shipudeo/lda3.bmp" id="3_13hvk"]
-[ext_resource type="Texture2D" uid="uid://cj3hnfx4xw30e" path="res://assets/characters/naruto/naruto/narut shipudeo/lda4.bmp" id="4_p4o5u"]
-[ext_resource type="Texture2D" uid="uid://ossm1k3b6b7x" path="res://assets/characters/naruto/naruto/narut shipudeo/lda5.bmp" id="5_fyun2"]
-[ext_resource type="Texture2D" uid="uid://dm32py02leoe8" path="res://assets/characters/naruto/naruto/narut shipudeo/lda6.bmp" id="6_pf2dp"]
+[ext_resource type="Texture2D" uid="uid://hpagjxn1walq" path="res://assets/characters/naruto/naruto/damage/ifrog1.png" id="1_xgykd"]
+[ext_resource type="Texture2D" uid="uid://cgyee6epq81oy" path="res://assets/characters/naruto/naruto/damage/ifrog2.png" id="2_fe3dk"]
+[ext_resource type="Texture2D" uid="uid://68megum3cydp" path="res://assets/characters/naruto/naruto/damage/ifrog3.png" id="3_1n356"]
+[ext_resource type="Texture2D" uid="uid://462inlqlpif8" path="res://assets/characters/naruto/naruto/damage/ifrog4.png" id="4_gomcq"]
+[ext_resource type="Texture2D" uid="uid://c3x47xaiilr8s" path="res://assets/characters/naruto/naruto/damage/ifrog5.png" id="5_35me8"]
+[ext_resource type="Texture2D" uid="uid://boj6k8r0sv6w7" path="res://assets/characters/naruto/naruto/damage/ifrog6.png" id="6_e6pxp"]
 [ext_resource type="Texture2D" uid="uid://ct4ups4x53i6d" path="res://assets/effects/jutsus/substituicao/substitution_jutsu_sheet.png" id="7_y7fca"]
+[ext_resource type="Texture2D" uid="uid://b7hcjfriv7jgw" path="res://assets/characters/naruto/naruto/puch/fast pùch/dojvngo1.png" id="8_atk1"]
+[ext_resource type="Texture2D" uid="uid://rtannssjt7f4" path="res://assets/characters/naruto/naruto/puch/fast pùch/dojvngo2.png" id="9_atk2"]
+[ext_resource type="Texture2D" uid="uid://bl881mtlrlcdn" path="res://assets/characters/naruto/naruto/puch/fast pùch/dojvngo3.png" id="10_atk3"]
+[ext_resource type="Texture2D" uid="uid://c0sdlgg74wj62" path="res://assets/characters/naruto/naruto/puch/fast pùch/dojvngo4.png" id="11_atk4"]
+[ext_resource type="Texture2D" uid="uid://dpemrodl1v5vy" path="res://assets/characters/naruto/naruto/stansefffs1.png" id="11_txs8o"]
+[ext_resource type="Texture2D" uid="uid://dtdi16bjf1h2m" path="res://assets/characters/naruto/naruto/stansefffs2.png" id="12_1cw0v"]
+[ext_resource type="Texture2D" uid="uid://qvsmdlg6n0ta" path="res://assets/characters/naruto/naruto/walk/run/roibmo1.png" id="12_run1"]
+[ext_resource type="Texture2D" uid="uid://dblcme12s5rj4" path="res://assets/characters/naruto/naruto/stansefffs3.png" id="13_et35v"]
+[ext_resource type="Texture2D" uid="uid://26cf0o52jptt" path="res://assets/characters/naruto/naruto/walk/run/roibmo2.png" id="13_run2"]
+[ext_resource type="Texture2D" uid="uid://copten0q224ir" path="res://assets/characters/naruto/naruto/stansefffs4.png" id="14_n0pbp"]
+[ext_resource type="Texture2D" uid="uid://d2gvmp42dcwl" path="res://assets/characters/naruto/naruto/walk/run/roibmo3.png" id="14_run3"]
+[ext_resource type="Texture2D" uid="uid://b2uctel0i71no" path="res://assets/characters/naruto/naruto/walk/run/roibmo4.png" id="15_run4"]
+[ext_resource type="Texture2D" uid="uid://caa5ds2w8iuq7" path="res://assets/characters/naruto/naruto/stansefffs5.png" id="15_uomqq"]
+[ext_resource type="Texture2D" uid="uid://ddydxvjt2s8jj" path="res://assets/characters/naruto/naruto/stansefffs6.png" id="16_2nc25"]
+[ext_resource type="Texture2D" uid="uid://cc7e332rchyd3" path="res://assets/characters/naruto/naruto/walk/run/roibmo5.png" id="16_run5"]
+[ext_resource type="Texture2D" uid="uid://d3vvglle2r1l2" path="res://assets/characters/naruto/naruto/walk/run/roibmo6.png" id="17_run6"]
+[ext_resource type="Texture2D" uid="uid://7qlgkifp36x4" path="res://assets/characters/naruto/naruto/clones/lasfws1.png" id="18_las1"]
+[ext_resource type="Texture2D" uid="uid://w013dtqhmaas" path="res://assets/characters/naruto/naruto/clones/lasfws2.png" id="19_las2"]
+[ext_resource type="Texture2D" uid="uid://b8tmxlrq0ofp3" path="res://assets/characters/naruto/naruto/clones/lasfws3.png" id="20_las3"]
+[ext_resource type="Texture2D" uid="uid://c785goap6ihrr" path="res://assets/characters/naruto/naruto/clones/lasfws4.png" id="21_las4"]
+[ext_resource type="Texture2D" uid="uid://dlkam35jbwjk0" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/clone/arasg1.png" id="22_ara1"]
+[ext_resource type="Texture2D" uid="uid://b0tnbk5fryj7s" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/clone/arasg2.png" id="23_ara2"]
+[ext_resource type="Texture2D" uid="uid://brb7lv0qew2ta" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/thnmko1.png" id="24_thn1"]
+[ext_resource type="Texture2D" uid="uid://c1h5weai3rvrf" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/thnmko2.png" id="25_thn2"]
+[ext_resource type="Texture2D" uid="uid://botkpahpi138h" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/thnmko3.png" id="26_thn3"]
+[ext_resource type="Texture2D" uid="uid://caywicuctyvxm" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/thnmko4.png" id="27_thn4"]
+[ext_resource type="Texture2D" uid="uid://cn25w85pgko8y" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/rasdfg1.png" id="28_ras1"]
+[ext_resource type="Texture2D" uid="uid://nkkmy862kf3g" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/rasdfg2.png" id="29_ras2"]
+[ext_resource type="Texture2D" uid="uid://d0kkp7pqood8m" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/rasdfg3.png" id="30_ras3"]
+[ext_resource type="Texture2D" uid="uid://dy6ck2ogst0v8" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/rasdfg4.png" id="31_ras4"]
+[ext_resource type="Texture2D" uid="uid://dpp35iep6lg0d" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/rasdfg5.png" id="32_ras5"]
+[ext_resource type="Texture2D" uid="uid://c7vn5skxxj343" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/rasdfg6.png" id="33_ras6"]
+[ext_resource type="Texture2D" uid="uid://dsb3prdkhr6r7" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/rasdfg7.png" id="34_ras7"]
+[ext_resource type="Texture2D" uid="uid://bp17dl2lhf28r" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/rasdfg8.png" id="35_ras8"]
+[ext_resource type="Texture2D" uid="uid://ia5d6nvywbn8" path="res://assets/characters/naruto/naruto/especiales/rasengan_clone/rasdfg9.png" id="36_ras9"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_13hvk"]
 atlas = ExtResource("7_y7fca")
@@ -46,39 +81,64 @@ region = Rect2(0, 768, 64, 96)
 
 [resource]
 animations = [{
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_atk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_atk2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_atk3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_atk4")
+}],
 "loop": 1,
 "name": &"attack",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": 1,
-"name": &"chidori",
-"speed": 5.0
-}, {
-"frames": [],
-"loop": 1,
-"name": &"damage",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_gqq2h")
+"texture": ExtResource("1_xgykd")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_y7fca")
+"texture": ExtResource("2_fe3dk")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_13hvk")
+"texture": ExtResource("3_1n356")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_p4o5u")
+"texture": ExtResource("4_gomcq")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_fyun2")
+"texture": ExtResource("5_35me8")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_pf2dp")
+"texture": ExtResource("6_e6pxp")
+}],
+"loop": 1,
+"name": &"damage",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_txs8o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_1cw0v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_et35v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_n0pbp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_uomqq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_2nc25")
 }],
 "loop": 1,
 "name": &"idle",
@@ -115,4 +175,104 @@ animations = [{
 "loop": 1,
 "name": &"kawarimi",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_run1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_run2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_run3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_run4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_run5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_run6")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_las1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_las2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_las3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_las4")
+}],
+"loop": 1,
+"name": &"chakra_pose_clone",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_ara1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_ara2")
+}],
+"loop": 1,
+"name": &"rasengan_clone_generate",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("24_thn1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_thn2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_thn3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_thn4")
+}],
+"loop": 1,
+"name": &"naruto_holding_rasengan",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("28_ras1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_ras2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_ras3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_ras4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_ras5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_ras6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_ras7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_ras8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_ras9")
+}],
+"loop": 1,
+"name": &"naruto_attack_rasengan",
+"speed": 12.0
 }]

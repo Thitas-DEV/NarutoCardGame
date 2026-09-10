@@ -47,9 +47,13 @@ func update_card_display() -> void:
 	cost_label.text = card_data.get_cost_display()
 	cost_label.modulate = card_data.get_element_color()
 	
-	type_label.text = card_data.get_type_name().to_upper()
+	if card_data.requires_clone:
+		type_label.text = "%s (👥 CLONE)" % card_data.get_type_name().to_upper()
+		desc_label.text = "[color=#ffd24d][b]👥 Requer Clone[/b][/color]\n" + card_data.description
+	else:
+		type_label.text = card_data.get_type_name().to_upper()
+		desc_label.text = card_data.description
 	type_label.modulate = card_data.get_type_color()
-	desc_label.text = card_data.description
 	
 	if icon_rect:
 		if card_data.icon:
@@ -104,6 +108,9 @@ func _on_mouse_exited() -> void:
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
+			var bf = get_tree().current_scene
+			if bf and bf.has_method("are_animations_running") and bf.are_animations_running():
+				return
 			if is_playable:
 				if card_data.target_type == AbilityData.TargetType.SINGLE_ENEMY:
 					is_targeting = true
