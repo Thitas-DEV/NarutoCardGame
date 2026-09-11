@@ -51,7 +51,6 @@ func update_card_display() -> void:
 	if cost_label:
 		cost_label.text = card_data.get_cost_display()
 	
-<<<<<<< HEAD
 	var elem_color = card_data.get_element_color()
 	
 	# Estiliza o selo de custo com a cor do elemento
@@ -71,22 +70,17 @@ func update_card_display() -> void:
 			frame_panel.add_theme_stylebox_override("panel", new_frame_sb)
 	
 	# Exibe o tipo e elemento na etiqueta de categoria
+	var base_type = card_data.get_type_name().to_upper()
 	if card_data.required_element != ChakraElement.Type.NONE:
-		type_label.text = "%s • %s" % [card_data.get_type_name().to_upper(), ChakraElement.get_element_short_name(card_data.required_element).to_upper()]
-	else:
-		type_label.text = card_data.get_type_name().to_upper()
-	type_label.modulate = card_data.get_type_color()
+		base_type = "%s • %s" % [base_type, ChakraElement.get_element_short_name(card_data.required_element).to_upper()]
 	
-	desc_label.text = card_data.description
-=======
 	if card_data.requires_clone:
-		type_label.text = "%s (👥 CLONE)" % card_data.get_type_name().to_upper()
+		type_label.text = "%s (👥 CLONE)" % base_type
 		desc_label.text = "[color=#ffd24d][b]👥 Requer Clone[/b][/color]\n" + card_data.description
 	else:
-		type_label.text = card_data.get_type_name().to_upper()
+		type_label.text = base_type
 		desc_label.text = card_data.description
 	type_label.modulate = card_data.get_type_color()
->>>>>>> dd1285b0797088a0b681c3bc6fd093ec019da4fd
 	
 	# Ícone do elemento no CostContainer junto ao custo
 	if element_icon_rect:
