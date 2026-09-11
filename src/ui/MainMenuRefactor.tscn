@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://yfmnqs1hhhbv"]
+
+[ext_resource type="FontFile" uid="uid://gwkmvc3punlf" path="res://assets/fonts/Oswald/static/Oswald-Bold.ttf" id="1_jpjoi"]
+[ext_resource type="Texture2D" uid="uid://c7i1h4caamfgf" path="res://assets/backgrounds/naruto-team-7-black-5120x2880-25019-sem-fundo.png" id="1_k0a1g"]
+[ext_resource type="FontFile" uid="uid://bwc5usv1ihi8q" path="res://assets/fonts/bebas_neue/BebasNeue-Regular.otf" id="2_7wwth"]
+
+[sub_resource type="Gradient" id="Gradient_k0a1g"]
+offsets = PackedFloat32Array(0, 0.16363636, 0.47878787, 0.7090909, 1)
+colors = PackedColorArray(0.9098039, 0.44705883, 0.10980392, 1, 0.65882355, 0.3529412, 0.11764706, 1, 0.22745098, 0.18431373, 0.14117648, 1, 0.08627451, 0.1254902, 0.17254902, 1, 0.120034106, 0.1395567, 0.1650469, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_g4v7s"]
+gradient = SubResource("Gradient_k0a1g")
+fill_from = Vector2(1, 0.790393)
+
+[node name="MainMenuRefactor" type="Control" unique_id=406470036]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1967038418]
+position = Vector2(640, 345.75003)
+scale = Vector2(19.984375, 11.679688)
+texture = SubResource("GradientTexture2D_g4v7s")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1941424883]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -602.0
+offset_top = 156.0
+offset_right = -91.0
+offset_bottom = 381.0
+grow_horizontal = 2
+theme_override_constants/separation = 3
+
+[node name="Subtitle" type="Label" parent="VBoxContainer" unique_id=47412303]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.7921569, 0.5137255, 1)
+theme_override_fonts/font = ExtResource("1_jpjoi")
+theme_override_font_sizes/font_size = 30
+text = "Torneio das sombras"
+
+[node name="MainTitle" type="VBoxContainer" parent="VBoxContainer" unique_id=1148466872]
+layout_mode = 2
+theme_override_constants/separation = -25
+
+[node name="MainTitle" type="Label" parent="VBoxContainer/MainTitle" unique_id=1139946805]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_7wwth")
+theme_override_font_sizes/font_size = 100
+text = "Shinobi"
+
+[node name="MainTitle2" type="Label" parent="VBoxContainer/MainTitle" unique_id=1485076476]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_7wwth")
+theme_override_font_sizes/font_size = 74
+text = "C l a s h"
+
+[node name="GameModes" type="VBoxContainer" parent="." unique_id=1752731938]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -541.0
+offset_top = -100.0
+offset_bottom = 43.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 25
+
+[node name="QuickBattleButton" type="Button" parent="GameModes" unique_id=884763864]
+layout_mode = 2
+text = "Batalha Rápida"
+
+[node name="StoryModeButton" type="Button" parent="GameModes" unique_id=1789658151]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Modo História
+"
+
+[node name="Deck" type="Button" parent="GameModes" unique_id=1426637046]
+layout_mode = 2
+text = "Deck/Coleção
+"
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1749427543]
+layout_mode = 0
+offset_left = -26.0
+offset_top = 180.0
+offset_right = 648.0
+offset_bottom = 574.0
+texture = ExtResource("1_k0a1g")
+expand_mode = 2

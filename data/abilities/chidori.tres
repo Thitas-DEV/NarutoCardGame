@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://dkyddc3qhqini"]
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://bf5sae0e5fsdg"]
 
 [ext_resource type="Texture2D" uid="uid://cqwk7vd36c5up" path="res://assets/cards/chidori.png" id="1_5hiq7"]
 [ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="1_abdt"]

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Naruto Shinobi Clash"
-run/main_scene="res://src/ui/MainMenu.tscn"
+run/main_scene="uid://dm8x1k4y2wap0"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 

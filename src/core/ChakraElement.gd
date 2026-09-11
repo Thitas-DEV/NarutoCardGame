@@ -45,3 +45,29 @@ static func get_element_color(type: Type) -> Color:
 		Type.EARTH: return Color(0.85, 0.6, 0.25)     # Ocre / Terra
 		Type.LIGHTNING: return Color(1.0, 0.85, 0.15) # Amarelo elétrico
 		_: return Color(0.9, 0.5, 0.2)                # Laranja Taijutsu
+
+const TEXTURE_PATHS = {
+	Type.NONE: "res://assets/cards/taijutsu-sem-fundo.png",
+	Type.WATER: "res://assets/cards/Agua-sem-fundo.png",
+	Type.FIRE: "res://assets/cards/Fogo-sem-fundo.png",
+	Type.WIND: "res://assets/cards/vento-sem-fundo.png",
+	Type.EARTH: "res://assets/cards/Terra -sem-fundo.png",
+	Type.LIGHTNING: "res://assets/cards/rayo-sem-fundo.png"
+}
+
+static var _cached_textures: Dictionary = {}
+
+static func get_element_texture_path(type: Type) -> String:
+	return TEXTURE_PATHS.get(type, "")
+
+static func get_element_texture(type: Type) -> Texture2D:
+	if _cached_textures.has(type):
+		return _cached_textures[type]
+		
+	var path = get_element_texture_path(type)
+	if path != "" and ResourceLoader.exists(path):
+		var tex = load(path) as Texture2D
+		if tex:
+			_cached_textures[type] = tex
+			return tex
+	return null

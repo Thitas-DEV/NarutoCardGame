@@ -105,9 +105,25 @@ func get_type_color() -> Color:
 func get_element_color() -> Color:
 	return ChakraElement.get_element_color(required_element)
 
+func get_element_texture() -> Texture2D:
+	return ChakraElement.get_element_texture(required_element)
+
+## Retorna a ilustração própria da carta ou o emblema do elemento como fallback
+func get_effective_icon() -> Texture2D:
+	if icon:
+		return icon
+	return ChakraElement.get_element_texture(required_element)
+
+## Retorna o valor numérico para o selo de custo na carta
 func get_cost_display() -> String:
 	if required_element == ChakraElement.Type.NONE or element_cost == 0:
+		return "0"
+	return str(element_cost)
+
+## Retorna a descrição completa do custo com ícone e nome do elemento
+func get_cost_full_display() -> String:
+	if required_element == ChakraElement.Type.NONE or element_cost == 0:
 		return "TAIJUTSU (0)"
-	var icon = ChakraElement.get_element_icon(required_element)
+	var icon_sym = ChakraElement.get_element_icon(required_element)
 	var short_name = ChakraElement.get_element_short_name(required_element)
-	return "%s %d %s" % [icon, element_cost, short_name.to_upper()]
+	return "%s %d %s" % [icon_sym, element_cost, short_name.to_upper()]

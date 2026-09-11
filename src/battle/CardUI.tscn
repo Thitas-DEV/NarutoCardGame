@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3t8qv8g1j58m"]
+[gd_scene format=3 uid="uid://b3t8qv8g1j58m"]
 
-[ext_resource type="Script" path="res://src/battle/CardUI.gd" id="1_cui"]
+[ext_resource type="Script" uid="uid://bi2fj0ruokqj2" path="res://src/battle/CardUI.gd" id="1_cui"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_glow"]
 bg_color = Color(1, 0.8, 0.2, 0.25)
@@ -24,7 +24,6 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
-shadow_color = Color(0, 0, 0, 0.6)
 shadow_size = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cost"]
@@ -48,16 +47,16 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="CardUI" type="Control"]
+[node name="CardUI" type="Control" unique_id=430274581]
 custom_minimum_size = Vector2(160, 230)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 160.0
 offset_bottom = 230.0
-mouse_filter = 0
 script = ExtResource("1_cui")
+metadata/_edit_horizontal_guides_ = [-80.0]
 
-[node name="GlowEffect" type="Panel" parent="."]
+[node name="GlowEffect" type="Panel" parent="." unique_id=972835409]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -68,7 +67,7 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_glow")
 
-[node name="CardFrame" type="Panel" parent="."]
+[node name="CardFrame" type="Panel" parent="." unique_id=557959780]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -78,33 +77,51 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_frame")
 
-[node name="CostContainer" type="Panel" parent="CardFrame"]
+[node name="CostContainer" type="Panel" parent="CardFrame" unique_id=919700186]
 layout_mode = 1
 offset_left = -6.0
 offset_top = -6.0
-offset_right = 28.0
-offset_bottom = 28.0
+offset_right = 46.0
+offset_bottom = 26.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_cost")
 
-[node name="CostLabel" type="Label" parent="CardFrame/CostContainer"]
+[node name="HBox" type="HBoxContainer" parent="CardFrame/CostContainer" unique_id=1492083110]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 3.0
+offset_top = 2.0
+offset_right = -3.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="ElementIcon" type="TextureRect" parent="CardFrame/CostContainer/HBox" unique_id=2083918291]
+custom_minimum_size = Vector2(22, 22)
+layout_mode = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CostLabel" type="Label" parent="CardFrame/CostContainer/HBox" unique_id=483106422]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.9)
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 15
 text = "2"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TitleLabel" type="Label" parent="CardFrame"]
+[node name="TitleLabel" type="Label" parent="CardFrame" unique_id=992815597]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 32.0
+offset_left = 50.0
 offset_top = 4.0
 offset_right = -8.0
 offset_bottom = 26.0
@@ -115,7 +132,7 @@ text = "Rasengan!"
 vertical_alignment = 1
 text_overrun_behavior = 3
 
-[node name="Illustration" type="Panel" parent="CardFrame"]
+[node name="Illustration" type="Panel" parent="CardFrame" unique_id=1573718122]
 clip_contents = true
 layout_mode = 1
 anchors_preset = 10
@@ -128,7 +145,7 @@ grow_horizontal = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_illus")
 
-[node name="Icon" type="TextureRect" parent="CardFrame/Illustration"]
+[node name="Icon" type="TextureRect" parent="CardFrame/Illustration" unique_id=1731341658]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -139,7 +156,7 @@ mouse_filter = 2
 expand_mode = 1
 stretch_mode = 6
 
-[node name="TypeLabel" type="Label" parent="CardFrame"]
+[node name="TypeLabel" type="Label" parent="CardFrame" unique_id=737277413]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -153,7 +170,7 @@ theme_override_font_sizes/font_size = 10
 text = "NINJUTSU"
 horizontal_alignment = 1
 
-[node name="DescLabel" type="RichTextLabel" parent="CardFrame"]
+[node name="DescLabel" type="RichTextLabel" parent="CardFrame" unique_id=681105717]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0

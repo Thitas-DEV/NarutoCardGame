@@ -17,12 +17,14 @@ var original_pos: Vector2
 var original_rot: float = 0.0
 
 @onready var title_label: Label = $CardFrame/TitleLabel
-@onready var cost_label: Label = $CardFrame/CostContainer/CostLabel
+@onready var cost_label: Label = $CardFrame/CostContainer/HBox/CostLabel if has_node("CardFrame/CostContainer/HBox/CostLabel") else ($CardFrame/CostContainer/CostLabel if has_node("CardFrame/CostContainer/CostLabel") else null)
+@onready var cost_container: Panel = $CardFrame/CostContainer if has_node("CardFrame/CostContainer") else null
 @onready var desc_label: RichTextLabel = $CardFrame/DescLabel
 @onready var type_label: Label = $CardFrame/TypeLabel
 @onready var frame_panel: Panel = $CardFrame
 @onready var illustration_panel: Panel = $CardFrame/Illustration
 @onready var icon_rect: TextureRect = $CardFrame/Illustration/Icon if has_node("CardFrame/Illustration/Icon") else null
+@onready var element_icon_rect: TextureRect = $CardFrame/CostContainer/HBox/ElementIcon if has_node("CardFrame/CostContainer/HBox/ElementIcon") else ($CardFrame/ElementIcon if has_node("CardFrame/ElementIcon") else null)
 @onready var glow_panel: Panel = $GlowEffect
 
 func _ready() -> void:
@@ -44,13 +46,46 @@ func update_card_display() -> void:
 		return
 		
 	title_label.text = card_data.name
-	cost_label.text = card_data.get_cost_display()
-	cost_label.modulate = card_data.get_element_color()
+	if cost_label:
+		cost_label.text = card_data.get_cost_display()
 	
-	type_label.text = card_data.get_type_name().to_upper()
+	var elem_color = card_data.get_element_color()
+	
+	# Estiliza o selo de custo com a cor do elemento
+	if cost_container:
+		var cost_sb = cost_container.get_theme_stylebox("panel")
+		if cost_sb is StyleBoxFlat:
+			var new_cost_sb = cost_sb.duplicate() as StyleBoxFlat
+			new_cost_sb.bg_color = elem_color
+			cost_container.add_theme_stylebox_override("panel", new_cost_sb)
+			
+	# Atualiza a cor da borda da carta com a cor do elemento
+	if frame_panel:
+		var frame_sb = frame_panel.get_theme_stylebox("panel")
+		if frame_sb is StyleBoxFlat:
+			var new_frame_sb = frame_sb.duplicate() as StyleBoxFlat
+			new_frame_sb.border_color = elem_color
+			frame_panel.add_theme_stylebox_override("panel", new_frame_sb)
+	
+	# Exibe o tipo e elemento na etiqueta de categoria
+	if card_data.required_element != ChakraElement.Type.NONE:
+		type_label.text = "%s • %s" % [card_data.get_type_name().to_upper(), ChakraElement.get_element_short_name(card_data.required_element).to_upper()]
+	else:
+		type_label.text = card_data.get_type_name().to_upper()
 	type_label.modulate = card_data.get_type_color()
+	
 	desc_label.text = card_data.description
 	
+	# Ícone do elemento no CostContainer junto ao custo
+	if element_icon_rect:
+		var elem_tex = card_data.get_element_texture()
+		if elem_tex:
+			element_icon_rect.texture = elem_tex
+			element_icon_rect.visible = true
+		else:
+			element_icon_rect.visible = false
+	
+	# Ilustração central (exibe apenas a arte própria da carta, sem imagens de elemento)
 	if icon_rect:
 		if card_data.icon:
 			icon_rect.texture = card_data.icon

@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dmv7q9k2l1m4x"]
+[gd_scene format=3 uid="uid://dmv7rak2l1m4x"]
 
-[ext_resource type="Script" path="res://src/deck_builder/DeckBuilder.gd" id="1_db"]
+[ext_resource type="Script" uid="uid://3ab84o5w75gm" path="res://src/deck_builder/DeckBuilder.gd" id="1_db"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_db_bg"]
 bg_color = Color(0.08, 0.09, 0.13, 1)
@@ -22,7 +22,7 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="DeckBuilder" type="Control"]
+[node name="DeckBuilder" type="Control" unique_id=1257461376]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -31,7 +31,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_db")
 
-[node name="Background" type="Panel" parent="."]
+[node name="Background" type="Panel" parent="." unique_id=2039828747]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -40,7 +40,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_db_bg")
 
-[node name="TopBar" type="Panel" parent="."]
+[node name="TopBar" type="Panel" parent="." unique_id=505238477]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -48,7 +48,7 @@ offset_bottom = 60.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_db_top")
 
-[node name="TitleLabel" type="Label" parent="TopBar"]
+[node name="TitleLabel" type="Label" parent="TopBar" unique_id=849359057]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -62,7 +62,7 @@ theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
 theme_override_font_sizes/font_size = 18
 text = "🎴 MONTAGEM DE DECK NINJA"
 
-[node name="HeroLabel" type="Label" parent="TopBar"]
+[node name="HeroLabel" type="Label" parent="TopBar" unique_id=1005659730]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -75,7 +75,7 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 13
 text = "Personagem:"
 
-[node name="HeroSelector" type="OptionButton" parent="TopBar"]
+[node name="HeroSelector" type="OptionButton" parent="TopBar" unique_id=806980884]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -86,7 +86,7 @@ offset_right = 585.0
 offset_bottom = 16.0
 grow_vertical = 2
 
-[node name="BackButton" type="Button" parent="TopBar"]
+[node name="BackButton" type="Button" parent="TopBar" unique_id=630154582]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -101,7 +101,7 @@ grow_horizontal = 0
 grow_vertical = 2
 text = "VOLTAR AO MAPA"
 
-[node name="MainContainer" type="Control" parent="."]
+[node name="MainContainer" type="Control" parent="." unique_id=2007998712]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -113,7 +113,7 @@ offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HSplit" type="HBoxContainer" parent="MainContainer"]
+[node name="HSplit" type="HBoxContainer" parent="MainContainer" unique_id=150576719]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -122,12 +122,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 20
 
-[node name="CollectionPanel" type="Panel" parent="MainContainer/HSplit"]
+[node name="CollectionPanel" type="Panel" parent="MainContainer/HSplit" unique_id=1667829704]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel_box")
 
-[node name="Header" type="Label" parent="MainContainer/HSplit/CollectionPanel"]
+[node name="Header" type="Label" parent="MainContainer/HSplit/CollectionPanel" unique_id=2020813040]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -139,7 +139,7 @@ theme_override_font_sizes/font_size = 14
 text = "COLEÇÃO DISPONÍVEL (Clique para adicionar ao Deck)"
 horizontal_alignment = 1
 
-[node name="Scroll" type="ScrollContainer" parent="MainContainer/HSplit/CollectionPanel"]
+[node name="Scroll" type="ScrollContainer" parent="MainContainer/HSplit/CollectionPanel" unique_id=239174433]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -151,19 +151,19 @@ offset_bottom = -15.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CollectionGrid" type="GridContainer" parent="MainContainer/HSplit/CollectionPanel/Scroll"]
+[node name="CollectionGrid" type="GridContainer" parent="MainContainer/HSplit/CollectionPanel/Scroll" unique_id=1495298607]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 15
 theme_override_constants/v_separation = 15
 columns = 3
 
-[node name="DeckPanel" type="Panel" parent="MainContainer/HSplit"]
+[node name="DeckPanel" type="Panel" parent="MainContainer/HSplit" unique_id=1170636984]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel_box")
 
-[node name="Header" type="Label" parent="MainContainer/HSplit/DeckPanel"]
+[node name="Header" type="Label" parent="MainContainer/HSplit/DeckPanel" unique_id=850822525]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -175,7 +175,7 @@ theme_override_font_sizes/font_size = 14
 text = "DECK ATIVO (Clique com botão direito para remover)"
 horizontal_alignment = 1
 
-[node name="StatsLabel" type="Label" parent="MainContainer/HSplit/DeckPanel"]
+[node name="StatsLabel" type="Label" parent="MainContainer/HSplit/DeckPanel" unique_id=952343881]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -186,7 +186,7 @@ theme_override_font_sizes/font_size = 11
 text = "Cartas no Deck: 12 / 30 | Custo Médio de Chakra: 1.6"
 horizontal_alignment = 1
 
-[node name="Scroll" type="ScrollContainer" parent="MainContainer/HSplit/DeckPanel"]
+[node name="Scroll" type="ScrollContainer" parent="MainContainer/HSplit/DeckPanel" unique_id=1557599429]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -198,7 +198,7 @@ offset_bottom = -15.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DeckGrid" type="GridContainer" parent="MainContainer/HSplit/DeckPanel/Scroll"]
+[node name="DeckGrid" type="GridContainer" parent="MainContainer/HSplit/DeckPanel/Scroll" unique_id=1848884479]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/h_separation = 15
