@@ -53,6 +53,11 @@ var active_trap_card: AbilityData = null
 var active_enemy_trap_card: AbilityData = null
 var active_support_card: AbilityData = null
 
+# Clones das Sombras
+var player_clone_visual: Node2D = null
+var enemy_clone_visual: Node2D = null
+const CHARACTER_VISUAL_SCENE = preload("res://src/battle/CharacterVisual.tscn")
+
 # Target arrow
 var target_arrow: Line2D
 
@@ -138,6 +143,13 @@ func _setup_battle() -> void:
 	else:
 		enemy_data = CharacterData.new()
 	
+	if has_player_clone():
+		player_clone_visual.queue_free()
+		player_clone_visual = null
+	if has_enemy_clone():
+		enemy_clone_visual.queue_free()
+		enemy_clone_visual = null
+		
 	player_visual.setup_character(player_data)
 	enemy_visual.setup_character(enemy_data)
 	
@@ -298,6 +310,12 @@ func _reorganize_hand() -> void:
 			var current_elem_chakra = player_chakra_pool.get(card.card_data.required_element, 0)
 			is_playable = (current_elem_chakra >= card.card_data.element_cost)
 			
+		# Restrições de Clone das Sombras
+		if card.card_data.requires_clone and not has_player_clone():
+			is_playable = false
+		if card.card_data.id == "kagebunshin" and has_player_clone():
+			is_playable = false
+			
 		card.set_playable_state(is_playable)
 
 func _on_target_drag_moved(card_node: Control, mouse_pos: Vector2) -> void:
@@ -319,13 +337,75 @@ func _on_target_drag_moved(card_node: Control, mouse_pos: Vector2) -> void:
 		
 	target_arrow.points = points
 
+func has_player_clone() -> bool:
+	return player_clone_visual != null and is_instance_valid(player_clone_visual) and not player_clone_visual.is_queued_for_deletion()
+
+func has_enemy_clone() -> bool:
+	return enemy_clone_visual != null and is_instance_valid(enemy_clone_visual) and not enemy_clone_visual.is_queued_for_deletion()
+
+func are_animations_running() -> bool:
+	var running = (player_visual != null and player_visual.is_busy()) or (enemy_visual != null and enemy_visual.is_busy())
+	if not running and has_player_clone() and player_clone_visual.is_busy():
+		running = true
+	if not running and has_enemy_clone() and enemy_clone_visual.is_busy():
+		running = true
+	return running
+
+func summon_clone(is_player_team: bool) -> void:
+	if is_player_team:
+		if has_player_clone():
+			player_visual.spawn_floating_text("MÁXIMO DE 1 CLONE!", Color(1.0, 0.4, 0.4))
+			return
+		player_visual.play_custom_animation("chakra_pose_clone")
+		var clone = CHARACTER_VISUAL_SCENE.instantiate()
+		clone.position = player_visual.position + Vector2(100, 30)
+		clone.z_index = player_visual.z_index + 1
+		clone.visible = true
+		clone.modulate = Color(1.0, 1.0, 1.0, 0.95)
+		$Arena2D.add_child(clone)
+		player_clone_visual = clone
+		clone.setup_clone(player_data, true)
+	else:
+		if has_enemy_clone():
+			return
+		enemy_visual.play_custom_animation("chakra_pose_clone")
+		var clone = CHARACTER_VISUAL_SCENE.instantiate()
+		clone.position = enemy_visual.position + Vector2(-100, 30)
+		clone.z_index = enemy_visual.z_index + 1
+		clone.visible = true
+		clone.modulate = Color(1.0, 1.0, 1.0, 0.95)
+		$Arena2D.add_child(clone)
+		enemy_clone_visual = clone
+		clone.setup_clone(enemy_data, false)
+	_reorganize_hand()
+
 func _on_target_drag_ended(card_node: Control, mouse_pos: Vector2) -> void:
 	target_arrow.visible = false
+	if are_animations_running():
+		_reorganize_hand()
+		return
 	var enemy_rect = Rect2(enemy_visual.global_position - Vector2(120, 150), Vector2(240, 300))
 	if enemy_rect.has_point(mouse_pos):
 		_on_card_played(card_node.card_data, card_node)
 
 func _on_card_played(c_data: AbilityData, card_node: Control) -> void:
+	# Não permite outro ataque enquanto qualquer animação estiver em execução
+	if current_state != TurnState.PLAYER_TURN or are_animations_running():
+		_reorganize_hand()
+		return
+		
+	# Validação de Requisito de Clone
+	if c_data.requires_clone and not has_player_clone():
+		player_visual.spawn_floating_text("REQUER CLONE!", Color(1.0, 0.4, 0.4))
+		_reorganize_hand()
+		return
+		
+	# Limite de 1 Clone ativo por vez
+	if c_data.id == "kagebunshin" and has_player_clone():
+		player_visual.spawn_floating_text("MÁXIMO DE 1 CLONE!", Color(1.0, 0.4, 0.4))
+		_reorganize_hand()
+		return
+		
 	# Validação de Custo Elemental
 	var has_chakra = false
 	if c_data.required_element == ChakraElement.Type.NONE or c_data.element_cost == 0:
@@ -333,7 +413,7 @@ func _on_card_played(c_data: AbilityData, card_node: Control) -> void:
 	else:
 		has_chakra = (player_chakra_pool.get(c_data.required_element, 0) >= c_data.element_cost)
 		
-	if current_state != TurnState.PLAYER_TURN or not has_chakra:
+	if not has_chakra:
 		_reorganize_hand()
 		return
 		
@@ -382,6 +462,25 @@ func _apply_card_effect(c_data: AbilityData, qte_multiplier: float = 1.0, trigge
 	match c_data.ability_type:
 		AbilityData.AbilityType.TAIJUTSU, AbilityData.AbilityType.NINJUTSU, AbilityData.AbilityType.ULTIMATE:
 			caster_visual.execute_ability(c_data, target_visual, on_impact_callback)
+			
+			# Se for ataque físico do jogador e houver Clone em campo, o clone repete o ataque físico!
+			if is_player and has_player_clone() and c_data.ability_type == AbilityData.AbilityType.TAIJUTSU and c_data.delivery_type == AbilityData.DeliveryType.MELEE_DASH:
+				var on_original_finished: Callable
+				on_original_finished = func(anim_name: String):
+					if caster_visual.animation_finished.is_connected(on_original_finished):
+						caster_visual.animation_finished.disconnect(on_original_finished)
+					var target_current_hp = enemy_data.current_hp if is_player else player_data.current_hp
+					if has_player_clone() and target_current_hp > 0 and current_state != TurnState.GAME_OVER:
+						player_clone_visual.execute_ability(c_data, target_visual, func():
+							for script in c_data.scripts:
+								if script.get("trigger", "") == "on_play" and script.get("effect", "") == "damage":
+									var clone_dmg = int(int(script.get("value", 10)) * final_multiplier)
+									var t_data = enemy_data if is_player else player_data
+									_damage_character(t_data, target_visual, clone_dmg, not is_player)
+									combo_meter.add_combo(1, 1)
+							_check_battle_state()
+						)
+				caster_visual.animation_finished.connect(on_original_finished)
 			
 		AbilityData.AbilityType.GENJUTSU:
 			on_impact_callback.call()
@@ -437,8 +536,14 @@ func _execute_script(script: Dictionary, multiplier: float, is_player: bool = tr
 			for k in pool.keys():
 				pool[k] = 0
 		"self_damage":
-			caster_data.current_hp = maxi(0, caster_data.current_hp - int(value))
-			caster_visual.spawn_floating_text("-%d" % int(value), Color(1.0, 0.2, 0.2))
+			var dmg = int(value)
+			if dmg > 0:
+				caster_data.current_hp = maxi(0, caster_data.current_hp - dmg)
+				caster_visual.spawn_floating_text("-%d" % dmg, Color(1.0, 0.2, 0.2))
+				if caster_visual.has_method("play_damage_animation"):
+					caster_visual.play_damage_animation()
+				elif caster_visual.has_method("play_hit_reaction"):
+					caster_visual.play_hit_reaction("normal")
 		"reduce_max_hp":
 			caster_data.max_hp = maxi(1, caster_data.max_hp - int(value))
 			caster_data.current_hp = mini(caster_data.current_hp, caster_data.max_hp)
@@ -447,11 +552,32 @@ func _execute_script(script: Dictionary, multiplier: float, is_player: bool = tr
 				draw_cards(int(value))
 			else:
 				_enemy_draw_cards(int(value))
+		"summon_clone":
+			summon_clone(is_player)
 		"plant_trap":
 			pass
 
 func _damage_character(target_data: CharacterData, target_visual: Node2D, amount: int, is_target_player: bool) -> void:
-	# Armadilha de Substituição (Kawarimi) é acionada quando o oponente ataca!
+	# Intercepção pelo Kage Bunshin (Clone das Sombras)
+	# Caso o ninja tenha um clone ativo, ele se sacrificará primeiro para absorver o golpe,
+	# mantendo a armadilha armada (não ativa a armadilha enquanto houver clone para se sacrificar).
+	if is_target_player and has_player_clone():
+		var clone = player_clone_visual
+		player_clone_visual = null
+		clone.spawn_floating_text("INTERCEPTOU!", Color(1.0, 0.9, 0.2))
+		clone.dissipate_clone()
+		target_visual.spawn_floating_text("PROTEGIDO!", Color(0.4, 0.8, 1.0))
+		_reorganize_hand()
+		return
+	elif not is_target_player and has_enemy_clone():
+		var clone = enemy_clone_visual
+		enemy_clone_visual = null
+		clone.spawn_floating_text("INTERCEPTOU!", Color(1.0, 0.9, 0.2))
+		clone.dissipate_clone()
+		target_visual.spawn_floating_text("PROTEGIDO!", Color(0.4, 0.8, 1.0))
+		return
+
+	# Armadilha de Substituição (Kawarimi) é acionada quando o ninja é atacado diretamente (sem clone)
 	if is_target_player and active_trap_card != null:
 		active_trap_card = null
 		trap_slot.visible = false
@@ -483,6 +609,10 @@ func _damage_character(target_data: CharacterData, target_visual: Node2D, amount
 	if amount > 0:
 		target_data.current_hp = maxi(0, target_data.current_hp - amount)
 		target_visual.spawn_floating_text("-%d" % amount, Color(1.0, 0.2, 0.2))
+		if target_visual.has_method("play_damage_animation"):
+			target_visual.play_damage_animation()
+		elif target_visual.has_method("play_hit_reaction"):
+			target_visual.play_hit_reaction("normal")
 		
 	var shield = player_shield if is_target_player else enemy_shield
 	var pool = player_chakra_pool if is_target_player else enemy_chakra_pool
@@ -503,7 +633,7 @@ func _on_qte_finished(success: bool, multiplier: float) -> void:
 		_update_ui()
 
 func _on_end_turn_pressed() -> void:
-	if current_state != TurnState.PLAYER_TURN:
+	if current_state != TurnState.PLAYER_TURN or are_animations_running():
 		return
 	
 	_start_enemy_turn()
@@ -525,6 +655,13 @@ func _start_enemy_turn() -> void:
 func _play_next_enemy_card() -> void:
 	if enemy_data.current_hp <= 0 or current_state == TurnState.GAME_OVER:
 		_finish_enemy_turn()
+		return
+		
+	# Aguarda animações pendentes antes de a IA agir
+	if are_animations_running():
+		var tw_wait = create_tween()
+		tw_wait.tween_interval(0.25)
+		tw_wait.tween_callback(_play_next_enemy_card)
 		return
 		
 	# Avalia cartas viáveis com base nas energias e Taijutsu

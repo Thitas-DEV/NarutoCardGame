@@ -142,6 +142,18 @@ func _get_or_generate_sound(sound_name: String) -> AudioStreamWAV:
 				var sample_val = int(clampf(boom * env, -1.0, 1.0) * 32767.0)
 				data.encode_s16(i * 2, sample_val)
 				
+		"kunai_defense":
+			# Sharp metallic blade parry / deflection sound
+			sample_count = int(22050 * 0.3)
+			data.resize(sample_count * 2)
+			for i in range(sample_count):
+				var t = float(i) / 22050.0
+				var env = exp(-float(i) / (22050.0 * 0.05))
+				var ring = sin(t * 2200.0 * TAU) * 0.5 + sin(t * 3300.0 * TAU) * 0.3 + sin(t * 880.0 * TAU) * 0.2
+				var click = randf_range(-0.4, 0.4) * exp(-t * 80.0)
+				var sample_val = int(clampf((ring + click) * env, -1.0, 1.0) * 32767.0)
+				data.encode_s16(i * 2, sample_val)
+				
 		_:
 			# Default UI click
 			sample_count = int(22050 * 0.08)

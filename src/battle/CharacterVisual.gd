@@ -4,6 +4,7 @@ extends Node2D
 signal animation_finished(anim_name: String)
 
 @export var is_player: bool = true
+@export var is_clone: bool = false
 @export var character_name: String = "Naruto"
 
 var character_data: CharacterData
@@ -11,6 +12,7 @@ var target_pos: Vector2
 var base_pos: Vector2
 var is_animating: bool = false
 var is_substituting: bool = false
+var damage_tween: Tween = null
 
 # Visual state
 var breathing_time: float = 0.0
@@ -28,6 +30,9 @@ var status_dict: Dictionary = {} # { "burn": 2, "bleed": 1 }
 # Sprites & Visual nodes
 @onready var animated_sprite: AnimatedSprite2D = $VisualRoot/AnimatedSprite2D if has_node("VisualRoot/AnimatedSprite2D") else null
 @onready var sprite_2d: Sprite2D = $VisualRoot/Sprite2D if has_node("VisualRoot/Sprite2D") else null
+@onready var smoke_overlay: AnimatedSprite2D = $VisualRoot/SmokeOverlay if has_node("VisualRoot/SmokeOverlay") else null
+@onready var running_effect: AnimatedSprite2D = $VisualRoot/RunningEffect if has_node("VisualRoot/RunningEffect") else null
+@onready var impact_explosion: AnimatedSprite2D = $VisualRoot/ImpactExplosion if has_node("VisualRoot/ImpactExplosion") else null
 
 # UI elements
 @onready var hp_bar: ProgressBar = $UIContainer/HPBar
@@ -41,7 +46,7 @@ var status_dict: Dictionary = {} # { "burn": 2, "bleed": 1 }
 @onready var body_sprite: CanvasItem = $VisualRoot
 
 func _ready() -> void:
-	base_pos = position
+	base_pos = global_position
 	_setup_sprite_nodes()
 	queue_redraw()
 
@@ -53,11 +58,29 @@ func _setup_sprite_nodes() -> void:
 		elif has_node("VisualRoot/Sprite2D"):
 			sprite_2d = $VisualRoot/Sprite2D as Sprite2D
 			
+	if not smoke_overlay and has_node("VisualRoot/SmokeOverlay"):
+		smoke_overlay = $VisualRoot/SmokeOverlay as AnimatedSprite2D
+	if not running_effect and has_node("VisualRoot/RunningEffect"):
+		running_effect = $VisualRoot/RunningEffect as AnimatedSprite2D
+	if not impact_explosion and has_node("VisualRoot/ImpactExplosion"):
+		impact_explosion = $VisualRoot/ImpactExplosion as AnimatedSprite2D
+			
 	if animated_sprite:
 		animated_sprite.play("idle")
 		animated_sprite.flip_h = not is_player
 	elif sprite_2d:
 		sprite_2d.flip_h = not is_player
+		
+	if smoke_overlay:
+		smoke_overlay.flip_h = not is_player
+		smoke_overlay.visible = false
+	if running_effect:
+		running_effect.flip_h = not is_player
+		running_effect.position.x = -20 if is_player else 20
+		running_effect.visible = false
+	if impact_explosion:
+		impact_explosion.flip_h = not is_player
+		impact_explosion.visible = false
 
 func setup_character(data: CharacterData) -> void:
 	character_data = data
@@ -65,6 +88,91 @@ func setup_character(data: CharacterData) -> void:
 	_setup_character_animations(data)
 	update_stats(data.current_hp, data.max_hp, 0, {})
 	queue_redraw()
+
+func play_smoke_overlay(on_finished: Callable = Callable()) -> void:
+	if not smoke_overlay:
+		if on_finished.is_valid():
+			on_finished.call()
+		return
+	smoke_overlay.visible = true
+	smoke_overlay.frame = 0
+	smoke_overlay.play("default")
+	SoundManager.play_sfx("kawarimi")
+	
+	var tw = create_tween()
+	tw.tween_interval(0.5)
+	tw.tween_callback(func():
+		smoke_overlay.visible = false
+		if on_finished.is_valid():
+			on_finished.call()
+	)
+
+func set_running_vfx_active(active: bool) -> void:
+	if running_effect:
+		running_effect.visible = active
+		if active:
+			running_effect.frame = 0
+			running_effect.play("default")
+		else:
+			running_effect.stop()
+
+func play_impact_explosion(on_finished: Callable = Callable()) -> void:
+	if not impact_explosion:
+		if on_finished.is_valid():
+			on_finished.call()
+		return
+	impact_explosion.visible = true
+	impact_explosion.frame = 0
+	impact_explosion.play("default")
+	
+	var tw = create_tween()
+	tw.tween_interval(0.35)
+	tw.tween_callback(func():
+		impact_explosion.visible = false
+		if on_finished.is_valid():
+			on_finished.call()
+	)
+
+func setup_clone(data: CharacterData, on_player_side: bool) -> void:
+	is_clone = true
+	is_player = on_player_side
+	character_data = data
+	visible = true
+	modulate = Color(1.0, 1.0, 1.0, 0.95)
+	base_pos = global_position
+	_setup_sprite_nodes()
+	if body_sprite:
+		body_sprite.modulate = Color.WHITE
+		body_sprite.visible = true
+	if animated_sprite:
+		animated_sprite.modulate = Color.WHITE
+		animated_sprite.visible = true
+	name_label.text = "Clone das Sombras"
+	_setup_character_animations(data)
+	hp_bar.max_value = 1
+	hp_bar.value = 1
+	hp_label.text = "1 / 1"
+	shield_bar.visible = false
+	chakra_container.visible = false
+	if intent_container:
+		intent_container.visible = false
+	spawn_floating_text("CLONE!", Color(1.0, 0.85, 0.2))
+	play_smoke_overlay()
+	queue_redraw()
+
+func dissipate_clone(on_complete: Callable = Callable()) -> void:
+	is_animating = true
+	spawn_floating_text("POOF!", Color(0.85, 0.85, 0.85))
+	play_custom_animation("damage")
+	play_smoke_overlay()
+	var tw = create_tween()
+	tw.tween_property(self, "modulate:a", 0.0, 0.35)
+	tw.tween_callback(func():
+		is_animating = false
+		if on_complete.is_valid():
+			on_complete.call()
+		queue_free()
+	)
 
 func _setup_character_animations(data: CharacterData) -> void:
 	if not animated_sprite:
@@ -104,9 +212,13 @@ func _setup_character_animations(data: CharacterData) -> void:
 func play_custom_animation(anim_name: String) -> void:
 	if not animated_sprite or not animated_sprite.visible or not animated_sprite.sprite_frames:
 		return
-	if animated_sprite.sprite_frames.has_animation(anim_name):
+	if animated_sprite.sprite_frames.has_animation(anim_name) and animated_sprite.sprite_frames.get_frame_count(anim_name) > 0:
 		animated_sprite.play(anim_name)
-	elif animated_sprite.sprite_frames.has_animation("attack"):
+	elif anim_name == "kunai_defense" and animated_sprite.sprite_frames.has_animation("guard") and animated_sprite.sprite_frames.get_frame_count("guard") > 0:
+		animated_sprite.play("guard")
+	elif anim_name == "guard" and animated_sprite.sprite_frames.has_animation("kunai_defense") and animated_sprite.sprite_frames.get_frame_count("kunai_defense") > 0:
+		animated_sprite.play("kunai_defense")
+	elif anim_name != "damage" and anim_name != "idle" and animated_sprite.sprite_frames.has_animation("attack") and animated_sprite.sprite_frames.get_frame_count("attack") > 0:
 		animated_sprite.play("attack")
 
 func update_stats(hp: int, max_hp: int, shield: int, chakra_pool: Dictionary = {}) -> void:
@@ -241,35 +353,73 @@ func play_attack_animation(target_character: Node2D, anim_key: String) -> void:
 
 func _execute_melee_dash(ability: AbilityData, target_character: Node2D, on_hit: Callable) -> void:
 	var anim_key = ability.animation_key
-	play_custom_animation(anim_key)
 	var tw = create_tween()
 	var dest = target_character.global_position + (Vector2(-70, 0) if is_player else Vector2(70, 0))
-	
 	match anim_key:
 		"rasengan", "ougi_rasengan":
-			aura_active = true
-			aura_color = Color(0.1, 0.8, 1.0, 0.7)
-			SoundManager.play_sfx("rasengan")
-			current_vfx = "rasengan"
-			vfx_progress = 1.0
-			tw.tween_property(self, "global_position", dest, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-			tw.tween_callback(func():
-				if on_hit.is_valid(): on_hit.call()
-				target_character.play_hit_reaction("heavy")
-				SoundManager.play_sfx("hit", 0.8)
-				_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 8.0)
-			)
+			var bf = _get_battlefield()
+			var clone = (bf.player_clone_visual if is_player else bf.enemy_clone_visual) if bf else null
+			
+			# Sequência Cinematográfica do Rasengan Clássico:
+			
+			# 1. Clone executa a fumaça e "some" momentaneamente
+			if clone and is_instance_valid(clone):
+				clone.play_smoke_overlay()
+				clone.visible = false
+			else:
+				play_smoke_overlay()
+				
 			tw.tween_interval(0.2)
+			
+			# 2. Animação do naruto ao lado do clone conjurando rasengan
+			tw.tween_callback(func():
+				play_custom_animation("rasengan_clone_generate")
+				SoundManager.play_sfx("rasengan")
+			)
+			tw.tween_interval(0.65)
+			
+			# 3. Clone executa a fumaça e volta para o local original & Naruto com rasengan pronto
+			tw.tween_callback(func():
+				play_custom_animation("naruto_holding_rasengan")
+				if clone and is_instance_valid(clone):
+					clone.visible = true
+					clone.play_smoke_overlay()
+					clone.play_custom_animation("idle")
+			)
+			tw.tween_interval(0.35)
+			
+			# 4. Naruto executa a animação de corrida com rasengan
+			tw.tween_callback(func():
+				play_custom_animation("naruto_attack_rasengan")
+				set_running_vfx_active(true)
+			)
+			tw.tween_property(self, "global_position", dest, 0.35).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+			
+			# 5. Impacto e explosão no oponente
+			tw.tween_callback(func():
+				set_running_vfx_active(false)
+				if target_character.has_method("play_impact_explosion"):
+					target_character.play_impact_explosion()
+				if on_hit.is_valid():
+					on_hit.call()
+				else:
+					target_character.play_damage_animation()
+				SoundManager.play_sfx("hit", 1.2)
+				_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 10.0)
+			)
+			
+			tw.tween_interval(0.25)
+			
+			# 6. Retorno à base
 			tw.tween_property(self, "global_position", base_pos, 0.25).set_trans(Tween.TRANS_SINE)
 			tw.tween_callback(func():
-				aura_active = false
-				current_vfx = ""
 				is_animating = false
 				play_custom_animation("idle")
 				animation_finished.emit(anim_key)
 			)
 			
 		"chidori", "ougi_chidori":
+			play_custom_animation(anim_key)
 			aura_active = true
 			aura_color = Color(0.3, 0.6, 1.0, 0.9)
 			SoundManager.play_sfx("chidori")
@@ -277,8 +427,10 @@ func _execute_melee_dash(ability: AbilityData, target_character: Node2D, on_hit:
 			vfx_progress = 1.0
 			tw.tween_property(self, "global_position", dest, 0.18).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_IN)
 			tw.tween_callback(func():
-				if on_hit.is_valid(): on_hit.call()
-				target_character.play_hit_reaction("lightning")
+				if on_hit.is_valid():
+					on_hit.call()
+				else:
+					target_character.play_damage_animation()
 				SoundManager.play_sfx("hit", 1.3)
 				_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 8.0)
 			)
@@ -293,10 +445,13 @@ func _execute_melee_dash(ability: AbilityData, target_character: Node2D, on_hit:
 			)
 			
 		"leaf_hurricane", "naruto_combo", "lotus":
+			play_custom_animation(anim_key)
 			tw.tween_property(self, "global_position", dest, 0.2).set_trans(Tween.TRANS_BACK)
 			tw.tween_callback(func():
-				if on_hit.is_valid(): on_hit.call()
-				target_character.play_hit_reaction("combo")
+				if on_hit.is_valid():
+					on_hit.call()
+				else:
+					target_character.play_damage_animation()
 				SoundManager.play_sfx("hit", 1.1)
 				_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 5.0)
 			)
@@ -309,15 +464,25 @@ func _execute_melee_dash(ability: AbilityData, target_character: Node2D, on_hit:
 			)
 			
 		_:
-			# Standard punch/kick
-			tw.tween_property(self, "global_position", dest, 0.18).set_trans(Tween.TRANS_QUAD)
+			# Ataque físico simples (Soco simples / Taijutsu básico)
+			# 1. Inicia animação de corrida "run" e corre até o adversário
+			play_custom_animation("run")
+			tw.tween_property(self, "global_position", dest, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+			# 2. Ao alcançar o alvo, executa a animação "attack" (soco) e aplica impacto
 			tw.tween_callback(func():
-				if on_hit.is_valid(): on_hit.call()
-				target_character.play_hit_reaction("normal")
+				play_custom_animation("attack")
+				if on_hit.is_valid():
+					on_hit.call()
+				else:
+					target_character.play_damage_animation()
 				SoundManager.play_sfx("hit")
 				_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 3.0)
 			)
-			tw.tween_property(self, "global_position", base_pos, 0.18).set_trans(Tween.TRANS_QUAD)
+			# 3. Intervalo de impacto do golpe
+			tw.tween_interval(0.25)
+			# 4. Retorna para a posição base
+			tw.tween_property(self, "global_position", base_pos, 0.2).set_trans(Tween.TRANS_QUAD)
+			# 5. Volta à animação "idle" e finaliza estado de animação
 			tw.tween_callback(func():
 				is_animating = false
 				play_custom_animation("idle")
@@ -336,14 +501,18 @@ func _execute_projectile(ability: AbilityData, target_character: Node2D, on_hit:
 	
 	if vfx:
 		vfx.spawn_projectile(start_pos, end_pos, ability, func():
-			if on_hit.is_valid(): on_hit.call()
-			target_character.play_hit_reaction("burn" if ability.required_element == ChakraElement.Type.FIRE else "heavy")
+			if on_hit.is_valid():
+				on_hit.call()
+			else:
+				target_character.play_damage_animation()
 			SoundManager.play_sfx("hit", 0.9)
 			_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 6.0)
 		)
 	else:
-		if on_hit.is_valid(): on_hit.call()
-		target_character.play_hit_reaction("heavy")
+		if on_hit.is_valid():
+			on_hit.call()
+		else:
+			target_character.play_damage_animation()
 		
 	var tw = create_tween()
 	tw.tween_interval(0.45)
@@ -366,14 +535,18 @@ func _execute_celestial_strike(ability: AbilityData, target_character: Node2D, o
 	
 	if vfx:
 		vfx.spawn_celestial_strike(target_pos, ability, func():
-			if on_hit.is_valid(): on_hit.call()
-			target_character.play_hit_reaction("lightning")
+			if on_hit.is_valid():
+				on_hit.call()
+			else:
+				target_character.play_damage_animation()
 			SoundManager.play_sfx("hit", 1.4)
 			_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 14.0, 0.4)
 		)
 	else:
-		if on_hit.is_valid(): on_hit.call()
-		target_character.play_hit_reaction("lightning")
+		if on_hit.is_valid():
+			on_hit.call()
+		else:
+			target_character.play_damage_animation()
 		
 	var tw = create_tween()
 	tw.tween_interval(0.6)
@@ -391,13 +564,17 @@ func _execute_clones(ability: AbilityData, target_character: Node2D, on_hit: Cal
 	var vfx = _get_battle_vfx()
 	if vfx:
 		vfx.spawn_clone_rush(global_position, target_character.global_position, character_data, func():
-			if on_hit.is_valid(): on_hit.call()
-			target_character.play_hit_reaction("combo")
+			if on_hit.is_valid():
+				on_hit.call()
+			else:
+				target_character.play_damage_animation()
 			_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 5.0)
 		)
 	else:
-		if on_hit.is_valid(): on_hit.call()
-		target_character.play_hit_reaction("combo")
+		if on_hit.is_valid():
+			on_hit.call()
+		else:
+			target_character.play_damage_animation()
 		
 	var tw = create_tween()
 	tw.tween_interval(0.65)
@@ -415,14 +592,18 @@ func _execute_summon(ability: AbilityData, target_character: Node2D, on_hit: Cal
 	var vfx = _get_battle_vfx()
 	if vfx:
 		vfx.spawn_summon_strike(target_character.global_position, ability, func():
-			if on_hit.is_valid(): on_hit.call()
-			target_character.play_hit_reaction("heavy")
+			if on_hit.is_valid():
+				on_hit.call()
+			else:
+				target_character.play_damage_animation()
 			SoundManager.play_sfx("hit", 0.7)
 			_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 10.0, 0.3)
 		)
 	else:
-		if on_hit.is_valid(): on_hit.call()
-		target_character.play_hit_reaction("heavy")
+		if on_hit.is_valid():
+			on_hit.call()
+		else:
+			target_character.play_damage_animation()
 		
 	var tw = create_tween()
 	tw.tween_interval(0.75)
@@ -459,6 +640,12 @@ func _execute_self_cast(ability: AbilityData, on_hit: Callable) -> void:
 				vfx.spawn_earth_wall(global_position + Vector2(40 * flip, 0))
 				SoundManager.play_sfx("hit", 0.6)
 			_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 4.0)
+		"kagebunshin":
+			SoundManager.play_sfx("kawarimi")
+		"iron_guard":
+			aura_active = true
+			aura_color = Color(0.3, 0.7, 1.0, 0.6)
+			SoundManager.play_sfx("kunai_defense")
 		_:
 			aura_active = true
 			aura_color = Color(0.3, 0.8, 0.4, 0.6)
@@ -468,7 +655,8 @@ func _execute_self_cast(ability: AbilityData, on_hit: Callable) -> void:
 		on_hit.call()
 		
 	var tw = create_tween()
-	tw.tween_interval(0.4)
+	var cast_duration = 0.8 if ability.id == "kagebunshin" else (0.55 if anim_key == "kunai_defense" else 0.4)
+	tw.tween_interval(cast_duration)
 	tw.tween_callback(func():
 		aura_active = false
 		is_animating = false
@@ -501,19 +689,47 @@ func _trigger_screen_shake(intensity: float, duration: float = 0.25) -> void:
 		bf.shake_arena(intensity, duration)
 
 func play_hit_reaction(hit_type: String = "normal") -> void:
+	play_damage_animation()
+
+func play_damage_animation() -> void:
 	if is_substituting:
 		return
+		
 	play_custom_animation("damage")
+	
+	# Calcula a duração para a animação "damage" rodar os seus frames por completo
+	var anim_duration = 0.5
+	if animated_sprite and animated_sprite.sprite_frames and animated_sprite.sprite_frames.has_animation("damage"):
+		var frame_count = animated_sprite.sprite_frames.get_frame_count("damage")
+		if frame_count > 0:
+			var spd = animated_sprite.sprite_frames.get_animation_speed("damage")
+			if spd > 0.0:
+				anim_duration = float(frame_count) / spd
+	anim_duration = clampf(anim_duration, 0.4, 1.2)
+	
+	# Efeito de recuo físico ao levar dano
 	var tw = create_tween()
 	var push_dir = Vector2(-25, 0) if is_player else Vector2(25, 0)
-	tw.tween_property(self, "position", base_pos + push_dir, 0.08)
-	tw.tween_property(self, "position", base_pos, 0.12)
-	tw.tween_callback(func(): play_custom_animation("idle"))
+	tw.tween_property(self, "global_position", base_pos + push_dir, 0.08)
+	tw.tween_property(self, "global_position", base_pos, 0.12)
 	
-	# Red flash on body
+	# Flash vermelho de impacto
 	modulate = Color(1.8, 0.4, 0.4)
 	var flash_tw = create_tween()
 	flash_tw.tween_property(self, "modulate", Color.WHITE, 0.25)
+	
+	# Retorna para a animação idle após a duração completa dos frames de dano
+	if damage_tween and damage_tween.is_valid():
+		damage_tween.kill()
+	damage_tween = create_tween()
+	damage_tween.tween_interval(anim_duration)
+	damage_tween.tween_callback(func():
+		if not is_animating and not is_substituting:
+			play_custom_animation("idle")
+	)
+
+func is_busy() -> bool:
+	return is_animating or is_substituting or (damage_tween != null and damage_tween.is_valid())
 
 func trigger_kawarimi_substitution() -> void:
 	is_substituting = true

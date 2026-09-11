@@ -31,8 +31,10 @@ func _ready() -> void:
 	custom_minimum_size = Vector2(160, 230)
 	pivot_offset = size / 2.0
 	
-	mouse_entered.connect(_on_mouse_entered)
-	mouse_exited.connect(_on_mouse_exited)
+	if not mouse_entered.is_connected(_on_mouse_entered):
+		mouse_entered.connect(_on_mouse_entered)
+	if not mouse_exited.is_connected(_on_mouse_exited):
+		mouse_exited.connect(_on_mouse_exited)
 	
 	if card_data:
 		update_card_display()
@@ -49,6 +51,7 @@ func update_card_display() -> void:
 	if cost_label:
 		cost_label.text = card_data.get_cost_display()
 	
+<<<<<<< HEAD
 	var elem_color = card_data.get_element_color()
 	
 	# Estiliza o selo de custo com a cor do elemento
@@ -75,6 +78,15 @@ func update_card_display() -> void:
 	type_label.modulate = card_data.get_type_color()
 	
 	desc_label.text = card_data.description
+=======
+	if card_data.requires_clone:
+		type_label.text = "%s (👥 CLONE)" % card_data.get_type_name().to_upper()
+		desc_label.text = "[color=#ffd24d][b]👥 Requer Clone[/b][/color]\n" + card_data.description
+	else:
+		type_label.text = card_data.get_type_name().to_upper()
+		desc_label.text = card_data.description
+	type_label.modulate = card_data.get_type_color()
+>>>>>>> dd1285b0797088a0b681c3bc6fd093ec019da4fd
 	
 	# Ícone do elemento no CostContainer junto ao custo
 	if element_icon_rect:
@@ -139,6 +151,9 @@ func _on_mouse_exited() -> void:
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
+			var bf = get_tree().current_scene
+			if bf and bf.has_method("are_animations_running") and bf.are_animations_running():
+				return
 			if is_playable:
 				if card_data.target_type == AbilityData.TargetType.SINGLE_ENEMY:
 					is_targeting = true

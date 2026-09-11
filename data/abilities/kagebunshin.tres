@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://cx6e5n21vqmkw"]
+
+[ext_resource type="Texture2D" uid="uid://bj0o3wcsg4isd" path="res://assets/cards/kagebushin.png" id="1_icon"]
+[ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="2_abdt"]
+
+[resource]
+script = ExtResource("2_abdt")
+id = "kagebunshin"
+name = "Kage Bunshin no Jutsu"
+description = "Invoca 1 Clone das Sombras no campo. O clone possui 1 HP, repete seus ataques físicos, intercepta o próximo golpe inimigo e viabiliza o Rasengan."
+icon = ExtResource("1_icon")
+required_element = 3
+element_cost = 1
+ability_type = 1
+target_type = 4
+delivery_type = 5
+animation_key = "chakra_pose_clone"
+scripts = Array[Dictionary]([{
+"effect": "summon_clone",
+"trigger": "on_play",
+"value": 1
+}])

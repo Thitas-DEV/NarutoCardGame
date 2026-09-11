@@ -1,10 +1,21 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://dgpxoh6k0kx88"]
 
 [ext_resource type="Texture2D" uid="uid://dofkj66phn1hh" path="res://assets/characters/naruto/naruto/narut shipudeo/naruto senin/golpear/arriba/arriba 2.bmp" id="1_aj8m4"]
+[ext_resource type="Texture2D" uid="uid://dqbakeuicqswn" path="res://assets/characters/kakashi/damage/5000-1.png" id="1_req43"]
 [ext_resource type="Texture2D" uid="uid://bo8f4t24i1sgq" path="res://assets/characters/naruto/naruto/narut shipudeo/naruto senin/golpear/arriba/arriba 3.bmp" id="2_dibk4"]
+[ext_resource type="Texture2D" uid="uid://b8r86a6j6amrx" path="res://assets/characters/kakashi/damage/5000-2.png" id="2_tm8fm"]
 [ext_resource type="Texture2D" uid="uid://drmnkpc7wwobe" path="res://assets/characters/naruto/naruto/narut shipudeo/naruto senin/golpear/arriba/arriba 4.bmp" id="3_22c3o"]
+[ext_resource type="Texture2D" uid="uid://3m2kq2h0br5e" path="res://assets/characters/kakashi/damage/5000-3.png" id="3_ahr3s"]
+[ext_resource type="Texture2D" uid="uid://dkog003j66idn" path="res://assets/characters/kakashi/damage/5000-4.png" id="4_2nho5"]
 [ext_resource type="Texture2D" uid="uid://pj6ddb4mg4hs" path="res://assets/characters/naruto/naruto/narut shipudeo/naruto senin/golpear/arriba/arriba.bmp" id="4_p8tx2"]
+[ext_resource type="Texture2D" uid="uid://bgmnmqsulat3" path="res://assets/characters/kakashi/damage/5000-5.png" id="5_5e3rp"]
 [ext_resource type="Texture2D" uid="uid://ct4ups4x53i6d" path="res://assets/effects/jutsus/substituicao/substitution_jutsu_sheet.png" id="5_dibk4"]
+[ext_resource type="Texture2D" uid="uid://begrm685j6gvr" path="res://assets/characters/kakashi/damage/5000-6.png" id="6_aq8u7"]
+[ext_resource type="Texture2D" uid="uid://cqh830fs3p0wf" path="res://assets/characters/kakashi/damage/5000-7.png" id="7_wb2gj"]
+[ext_resource type="Texture2D" uid="uid://28pi0cvxfjjt" path="res://assets/characters/kakashi/damage/5000-8.png" id="8_r5n6f"]
+[ext_resource type="Texture2D" uid="uid://cugihiwbsdc8n" path="res://assets/characters/kakashi/damage/5000-9.png" id="9_2ptlj"]
+[ext_resource type="Texture2D" uid="uid://drcl87skddtr0" path="res://assets/characters/kakashi/damage/5000-10.png" id="10_pftum"]
+[ext_resource type="Texture2D" uid="uid://cg2k875xkl6ss" path="res://assets/characters/kakashi/damage/5000-11.png" id="11_lnsjd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_13hvk"]
 atlas = ExtResource("5_dibk4")
@@ -54,10 +65,43 @@ animations = [{
 "name": &"chidori",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_req43")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_tm8fm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ahr3s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_2nho5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_5e3rp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_aq8u7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_wb2gj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_r5n6f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_2ptlj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_pftum")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_lnsjd")
+}],
 "loop": 1,
 "name": &"damage",
-"speed": 5.0
+"speed": 10.0
 }, {
 "frames": [{
 "duration": 1.0,

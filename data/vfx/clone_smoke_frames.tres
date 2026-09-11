@@ -1,0 +1,38 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://csmpk7smoke01"]
+
+[ext_resource type="Texture2D" uid="uid://b1q3jhfak3r2g" path="res://assets/effects/jutsus/clone_smoke/aslfñi1.png" id="1_smk1"]
+[ext_resource type="Texture2D" uid="uid://mh7a0q3rps72" path="res://assets/effects/jutsus/clone_smoke/aslfñi2.png" id="2_smk2"]
+[ext_resource type="Texture2D" uid="uid://c7f6jqwapdsa0" path="res://assets/effects/jutsus/clone_smoke/aslfñi3.png" id="3_smk3"]
+[ext_resource type="Texture2D" uid="uid://ddcxjpaw4aft5" path="res://assets/effects/jutsus/clone_smoke/aslfñi4.png" id="4_smk4"]
+[ext_resource type="Texture2D" uid="uid://d1ivfxybxu34b" path="res://assets/effects/jutsus/clone_smoke/aslfñi5.png" id="5_smk5"]
+[ext_resource type="Texture2D" uid="uid://b5x5ep80bkcb7" path="res://assets/effects/jutsus/clone_smoke/aslfñi6.png" id="6_smk6"]
+[ext_resource type="Texture2D" uid="uid://36oapexig18s" path="res://assets/effects/jutsus/clone_smoke/aslfñi7.png" id="7_smk7"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_smk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_smk2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_smk3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_smk4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_smk5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_smk6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_smk7")
+}],
+"loop": false,
+"name": &"default",
+"speed": 14.0
+}]
