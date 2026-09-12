@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://b7v2y3x8k2l1m"]
+[gd_scene format=3 uid="uid://b7v2y3x8k2l1m"]
 
-[ext_resource type="Script" path="res://src/map/StoryMap.gd" id="1_sm"]
-[ext_resource type="Script" path="res://src/map/ChibiPlayer.gd" id="2_cp"]
+[ext_resource type="Script" uid="uid://cjjms54q1cujb" path="res://src/map/StoryMap.gd" id="1_sm"]
+[ext_resource type="Script" uid="uid://16fy2d2808xi" path="res://src/map/ChibiPlayer.gd" id="2_cp"]
+[ext_resource type="PackedScene" uid="uid://bhm2aux443fj6" path="res://src/ui/menu_pausa.tscn" id="3_agohl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_map_bg"]
 bg_color = Color(0.1, 0.13, 0.18, 1)
@@ -32,7 +33,7 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="StoryMap" type="Control"]
+[node name="StoryMap" type="Control" unique_id=955230207]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,7 +42,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_sm")
 
-[node name="Background" type="Panel" parent="."]
+[node name="Background" type="Panel" parent="." unique_id=2113555268]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,7 +51,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_map_bg")
 
-[node name="TopBar" type="Panel" parent="."]
+[node name="TopBar" type="Panel" parent="." unique_id=1274100920]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -58,7 +59,7 @@ offset_bottom = 65.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_top_bar")
 
-[node name="HeroInfo" type="VBoxContainer" parent="TopBar"]
+[node name="HeroInfo" type="VBoxContainer" parent="TopBar" unique_id=439472508]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -69,18 +70,18 @@ offset_right = 350.0
 offset_bottom = 22.5
 grow_vertical = 2
 
-[node name="HeroName" type="Label" parent="TopBar/HeroInfo"]
+[node name="HeroName" type="Label" parent="TopBar/HeroInfo" unique_id=339086367]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
 theme_override_font_sizes/font_size = 16
 text = "Naruto Uzumaki"
 
-[node name="HPLabel" type="Label" parent="TopBar/HeroInfo"]
+[node name="HPLabel" type="Label" parent="TopBar/HeroInfo" unique_id=1045014542]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "HP: 80 / 80 | Deck: 12 cartas"
 
-[node name="DeckButton" type="Button" parent="TopBar"]
+[node name="DeckButton" type="Button" parent="TopBar" unique_id=278281616]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -95,7 +96,7 @@ grow_horizontal = 0
 grow_vertical = 2
 text = "🎴 EDITAR DECK"
 
-[node name="MenuButton" type="Button" parent="TopBar"]
+[node name="MenuButton" type="Button" parent="TopBar" unique_id=1558221477]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -110,7 +111,7 @@ grow_horizontal = 0
 grow_vertical = 2
 text = "MENU"
 
-[node name="MapArea" type="Control" parent="."]
+[node name="MapArea" type="Control" parent="." unique_id=1581587337]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -119,7 +120,7 @@ offset_top = 65.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MapCanvas" type="Control" parent="MapArea"]
+[node name="MapCanvas" type="Control" parent="MapArea" unique_id=303901662]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -127,7 +128,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NodeButtons" type="Control" parent="MapArea"]
+[node name="NodeButtons" type="Control" parent="MapArea" unique_id=1914217173]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -135,11 +136,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ChibiPlayer" type="Node2D" parent="MapArea"]
+[node name="ChibiPlayer" type="Node2D" parent="MapArea" unique_id=1083378029]
 position = Vector2(180, 480)
 script = ExtResource("2_cp")
 
-[node name="DialogueModal" type="Panel" parent="."]
+[node name="DialogueModal" type="Panel" parent="." unique_id=1356290403]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -155,7 +156,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_dlg")
 
-[node name="Speaker" type="Label" parent="DialogueModal"]
+[node name="Speaker" type="Label" parent="DialogueModal" unique_id=1875461114]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -168,7 +169,7 @@ theme_override_colors/font_color = Color(1, 0.75, 0.2, 1)
 theme_override_font_sizes/font_size = 18
 text = "Kakashi Hatake"
 
-[node name="Text" type="RichTextLabel" parent="DialogueModal"]
+[node name="Text" type="RichTextLabel" parent="DialogueModal" unique_id=2079214303]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -182,7 +183,7 @@ grow_vertical = 2
 theme_override_font_sizes/normal_font_size = 15
 text = "Texto do diálogo..."
 
-[node name="StartBattleBtn" type="Button" parent="DialogueModal"]
+[node name="StartBattleBtn" type="Button" parent="DialogueModal" unique_id=489571252]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -198,7 +199,7 @@ grow_vertical = 0
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_start")
 text = "⚔️ ENTRAR NA BATALHA"
 
-[node name="CancelBtn" type="Button" parent="DialogueModal"]
+[node name="CancelBtn" type="Button" parent="DialogueModal" unique_id=298564046]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -209,3 +210,5 @@ offset_right = 130.0
 offset_bottom = -15.0
 grow_vertical = 0
 text = "VOLTAR"
+
+[node name="Menu_pausa" parent="." unique_id=1831560146 instance=ExtResource("3_agohl")]

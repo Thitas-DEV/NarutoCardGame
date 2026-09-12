@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://d3m7yqvf56u1n" path="res://src/battle/CharacterVisual.tscn" id="2_cv"]
 [ext_resource type="PackedScene" uid="uid://dmv28p1j3mak1" path="res://src/battle/ComboMeter.tscn" id="3_cm"]
 [ext_resource type="PackedScene" uid="uid://ctvyu3c8q1n4p" path="res://src/battle/QTEOverlay.tscn" id="4_qte"]
+[ext_resource type="PackedScene" uid="uid://bhm2aux443fj6" path="res://src/ui/menu_pausa.tscn" id="5_kjftl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot"]
 bg_color = Color(0.12, 0.14, 0.2, 0.8)
@@ -349,3 +350,5 @@ text = "CONTINUAR ▶"
 
 [node name="QTEOverlay" parent="UI" unique_id=2112905477 instance=ExtResource("4_qte")]
 layout_mode = 1
+
+[node name="Menu_pausa" parent="." unique_id=1831560146 instance=ExtResource("5_kjftl")]
