@@ -10,6 +10,14 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
+
+
+
+func _unhandled_input(event: InputEvent):
+	if event.is_action("ui_cancel"):
+		visible = true
+		get_tree().paused = true
+
 func _on_resume_pressed() -> void:
 	visible = false
 	get_tree().paused = false
@@ -17,10 +25,6 @@ func _on_resume_pressed() -> void:
 func _on_sair_pressed() -> void:
 	get_tree().quit()
 
-func _unhandled_input(event: InputEvent):
-	if event.is_action("ui_cancel"):
-		visible = true
-		get_tree().paused = true
 
 func _on_menu_principal_pressed() -> void:
 	get_tree().change_scene_to_file("res://src/ui/MainMenu.tscn")

@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://da34nwv0x4agt" path="res://src/ui/menu_pausa.gd" id="1_8d3ek"]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
+
 [node name="Menu_pausa" type="CanvasLayer" unique_id=1831560146]
 process_mode = 3
 script = ExtResource("1_8d3ek")
@@ -32,6 +34,9 @@ text = "JOGO PAUSADO"
 [node name="Resume" type="Button" parent="VBoxContainer" unique_id=1956643433]
 layout_mode = 2
 text = "Resume"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VBoxContainer/Resume" unique_id=76409839]
+sprite_frames = SubResource("SpriteFrames_g4v7s")
 
 [node name="Menu_Principal" type="Button" parent="VBoxContainer" unique_id=1193632743]
 layout_mode = 2

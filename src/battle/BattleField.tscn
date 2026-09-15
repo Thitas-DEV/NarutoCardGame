@@ -352,3 +352,4 @@ text = "CONTINUAR ▶"
 layout_mode = 1
 
 [node name="Menu_pausa" parent="." unique_id=1831560146 instance=ExtResource("5_kjftl")]
+visible = false

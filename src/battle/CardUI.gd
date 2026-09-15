@@ -29,7 +29,7 @@ var original_rot: float = 0.0
 
 func _ready() -> void:
 	custom_minimum_size = Vector2(160, 230)
-	pivot_offset = size / 2.0
+	pivot_offset = custom_minimum_size / 2.0
 	
 	if not mouse_entered.is_connected(_on_mouse_entered):
 		mouse_entered.connect(_on_mouse_entered)
@@ -125,10 +125,12 @@ func _on_mouse_entered() -> void:
 	is_hovered = true
 	z_index = 100
 	
+	var is_in_container = get_parent() is Container
 	var tw = create_tween().set_parallel(true)
-	tw.tween_property(self, "scale", Vector2(1.2, 1.2), 0.15).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	tw.tween_property(self, "position", original_pos + Vector2(0, -50), 0.15).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	tw.tween_property(self, "rotation", 0.0, 0.15)
+	tw.tween_property(self, "scale", Vector2(1.15, 1.15), 0.15).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	if not is_in_container:
+		tw.tween_property(self, "position", original_pos + Vector2(0, -50), 0.15).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		tw.tween_property(self, "rotation", 0.0, 0.15)
 	
 	SoundManager.play_sfx("card_hover", 0.5)
 
@@ -137,10 +139,12 @@ func _on_mouse_exited() -> void:
 	is_hovered = false
 	z_index = 0
 	
+	var is_in_container = get_parent() is Container
 	var tw = create_tween().set_parallel(true)
 	tw.tween_property(self, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	tw.tween_property(self, "position", original_pos, 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	tw.tween_property(self, "rotation", original_rot, 0.2)
+	if not is_in_container:
+		tw.tween_property(self, "position", original_pos, 0.2).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		tw.tween_property(self, "rotation", original_rot, 0.2)
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -182,6 +186,7 @@ func _gui_input(event: InputEvent) -> void:
 func _return_to_hand() -> void:
 	is_hovered = false
 	var tw = create_tween().set_parallel(true)
-	tw.tween_property(self, "position", original_pos, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tw.tween_property(self, "rotation", original_rot, 0.3)
+	if not (get_parent() is Container):
+		tw.tween_property(self, "position", original_pos, 0.3).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+		tw.tween_property(self, "rotation", original_rot, 0.3)
 	tw.tween_property(self, "scale", Vector2.ONE, 0.3)
