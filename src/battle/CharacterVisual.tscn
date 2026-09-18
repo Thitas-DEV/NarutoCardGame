@@ -45,7 +45,7 @@ scale = Vector2(2, 2)
 position = Vector2(0, -28)
 sprite_frames = ExtResource("2_csocu")
 animation = &"walk"
-frame_progress = 0.4684341
+frame_progress = 0.039819248
 
 [node name="SmokeOverlay" type="AnimatedSprite2D" parent="VisualRoot" unique_id=348510651]
 visible = false
