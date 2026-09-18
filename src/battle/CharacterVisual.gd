@@ -231,15 +231,33 @@ func _setup_character_animations(data: CharacterData) -> void:
 func play_custom_animation(anim_name: String) -> void:
 	if not animated_sprite or not animated_sprite.visible or not animated_sprite.sprite_frames:
 		return
-	if animated_sprite.sprite_frames.has_animation(anim_name) and animated_sprite.sprite_frames.get_frame_count(anim_name) > 0:
-		animated_sprite.play(anim_name)
+	var frames: SpriteFrames = animated_sprite.sprite_frames
+	var target = anim_name
+	if not frames.has_animation(target) or frames.get_frame_count(target) == 0:
+		if frames.has_animation(anim_name.to_lower()) and frames.get_frame_count(anim_name.to_lower()) > 0:
+			target = anim_name.to_lower()
+		elif frames.has_animation(anim_name.capitalize()) and frames.get_frame_count(anim_name.capitalize()) > 0:
+			target = anim_name.capitalize()
+	
+	if frames.has_animation(target) and frames.get_frame_count(target) > 0:
+		animated_sprite.play(target)
+		return
 	elif anim_name in ["guard", "defense", "kunai_defense"]:
-		for fallback in ["defense", "guard", "kunai_defense"]:
-			if animated_sprite.sprite_frames.has_animation(fallback) and animated_sprite.sprite_frames.get_frame_count(fallback) > 0:
+		for fallback in ["defense", "guard", "kunai_defense", "Guard", "Defense"]:
+			if frames.has_animation(fallback) and frames.get_frame_count(fallback) > 0:
 				animated_sprite.play(fallback)
 				return
-	elif anim_name != "damage" and anim_name != "idle" and animated_sprite.sprite_frames.has_animation("attack") and animated_sprite.sprite_frames.get_frame_count("attack") > 0:
-		animated_sprite.play("attack")
+	elif anim_name == "idle":
+		for fallback in ["idle", "Idle", "default"]:
+			if frames.has_animation(fallback) and frames.get_frame_count(fallback) > 0:
+				animated_sprite.play(fallback)
+				return
+	elif anim_name != "damage":
+		for fallback in ["attack", "Attack"]:
+			if frames.has_animation(fallback) and frames.get_frame_count(fallback) > 0:
+				animated_sprite.play(fallback)
+				return
+
 
 func play_celebration(on_finished: Callable = Callable()) -> void:
 	SoundManager.play_sfx("hit")

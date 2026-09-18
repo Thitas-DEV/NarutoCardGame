@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c0nwj32o0t4q1" path="res://src/ui/MainMenuRefactor.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://c7i1h4caamfgf" path="res://assets/backgrounds/naruto-team-7-black-5120x2880-25019-sem-fundo.png" id="2_k0a1g"]
 [ext_resource type="Texture2D" uid="uid://cl1413o8xrhio" path="res://assets/UI/shinobi-clash-logo.png" id="3_logo"]
-[ext_resource type="FontFile" path="res://assets/UI/fonts/njnaruto.ttf" id="4_njnaruto"]
+[ext_resource type="FontFile" uid="uid://dbdxgaeuat7y2" path="res://assets/UI/fonts/njnaruto.ttf" id="4_njnaruto"]
 
 [sub_resource type="Gradient" id="Gradient_k0a1g"]
 offsets = PackedFloat32Array(0, 0.16363636, 0.47878787, 0.7090909, 1)
@@ -25,6 +25,18 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
+bg_color = Color(0.85, 0.4, 0.1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.85, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
 bg_color = Color(0.18, 0.22, 0.32, 0.95)
 border_width_left = 2
@@ -38,18 +50,6 @@ corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 shadow_color = Color(0.9, 0.5, 0.1, 0.4)
 shadow_size = 6
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_pressed"]
-bg_color = Color(0.85, 0.4, 0.1, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(1, 0.85, 0.4, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
 
 [node name="MainMenuRefactor" type="Control" unique_id=406470036]
 layout_mode = 3
@@ -124,8 +124,8 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("4_njnaruto")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "Batalha Rapida"
 
 [node name="StoryModeButton" type="Button" parent="GameModes" unique_id=1789658151]
@@ -134,8 +134,8 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("4_njnaruto")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "Modo Historia"
 
 [node name="Deck" type="Button" parent="GameModes" unique_id=1426637046]
@@ -144,6 +144,6 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("4_njnaruto")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "Deck / Colecao"
