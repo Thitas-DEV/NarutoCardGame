@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b5346etdiq2av"
-path="res://.godot/imported/fagulha_1403-3.png-29025b21aafe77f3429b233672b4544b.ctex"
+uid="uid://5xgv2q4otblo"
+path="res://.godot/imported/katon_1000-2.png-c397c6c036c8ed08a79c3185874eae55.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/traps/kunai_bomba/fagulha/fagulha_1403-3.png"
-dest_files=["res://.godot/imported/fagulha_1403-3.png-29025b21aafe77f3429b233672b4544b.ctex"]
+source_file="res://assets/characters/iruka/katon/katon_1000-2.png"
+dest_files=["res://.godot/imported/katon_1000-2.png-c397c6c036c8ed08a79c3185874eae55.ctex"]
 
 [params]
 

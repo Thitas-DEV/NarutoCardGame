@@ -1,0 +1,244 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://xxptd8438wf3"]
+
+[ext_resource type="Texture2D" uid="uid://dkgit00qlannq" path="res://assets/characters/iruka/idle/idle_0-1.png" id="1_epc8l"]
+[ext_resource type="Texture2D" uid="uid://cjriw1uclwjca" path="res://assets/characters/iruka/idle/idle_0-2.png" id="2_6nvjl"]
+[ext_resource type="Texture2D" uid="uid://bmq11pym6rc5a" path="res://assets/characters/iruka/idle/idle_0-3.png" id="3_d10pw"]
+[ext_resource type="Texture2D" uid="uid://dnc4ms5kxr03i" path="res://assets/characters/iruka/attack/attack_200-0.png" id="4_atk0"]
+[ext_resource type="Texture2D" uid="uid://dgap0wgr1xlm2" path="res://assets/characters/iruka/attack/attack_200-1.png" id="5_atk1"]
+[ext_resource type="Texture2D" uid="uid://bd5d1yqcn2yu2" path="res://assets/characters/iruka/attack/attack_200-2.png" id="6_atk2"]
+[ext_resource type="Texture2D" uid="uid://jsdaaao0ikmo" path="res://assets/characters/iruka/attack_kunai/attack_200-10.png" id="7_k0"]
+[ext_resource type="Texture2D" uid="uid://cs0x6srupxbrf" path="res://assets/characters/iruka/attack_kunai/attack_200-11.png" id="8_k1"]
+[ext_resource type="Texture2D" uid="uid://crdwgp36a3alg" path="res://assets/characters/iruka/attack_kunai/attack_200-13.png" id="9_k2"]
+[ext_resource type="Texture2D" uid="uid://duh7evmbncs6s" path="res://assets/characters/iruka/attack_kunai/attack_200-15.png" id="10_k3"]
+[ext_resource type="Texture2D" uid="uid://diurld7ejqem1" path="res://assets/characters/iruka/throw_kunai/kunai_300-0.png" id="11_tk0"]
+[ext_resource type="Texture2D" uid="uid://cqmjgb6sxvyh" path="res://assets/characters/iruka/throw_kunai/kunai_300-1.png" id="12_tk1"]
+[ext_resource type="Texture2D" uid="uid://rmah56rqm5d8" path="res://assets/characters/iruka/throw_kunai/kunai_300-2.png" id="13_tk2"]
+[ext_resource type="Texture2D" uid="uid://bresgnyumrb42" path="res://assets/characters/iruka/throw_papel_bomba/kunai_300-0.png" id="14_tpb0"]
+[ext_resource type="Texture2D" uid="uid://dh3kgsb27pl4g" path="res://assets/characters/iruka/throw_papel_bomba/kunai_300-1.png" id="14_tpb1"]
+[ext_resource type="Texture2D" uid="uid://bo0xllu58n5p1" path="res://assets/characters/iruka/throw_papel_bomba/kunai_300-9.png" id="14_tpb9"]
+[ext_resource type="Texture2D" uid="uid://cohikamwwnxqa" path="res://assets/characters/iruka/run/run_20-0.png" id="15_run0"]
+[ext_resource type="Texture2D" uid="uid://clcxqsmxqacgn" path="res://assets/characters/iruka/run/run_20-1.png" id="16_run1"]
+[ext_resource type="Texture2D" uid="uid://1vao141o5cv3" path="res://assets/characters/iruka/run/run_20-2.png" id="17_run2"]
+[ext_resource type="Texture2D" uid="uid://dj0dvt6uyn0pb" path="res://assets/characters/iruka/run/run_20-3.png" id="18_run3"]
+[ext_resource type="Texture2D" uid="uid://byr1l7onfforg" path="res://assets/characters/iruka/run/run_20-4.png" id="19_run4"]
+[ext_resource type="Texture2D" uid="uid://llyihah43ceo" path="res://assets/characters/iruka/run/run_20-5.png" id="20_run5"]
+[ext_resource type="Texture2D" uid="uid://hs40ir0ohijm" path="res://assets/characters/iruka/defense/defense_121-0.png" id="21_def0"]
+[ext_resource type="Texture2D" uid="uid://bb1tnp33axute" path="res://assets/characters/iruka/defense/defense_121-1.png" id="22_def1"]
+[ext_resource type="Texture2D" uid="uid://c4bb7kypacbgx" path="res://assets/characters/iruka/bravo/attack_200-16.png" id="23_br0"]
+[ext_resource type="Texture2D" uid="uid://cjti5o7cqfimk" path="res://assets/characters/iruka/bravo/attack_200-17.png" id="24_br1"]
+[ext_resource type="Texture2D" uid="uid://ys5oetfmdhhf" path="res://assets/characters/iruka/bravo/attack_200-18.png" id="25_br2"]
+[ext_resource type="Texture2D" uid="uid://ct4ups4x53i6d" path="res://assets/effects/jutsus/substituicao/substitution_jutsu_sheet.png" id="26_subst"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_13hvk"]
+atlas = ExtResource("26_subst")
+region = Rect2(0, 0, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p4o5u"]
+atlas = ExtResource("26_subst")
+region = Rect2(0, 96, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fyun2"]
+atlas = ExtResource("26_subst")
+region = Rect2(0, 192, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pf2dp"]
+atlas = ExtResource("26_subst")
+region = Rect2(0, 288, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2smm"]
+atlas = ExtResource("26_subst")
+region = Rect2(0, 384, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xgykd"]
+atlas = ExtResource("26_subst")
+region = Rect2(0, 480, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fe3dk"]
+atlas = ExtResource("26_subst")
+region = Rect2(0, 576, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1n356"]
+atlas = ExtResource("26_subst")
+region = Rect2(0, 672, 64, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gomcq"]
+atlas = ExtResource("26_subst")
+region = Rect2(0, 768, 64, 96)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_atk0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_atk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_atk2")
+}],
+"loop": 0,
+"name": &"attack",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_k0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_k1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_k2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_k3")
+}],
+"loop": 0,
+"name": &"attack_kunai",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("23_br0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_br1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_br2")
+}],
+"loop": 0,
+"name": &"bravo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_def1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_br1")
+}],
+"loop": 0,
+"name": &"damage",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("21_def0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_def1")
+}],
+"loop": 1,
+"name": &"defense",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("21_def0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_def1")
+}],
+"loop": 1,
+"name": &"guard",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_epc8l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_6nvjl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_d10pw")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_13hvk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p4o5u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fyun2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pf2dp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2smm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xgykd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fe3dk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1n356")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gomcq")
+}],
+"loop": 0,
+"name": &"kawarimi",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_run0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_run1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_run2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_run3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_run4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_run5")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_tk0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_tk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_tk2")
+}],
+"loop": 0,
+"name": &"throw_kunai",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_tpb0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_tpb1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_tpb9")
+}],
+"loop": 0,
+"name": &"throw_papel_bomba",
+"speed": 7.0
+}]

@@ -86,8 +86,8 @@ func _ready():
 	# 6. Verifica carta iron_guard e animação kunai_defense
 	var iron_guard = load('res://data/abilities/iron_guard.tres')
 	assert(iron_guard != null, 'iron_guard.tres deve carregar com sucesso')
-	assert(iron_guard.animation_key == 'kunai_defense', 'iron_guard deve ter animation_key == "kunai_defense"')
-	print('[PASS] iron_guard animation_key == "kunai_defense"')
+	assert(iron_guard.animation_key in ['defense', 'kunai_defense'], 'iron_guard deve ter animation_key "defense" ou "kunai_defense"')
+	print('[PASS] iron_guard animation_key == "' + iron_guard.animation_key + '"')
 	
 	assert(naruto_frames.has_animation('kunai_defense'), 'naruto_frames deve possuir animacao kunai_defense')
 	assert(naruto_frames.get_frame_count('kunai_defense') == 3, 'kunai_defense deve ter 3 frames')

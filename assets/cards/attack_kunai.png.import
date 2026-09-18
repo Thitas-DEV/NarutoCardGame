@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5ajowroqha7e"
-path="res://.godot/imported/kunai_bomba_20-12.png-d997be91e24a28c4ce3593fd987440de.ctex"
+uid="uid://dcxal04coifk7"
+path="res://.godot/imported/attack_kunai.png-34cab6a3ef58846bf91901f0d9fc0006.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/traps/kunai_bomba/kunai_bomba_20-12.png"
-dest_files=["res://.godot/imported/kunai_bomba_20-12.png-d997be91e24a28c4ce3593fd987440de.ctex"]
+source_file="res://assets/cards/attack_kunai.png"
+dest_files=["res://.godot/imported/attack_kunai.png-34cab6a3ef58846bf91901f0d9fc0006.ctex"]
 
 [params]
 

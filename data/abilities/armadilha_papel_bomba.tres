@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://bkn3kuokocipc"]
+
+[ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="1_abdt"]
+[ext_resource type="Texture2D" uid="uid://drvjdge4g50n6" path="res://assets/cards/papel_bomba.png" id="1_hswme"]
+
+[resource]
+script = ExtResource("1_abdt")
+id = "armadilha_papel_bomba"
+name = "Armadilha de Papel Bomba"
+description = "Armadilha tática no solo. Neutraliza o próximo ataque inimigo e detona causando 16 de dano explosivo de contra-ataque."
+icon = ExtResource("1_hswme")
+vigor_cost = 30
+ability_type = 3
+target_type = 2
+delivery_type = 5
+scripts = Array[Dictionary]([{
+"effect": "plant_trap",
+"trigger": "on_play",
+"value": "papel_bomba"
+}])
+animation_key = "throw_papel_bomba"

@@ -775,7 +775,35 @@ func _damage_character(target_data: CharacterData, target_visual: Node2D, amount
 			shake_arena(5.0, 0.3)
 			SoundManager.play_sfx("hit", 0.7)
 			target_visual.spawn_floating_text("PAREDE DE LAMA! 🪨 (BLOQUEADO)", Color(0.85, 0.65, 0.35))
+		elif trap.id == "armadilha_papel_bomba":
+			# Detonação explosiva do papel bomba plantado no chão!
+			var vfx = $Arena2D/BattleVFX if has_node("Arena2D/BattleVFX") else null
+			var attacker_visual = enemy_visual if is_target_player else player_visual
+			var attacker_data = enemy_data if is_target_player else player_data
+			
+			SoundManager.play_sfx("hit", 1.4)
+			shake_arena(9.0, 0.4)
+			target_visual.spawn_floating_text("PAPEL BOMBA DETONADO! 💥 (DEFESA)", Color(1.0, 0.6, 0.1))
+			
+			# Spawn de explosão e fumaça na posição da armadilha
+			if vfx:
+				var trap_pos = target_visual.global_position + (Vector2(40.0, 0.0) if is_target_player else Vector2(-40.0, 0.0))
+				vfx.spawn_explosion(trap_pos, Color(1.0, 0.45, 0.1), 60.0)
+				vfx.spawn_smoke_puff(trap_pos)
+			
+			# Causa contra-ataque explosivo no atacante com animação de impacto de explosão
+			if attacker_visual and attacker_data:
+				if attacker_visual.has_method("play_impact_explosion"):
+					attacker_visual.play_impact_explosion()
+				if vfx:
+					vfx.spawn_explosion(attacker_visual.global_position, Color(1.0, 0.35, 0.1), 50.0)
+					vfx.spawn_smoke_puff(attacker_visual.global_position)
+				attacker_visual.spawn_floating_text("EXPLOSÃO! -16 💥", Color(1.0, 0.3, 0.2))
+				attacker_data.current_hp = maxi(0, attacker_data.current_hp - 16)
+				if attacker_visual.has_method("play_damage_animation"):
+					attacker_visual.play_damage_animation()
 			_update_ui()
+			_check_battle_state()
 			return
 		else:
 			# Substituição padrão (Kawarimi)

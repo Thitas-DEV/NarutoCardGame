@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c8sqc50vx8dai"
-path="res://.godot/imported/kunai_bomba_20-13.png-12c3f9f94206c1c5e45c6b978e0e5ff4.ctex"
+path="res://.godot/imported/kunai_bomba_20-13.png-d38c148a5a7ecf753d2c80b819058aaf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/traps/kunai_bomba/kunai_bomba_20-13.png"
-dest_files=["res://.godot/imported/kunai_bomba_20-13.png-12c3f9f94206c1c5e45c6b978e0e5ff4.ctex"]
+source_file="res://assets/jutsus/kunai_bomba_no_chao/kunai_bomba_20-13.png"
+dest_files=["res://.godot/imported/kunai_bomba_20-13.png-d38c148a5a7ecf753d2c80b819058aaf.ctex"]
 
 [params]
 

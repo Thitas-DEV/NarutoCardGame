@@ -238,6 +238,9 @@ func spawn_earth_wall(pos: Vector2, is_player_side: bool = true, duration: float
 	
 	return wall_sprite
 
+func spawn_explosion(pos: Vector2, color: Color = Color(1.0, 0.45, 0.1), radius: float = 45.0) -> void:
+	_spawn_explosion(pos, color, radius)
+
 func _spawn_explosion(pos: Vector2, color: Color, radius: float) -> void:
 	active_explosions.append({
 		"pos": pos,
@@ -281,6 +284,8 @@ func _draw() -> void:
 		if proj.texture:
 			var tex_size = proj.texture.get_size()
 			var dir = (proj.end_pos - proj.start_pos).angle()
+			if "kunai_300-4" in proj.texture.resource_path or "laminas" in proj.texture.resource_path:
+				dir += proj.traveled * 0.08
 			draw_set_transform(proj.current_pos, dir, Vector2.ONE)
 			draw_texture(proj.texture, -tex_size * 0.5)
 			draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)

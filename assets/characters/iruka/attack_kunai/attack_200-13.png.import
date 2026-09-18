@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctrrvasw3hrr"
-path="res://.godot/imported/fagulha_1403-4.png-5fb4cf55d7f29e4f03eaa2a817f8c127.ctex"
+uid="uid://crdwgp36a3alg"
+path="res://.godot/imported/attack_200-13.png-e0f7abb65977d84ed0e6bb4603165298.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/traps/kunai_bomba/fagulha/fagulha_1403-4.png"
-dest_files=["res://.godot/imported/fagulha_1403-4.png-5fb4cf55d7f29e4f03eaa2a817f8c127.ctex"]
+source_file="res://assets/characters/iruka/attack_kunai/attack_200-13.png"
+dest_files=["res://.godot/imported/attack_200-13.png-e0f7abb65977d84ed0e6bb4603165298.ctex"]
 
 [params]
 
