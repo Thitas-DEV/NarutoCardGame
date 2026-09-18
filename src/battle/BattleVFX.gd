@@ -16,9 +16,16 @@ var active_summons: Array[Dictionary] = []
 # Lista de efeitos de impacto / explosões
 var active_explosions: Array[Dictionary] = []
 const PAREDE_DE_LAMA_FRAMES = preload("res://data/vfx/parede_de_lama_frames.tres")
+const BOLA_DE_FOGO_FRAMES = preload("res://data/vfx/bola_de_fogo_frames.tres")
 
 func _ready() -> void:
 	z_index = 20 # Renderiza acima dos personagens
+
+func _exit_tree() -> void:
+	for proj in active_projectiles:
+		if proj.get("sprite_node") != null and is_instance_valid(proj.sprite_node):
+			proj.sprite_node.queue_free()
+	active_projectiles.clear()
 
 func _process(delta: float) -> void:
 	var needs_redraw = false
@@ -32,19 +39,26 @@ func _process(delta: float) -> void:
 		var t = clampf(proj.traveled / proj.distance, 0.0, 1.0)
 		proj.current_pos = proj.start_pos.lerp(proj.end_pos, t)
 		
-		# Adicionar ponto ao rastro
-		proj.trail.append({"pos": proj.current_pos, "alpha": 1.0, "size": proj.radius * 0.8})
-		if proj.trail.size() > 8:
-			proj.trail.pop_front()
-			
-		# Envelhecer rastro existente
-		for tr in proj.trail:
-			tr.alpha = maxf(0.0, tr.alpha - delta * 4.0)
-			tr.size = maxf(2.0, tr.size - delta * 15.0)
+		# Atualizar sprite animado se houver (ex: Bola de Fogo)
+		if proj.get("sprite_node") != null and is_instance_valid(proj.sprite_node):
+			proj.sprite_node.position = proj.current_pos
+		else:
+			# Adicionar ponto ao rastro apenas se não tiver sprite dedicado
+			proj.trail.append({"pos": proj.current_pos, "alpha": 1.0, "size": proj.radius * 0.8})
+			if proj.trail.size() > 8:
+				proj.trail.pop_front()
+				
+			# Envelhecer rastro existente
+			for tr in proj.trail:
+				tr.alpha = maxf(0.0, tr.alpha - delta * 4.0)
+				tr.size = maxf(2.0, tr.size - delta * 15.0)
 			
 		if t >= 1.0:
 			# Chegou ao destino
-			_spawn_explosion(proj.end_pos, proj.color, proj.radius * 2.2)
+			if proj.get("sprite_node") != null and is_instance_valid(proj.sprite_node):
+				proj.sprite_node.queue_free()
+			var exp_radius = 55.0 if proj.get("sprite_node") != null else proj.radius * 2.2
+			_spawn_explosion(proj.end_pos, proj.color, exp_radius)
 			if proj.on_impact.is_valid():
 				proj.on_impact.call()
 			active_projectiles.remove_at(p_idx)
@@ -123,6 +137,21 @@ func spawn_projectile(start_pos: Vector2, end_pos: Vector2, ability: AbilityData
 	var dist = start_pos.distance_to(end_pos)
 	var speed = ability.projectile_speed if ability.projectile_speed > 0 else 900.0
 	
+	var is_fireball = (ability != null and (ability.id == "katon_gokakyu" or ability.required_element == ChakraElement.Type.FIRE or ability.animation_key in ["katon", "katon_multi"]))
+	var sprite_node: AnimatedSprite2D = null
+	
+	if is_fireball:
+		sprite_node = AnimatedSprite2D.new()
+		sprite_node.sprite_frames = BOLA_DE_FOGO_FRAMES
+		sprite_node.animation = "default"
+		sprite_node.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		sprite_node.flip_h = (end_pos.x < start_pos.x)
+		sprite_node.position = start_pos
+		sprite_node.z_index = 10
+		add_child(sprite_node)
+		sprite_node.play("default")
+		SoundManager.play_sfx("katon")
+	
 	active_projectiles.append({
 		"start_pos": start_pos,
 		"end_pos": end_pos,
@@ -135,6 +164,7 @@ func spawn_projectile(start_pos: Vector2, end_pos: Vector2, ability: AbilityData
 		"radius": 18.0 if ability.element_cost > 1 else 14.0,
 		"element": ability.required_element,
 		"trail": [],
+		"sprite_node": sprite_node,
 		"on_impact": on_impact
 	})
 	queue_redraw()
@@ -275,6 +305,10 @@ func _draw() -> void:
 
 	# 2. Desenhar Projéteis
 	for proj in active_projectiles:
+		# Se tiver nó de sprite dedicado (como Bola de Fogo), já é renderizado pelo nó
+		if proj.get("sprite_node") != null:
+			continue
+			
 		# Rastro de partículas
 		for tr in proj.trail:
 			var t_col = Color(proj.color.r, proj.color.g, proj.color.b, tr.alpha * 0.6)

@@ -153,6 +153,19 @@ func _get_or_generate_sound(sound_name: String) -> AudioStreamWAV:
 				var click = randf_range(-0.4, 0.4) * exp(-t * 80.0)
 				var sample_val = int(clampf((ring + click) * env, -1.0, 1.0) * 32767.0)
 				data.encode_s16(i * 2, sample_val)
+
+		"katon", "fireball":
+			# Fiery roar and rushing flame whoosh
+			sample_count = int(22050 * 0.55)
+			data.resize(sample_count * 2)
+			for i in range(sample_count):
+				var t = float(i) / 22050.0
+				var env = sin(float(i)/sample_count * PI)
+				var rumble = sin(t * (110.0 + sin(t * 25.0 * TAU) * 40.0) * TAU) * 0.6
+				var roar = randf_range(-0.5, 0.5) * (0.5 + sin(t * 12.0 * TAU) * 0.3)
+				var crackle = randf_range(-0.4, 0.4) if randf() > 0.7 else 0.0
+				var sample_val = int(clampf((rumble * 0.5 + roar * 0.4 + crackle * 0.3) * env, -1.0, 1.0) * 32767.0)
+				data.encode_s16(i * 2, sample_val)
 				
 		_:
 			# Default UI click

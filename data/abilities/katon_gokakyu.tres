@@ -16,6 +16,7 @@ delivery_type = 1
 projectile_color = Color(1, 0.35, 0.08, 1)
 projectile_speed = 950.0
 screen_shake_intensity = 7.0
+animation_key = "katon"
 scripts = Array[Dictionary]([{
 "combo": 1,
 "effect": "damage",
