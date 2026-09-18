@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://basw8sqac3vxu"]
+
+[ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="1_abdt"]
+[ext_resource type="Texture2D" uid="uid://dcxal04coifk7" path="res://assets/cards/attack_kunai.png" id="1_bmdvv"]
+
+[resource]
+script = ExtResource("1_abdt")
+id = "ataque_de_kunai"
+name = "Ataque de Kunai"
+description = "Avança com agilidade desferindo um golpe cortante e preciso de kunai."
+icon = ExtResource("1_bmdvv")
+vigor_cost = 20
+screen_shake_intensity = 3.5
+scripts = Array[Dictionary]([{
+"combo": 1,
+"effect": "damage",
+"hits": 1,
+"trigger": "on_play",
+"value": 11
+}])
+animation_key = "attack_kunai"

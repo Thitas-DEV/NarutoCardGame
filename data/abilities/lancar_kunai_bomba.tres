@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://dtt7ehsa8hafy"]
+
+[ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="1_abdt"]
+[ext_resource type="Texture2D" uid="uid://clgi2g4idlhd8" path="res://assets/cards/kunai_bomba.png" id="1_pui0q"]
+[ext_resource type="Texture2D" uid="uid://byu4eip87m463" path="res://assets/jutsus/kunai_com_bomba_ar/kunai_com_bomba_3350-1.png" id="2_bomb_kunai"]
+
+[resource]
+script = ExtResource("1_abdt")
+id = "lancar_kunai_bomba"
+name = "Lançar Kunai Bomba"
+description = "Arremessa uma kunai com papel bomba anexado, explodindo no impacto com dano devastador."
+icon = ExtResource("1_pui0q")
+vigor_cost = 35
+delivery_type = 1
+projectile_texture = ExtResource("2_bomb_kunai")
+projectile_color = Color(1, 0.45, 0.1, 1)
+projectile_speed = 950.0
+screen_shake_intensity = 6.0
+scripts = Array[Dictionary]([{
+"combo": 1,
+"effect": "damage",
+"hits": 1,
+"trigger": "on_play",
+"value": 18
+}])
+animation_key = "throw_papel_bomba"

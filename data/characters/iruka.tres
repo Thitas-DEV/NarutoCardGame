@@ -1,23 +1,28 @@
-[gd_resource type="Resource" script_class="CharacterData" load_steps=5 format=3]
+[gd_resource type="Resource" script_class="CharacterData" load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://src/core/character_data.gd" id="1_chdt"]
-[ext_resource type="Resource" path="res://data/abilities/naruto_punch.tres" id="2_naruto_punch"]
-[ext_resource type="Resource" path="res://data/abilities/iron_guard.tres" id="3_iron_guard"]
-[ext_resource type="Resource" path="res://data/abilities/kawarimi_trap.tres" id="4_kawarimi_trap"]
-[ext_resource type="Resource" path="res://data/abilities/katon_gokakyu.tres" id="5_katon_gokakyu"]
+[ext_resource type="Resource" path="res://data/abilities/ataque_de_kunai.tres" id="2_atk_kunai"]
+[ext_resource type="Resource" path="res://data/abilities/lancar_kunai.tres" id="3_lancar_kunai"]
+[ext_resource type="Resource" path="res://data/abilities/lancar_kunai_4_laminas.tres" id="4_kunai_4_laminas"]
+[ext_resource type="Resource" path="res://data/abilities/lancar_kunai_bomba.tres" id="5_lancar_bomba"]
+[ext_resource type="Resource" path="res://data/abilities/armadilha_papel_bomba.tres" id="6_armadilha_bomba"]
+[ext_resource type="Resource" path="res://data/abilities/katon_gokakyu.tres" id="7_katon"]
+[ext_resource type="Resource" path="res://data/abilities/iron_guard.tres" id="8_iron_guard"]
+[ext_resource type="SpriteFrames" path="res://data/characters/iruka_frames.tres" id="9_frames"]
 
 [resource]
 script = ExtResource("1_chdt")
 id = "iruka"
 name = "Iruka Umino"
 title = "Instrutor da Academia Ninja"
-tags = Array[String]([])
-max_hp = 75
-current_hp = 75
-max_vigor = 80
-current_vigor = 80
+tags = Array[String](["academia", "folha"])
+max_hp = 80
+current_hp = 80
+max_vigor = 100
+current_vigor = 100
 attack_modifier = 1.0
 avatar_color = Color(0.45, 0.35, 0.25, 1)
 secondary_color = Color(0.25, 0.2, 0.15, 1)
-chakra_affinities = Array[int]([2, 1])
-starting_deck = Array[Resource("res://src/core/ability_data.gd")]([ExtResource("2_naruto_punch"), ExtResource("2_naruto_punch"), ExtResource("3_iron_guard"), ExtResource("3_iron_guard"), ExtResource("4_kawarimi_trap"), ExtResource("5_katon_gokakyu")])
+chakra_affinities = Array[int]([2])
+sprite_frames = ExtResource("9_frames")
+starting_deck = Array[Resource("res://src/core/ability_data.gd")]([ExtResource("2_atk_kunai"), ExtResource("2_atk_kunai"), ExtResource("3_lancar_kunai"), ExtResource("3_lancar_kunai"), ExtResource("4_kunai_4_laminas"), ExtResource("4_kunai_4_laminas"), ExtResource("5_lancar_bomba"), ExtResource("5_lancar_bomba"), ExtResource("6_armadilha_bomba"), ExtResource("6_armadilha_bomba"), ExtResource("7_katon"), ExtResource("7_katon"), ExtResource("8_iron_guard"), ExtResource("8_iron_guard")])

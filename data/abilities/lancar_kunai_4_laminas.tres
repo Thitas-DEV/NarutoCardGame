@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://bskmmy17u2085"]
+
+[ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="1_abdt"]
+[ext_resource type="Texture2D" uid="uid://cvhh5xnwcotbk" path="res://assets/cards/Fuuma_Shuriken.png" id="1_wpann"]
+[ext_resource type="Texture2D" uid="uid://cvs0unvgmtqpi" path="res://assets/jutsus/kunai_4_laminas/kunai_300-4.png" id="2_fuma"]
+
+[resource]
+script = ExtResource("1_abdt")
+id = "lancar_kunai_4_laminas"
+name = "Lançar Kunai de 4 Lâminas"
+description = "Arremessa uma kunai de quatro lâminas rotativas cortantes, desferindo múltiplos cortes velozes no adversário."
+icon = ExtResource("1_wpann")
+vigor_cost = 25
+delivery_type = 1
+projectile_texture = ExtResource("2_fuma")
+projectile_color = Color(0.85, 0.9, 0.98, 1)
+projectile_speed = 1150.0
+screen_shake_intensity = 5.0
+scripts = Array[Dictionary]([{
+"combo": 2,
+"effect": "damage",
+"hits": 2,
+"trigger": "on_play",
+"value": 14
+}])
+animation_key = "throw_kunai"

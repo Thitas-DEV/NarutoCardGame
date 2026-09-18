@@ -93,9 +93,11 @@ func _setup_sprite_nodes() -> void:
 
 func setup_character(data: CharacterData) -> void:
 	character_data = data
-	name_label.text = data.name
+	if name_label:
+		name_label.text = data.name
 	_setup_character_animations(data)
-	update_stats(data.current_hp, data.max_hp, 0, {})
+	if hp_bar:
+		update_stats(data.current_hp, data.max_hp, 0, {})
 	queue_redraw()
 
 func play_smoke_overlay(on_finished: Callable = Callable()) -> void:
@@ -243,8 +245,13 @@ func play_custom_animation(anim_name: String) -> void:
 		animated_sprite.play(target)
 		return
 	elif anim_name in ["guard", "defense", "kunai_defense"]:
+<<<<<<< HEAD
 		for fallback in ["defense", "guard", "kunai_defense", "Guard", "Defense"]:
 			if frames.has_animation(fallback) and frames.get_frame_count(fallback) > 0:
+=======
+		for fallback in ["defense", "kunai_defense", "guard"]:
+			if animated_sprite.sprite_frames.has_animation(fallback) and animated_sprite.sprite_frames.get_frame_count(fallback) > 0:
+>>>>>>> 3548d79b0f0494dd994829e451754251b108ae65
 				animated_sprite.play(fallback)
 				return
 	elif anim_name == "idle":
@@ -531,9 +538,10 @@ func _execute_melee_dash(ability: AbilityData, target_character: Node2D, on_hit:
 			# 1. Inicia animação de corrida "run" e corre até o adversário
 			play_custom_animation("run")
 			tw.tween_property(self, "global_position", dest, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-			# 2. Ao alcançar o alvo, executa a animação "attack" (soco) e aplica impacto
+			# 2. Ao alcançar o alvo, executa a animação "attack" ou golpe específico (ex: attack_kunai) e aplica impacto
 			tw.tween_callback(func():
-				play_custom_animation("attack")
+				var strike_anim = ability.animation_key if ability.animation_key != "" else "attack"
+				play_custom_animation(strike_anim)
 				if on_hit.is_valid():
 					on_hit.call()
 				else:
@@ -677,16 +685,17 @@ func _execute_summon(ability: AbilityData, target_character: Node2D, on_hit: Cal
 	)
 
 func _execute_self_cast(ability: AbilityData, on_hit: Callable) -> void:
-	if ability.ability_type == AbilityData.AbilityType.TRAP or ability.id in ["kawarimi_trap", "doton_wall"]:
-		var text = "DEFESA DOTON ARMADA! 🪨" if ability.id == "doton_wall" else "ARMADILHA PREPARADA!"
-		var anim = "defense" if ability.id == "doton_wall" else "idle"
+	if ability.ability_type == AbilityData.AbilityType.TRAP or ability.id in ["kawarimi_trap", "doton_wall", "armadilha_papel_bomba"]:
+		var text = "DEFESA DOTON ARMADA! 🪨" if ability.id == "doton_wall" else ("PAPEL BOMBA ARMADO! 💣" if ability.id == "armadilha_papel_bomba" else "ARMADILHA PREPARADA!")
+		var anim = ability.animation_key if ability.animation_key != "" else ("defense" if ability.id == "doton_wall" else "idle")
 		play_custom_animation(anim)
 		spawn_floating_text(text, Color(0.85, 0.7, 0.2))
 		SoundManager.play_sfx("card_play")
 		if on_hit.is_valid():
 			on_hit.call()
 		var tw_trap = create_tween()
-		tw_trap.tween_interval(0.35)
+		var trap_duration = 0.5 if anim == "throw_papel_bomba" else 0.35
+		tw_trap.tween_interval(trap_duration)
 		tw_trap.tween_callback(func():
 			is_animating = false
 			play_custom_animation("idle")
@@ -713,7 +722,7 @@ func _execute_self_cast(ability: AbilityData, on_hit: Callable) -> void:
 		on_hit.call()
 		
 	var tw = create_tween()
-	var cast_duration = 0.8 if ability.id == "kagebunshin" else (0.55 if anim_key == "kunai_defense" else 0.4)
+	var cast_duration = 0.8 if ability.id == "kagebunshin" else (0.55 if anim_key in ["kunai_defense", "defense", "guard"] else 0.4)
 	tw.tween_interval(cast_duration)
 	tw.tween_callback(func():
 		aura_active = false

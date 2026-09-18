@@ -1,0 +1,118 @@
+[gd_resource type="SpriteFrames" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_0.png" id="1_qq0ks"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_1.png" id="2_lcgnj"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_2.png" id="3_eulwb"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_3.png" id="4_6vslf"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_4.png" id="5_vqr86"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_5.png" id="6_83lva"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_6.png" id="7_bfe0v"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_7.png" id="8_qsrtw"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_8.png" id="9_sinkg"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_9.png" id="10_nrbxn"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_10.png" id="11_mvk5p"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_11.png" id="12_l04wy"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_12.png" id="13_dqh0h"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_13.png" id="14_q7aaw"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_14.png" id="15_0kqxu"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_15.png" id="16_joqk6"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_16.png" id="17_8a5as"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_17.png" id="18_pl53c"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_18.png" id="19_an4kl"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_19.png" id="20_dni1n"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_20.png" id="21_p2l33"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_21.png" id="22_ujtyh"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_22.png" id="23_6qhda"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_23.png" id="24_lufaf"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_24.png" id="25_g6mpq"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_25.png" id="26_27jf7"]
+[ext_resource type="Texture2D" path="res://assets/jutsus/bola_de_fogo/bola_de_fogo_26.png" id="27_f6xjv"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_qq0ks")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_lcgnj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_eulwb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_6vslf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_vqr86")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_83lva")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_bfe0v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_qsrtw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_sinkg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_nrbxn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_mvk5p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_l04wy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_dqh0h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_q7aaw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_0kqxu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_joqk6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_8a5as")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_pl53c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_an4kl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_dni1n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_p2l33")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_ujtyh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_6qhda")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_lufaf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_g6mpq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_27jf7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_f6xjv")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 28.0
+}]

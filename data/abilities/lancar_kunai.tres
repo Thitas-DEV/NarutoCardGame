@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3 uid="uid://bx2nxwibfv8na"]
+
+[ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="1_abdt"]
+[ext_resource type="Texture2D" uid="uid://c75bt6cntnes5" path="res://assets/cards/lancar_kunai.png" id="1_eecpv"]
+[ext_resource type="Texture2D" uid="uid://ced3g1wjdo0qk" path="res://assets/jutsus/kunai/kunai_300-3.png" id="2_kunai"]
+
+[resource]
+script = ExtResource("1_abdt")
+id = "lancar_kunai"
+name = "Lançar Kunai"
+description = "Arremessa uma kunai afiada à distância causando dano perfurante imediato."
+icon = ExtResource("1_eecpv")
+vigor_cost = 20
+delivery_type = 1
+projectile_texture = ExtResource("2_kunai")
+projectile_color = Color(0.85, 0.9, 0.95, 1)
+projectile_speed = 1050.0
+screen_shake_intensity = 3.0
+scripts = Array[Dictionary]([{
+"combo": 1,
+"effect": "damage",
+"hits": 1,
+"trigger": "on_play",
+"value": 10
+}])
+animation_key = "throw_kunai"

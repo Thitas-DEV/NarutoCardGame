@@ -14,3 +14,8 @@ Coloque os spritesheets, imagens PNG ou frames de animação dos ninjas nas resp
 1. Ao adicionar arquivos `.png`, a Godot irá importá-los automaticamente.
 2. Na aba **Import** do arquivo no Godot, para Pixel Art, configure o Filter como **Nearest** se desejar visual nítido de pixels.
 3. Para configurar no jogo, abra a cena `res://src/battle/CharacterVisual.tscn`, selecione o nó `AnimatedSprite2D` e crie seu **SpriteFrames**.
+
+---
+
+Para acompanhar o status completo de todos os 29 ninjas e suas animações, consulte o arquivo na raiz do projeto:
+👉 **[CHECKLIST_PERSONAGENS_ANIMACOES.md](../../CHECKLIST_PERSONAGENS_ANIMACOES.md)**

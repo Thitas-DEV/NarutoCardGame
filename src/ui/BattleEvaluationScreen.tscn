@@ -1,0 +1,411 @@
+[gd_scene format=3 uid="uid://c8m3k8wal4p2y"]
+
+[ext_resource type="Script" uid="uid://cgvr8che47tkv" path="res://src/ui/BattleEvaluationScreen.gd" id="1_eval"]
+[ext_resource type="Texture2D" uid="uid://cs8jpxv2ale8m" path="res://assets/backgrounds/clouds.png" id="2_clouds"]
+[ext_resource type="Texture2D" uid="uid://cmjtj2wjkjuul" path="res://assets/UI/ninja_scroll_storm.png" id="3_xs558"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_char_card"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.1, 0.08, 0.06, 0.88)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.65, 0.25, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_stat_card"]
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+bg_color = Color(0.12, 0.09, 0.07, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.75, 0.55, 0.2, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_unlock_header"]
+content_margin_left = 12.0
+content_margin_top = 6.0
+content_margin_right = 12.0
+content_margin_bottom = 6.0
+bg_color = Color(0.2, 0.14, 0.04, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.85, 0.25, 0.95)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_continue_btn"]
+bg_color = Color(0.9, 0.45, 0.1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.85, 0.3, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.9, 0.45, 0.1, 0.4)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_continue_btn_hover"]
+bg_color = Color(1, 0.55, 0.15, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.95, 0.5, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(1, 0.55, 0.15, 0.6)
+shadow_size = 10
+
+[node name="BattleEvaluationScreen" type="Control" unique_id=625742959]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_eval")
+
+[node name="CloudsBackground" type="TextureRect" parent="." unique_id=1979344528]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_bottom = 94.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_clouds")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CloudsVignette" type="ColorRect" parent="." unique_id=1848761445]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.04, 0.06, 0.1, 0.65)
+
+[node name="ScrollFrame" type="TextureRect" parent="." unique_id=2075235940]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -690.0
+offset_top = -413.0
+offset_right = 668.0
+offset_bottom = 392.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_xs558")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ScrollContent" type="MarginContainer" parent="." unique_id=804765490]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -410.0
+offset_top = -290.0
+offset_right = 410.0
+offset_bottom = 290.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainContainer" type="VBoxContainer" parent="ScrollContent" unique_id=564561076]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Header" type="VBoxContainer" parent="ScrollContent/MainContainer" unique_id=27161548]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="TitleLabel" type="Label" parent="ScrollContent/MainContainer/Header" unique_id=565785684]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "AVALIACAO DE DESEMPENHO"
+horizontal_alignment = 1
+
+[node name="StageTitleLabel" type="Label" parent="ScrollContent/MainContainer/Header" unique_id=978711964]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "FASE 1.0 — NARUTO E IRUKA VS MIZUKI"
+horizontal_alignment = 1
+
+[node name="MissionStatusLabel" type="Label" parent="ScrollContent/MainContainer/Header" unique_id=1520988262]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.95, 0.45, 1)
+theme_override_font_sizes/font_size = 12
+text = "★ MISSAO CONCLUIDA COM SUCESSO! ★"
+horizontal_alignment = 1
+
+[node name="CombatantsBox" type="HBoxContainer" parent="ScrollContent/MainContainer" unique_id=765689393]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="HeroPanel" type="PanelContainer" parent="ScrollContent/MainContainer/CombatantsBox" unique_id=1341250630]
+custom_minimum_size = Vector2(290, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_char_card")
+
+[node name="VBox" type="VBoxContainer" parent="ScrollContent/MainContainer/CombatantsBox/HeroPanel" unique_id=1563211694]
+layout_mode = 2
+
+[node name="RoleLabel" type="Label" parent="ScrollContent/MainContainer/CombatantsBox/HeroPanel/VBox" unique_id=368237603]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "HEROI JOGAVEL"
+
+[node name="HeroNameLabel" type="Label" parent="ScrollContent/MainContainer/CombatantsBox/HeroPanel/VBox" unique_id=404320031]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.7, 1)
+theme_override_font_sizes/font_size = 15
+text = "Naruto Uzumaki"
+
+[node name="HeroTitleLabel" type="Label" parent="ScrollContent/MainContainer/CombatantsBox/HeroPanel/VBox" unique_id=842890360]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.85, 0.95, 1)
+theme_override_font_sizes/font_size = 11
+text = "Genin de Konoha"
+
+[node name="VSLabel" type="Label" parent="ScrollContent/MainContainer/CombatantsBox" unique_id=570648211]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_font_sizes/font_size = 16
+text = "⚔️ VS ⚔️"
+horizontal_alignment = 1
+
+[node name="EnemyPanel" type="PanelContainer" parent="ScrollContent/MainContainer/CombatantsBox" unique_id=1150068467]
+custom_minimum_size = Vector2(290, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_char_card")
+
+[node name="VBox" type="VBoxContainer" parent="ScrollContent/MainContainer/CombatantsBox/EnemyPanel" unique_id=148390519]
+layout_mode = 2
+
+[node name="RoleLabel" type="Label" parent="ScrollContent/MainContainer/CombatantsBox/EnemyPanel/VBox" unique_id=819412222]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.45, 0.4, 1)
+theme_override_font_sizes/font_size = 11
+text = "OPONENTE DA MISSAO"
+
+[node name="EnemyNameLabel" type="Label" parent="ScrollContent/MainContainer/CombatantsBox/EnemyPanel/VBox" unique_id=870570751]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.95, 0.7, 1)
+theme_override_font_sizes/font_size = 15
+text = "Mizuki"
+
+[node name="EnemyTitleLabel" type="Label" parent="ScrollContent/MainContainer/CombatantsBox/EnemyPanel/VBox" unique_id=765407657]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.5, 0.5, 1)
+theme_override_font_sizes/font_size = 11
+text = "Ninja Renegado [DERROTADO 💀]"
+
+[node name="StatsGrid" type="GridContainer" parent="ScrollContent/MainContainer" unique_id=1264535945]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+columns = 4
+
+[node name="DamageDealtCard" type="PanelContainer" parent="ScrollContent/MainContainer/StatsGrid" unique_id=2097647960]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_stat_card")
+
+[node name="VBox" type="VBoxContainer" parent="ScrollContent/MainContainer/StatsGrid/DamageDealtCard" unique_id=1284707680]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="ScrollContent/MainContainer/StatsGrid/DamageDealtCard/VBox" unique_id=11698956]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.5, 0.3, 1)
+theme_override_font_sizes/font_size = 11
+text = "💥 DANO CAUSADO"
+
+[node name="DamageDealtValue" type="Label" parent="ScrollContent/MainContainer/StatsGrid/DamageDealtCard/VBox" unique_id=738146832]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_font_sizes/font_size = 22
+text = "0"
+horizontal_alignment = 1
+
+[node name="SubLabel" type="Label" parent="ScrollContent/MainContainer/StatsGrid/DamageDealtCard/VBox" unique_id=700949282]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.75, 0.85, 1)
+theme_override_font_sizes/font_size = 10
+text = "Total infligido"
+horizontal_alignment = 1
+
+[node name="DamageTakenCard" type="PanelContainer" parent="ScrollContent/MainContainer/StatsGrid" unique_id=1000850073]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_stat_card")
+
+[node name="VBox" type="VBoxContainer" parent="ScrollContent/MainContainer/StatsGrid/DamageTakenCard" unique_id=1013864409]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="ScrollContent/MainContainer/StatsGrid/DamageTakenCard/VBox" unique_id=378177149]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.35, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "🛡️ DANO SOFRIDO"
+
+[node name="DamageTakenValue" type="Label" parent="ScrollContent/MainContainer/StatsGrid/DamageTakenCard/VBox" unique_id=67342795]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.9, 1, 1)
+theme_override_font_sizes/font_size = 22
+text = "0"
+horizontal_alignment = 1
+
+[node name="SubLabel" type="Label" parent="ScrollContent/MainContainer/StatsGrid/DamageTakenCard/VBox" unique_id=334832204]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.75, 0.85, 1)
+theme_override_font_sizes/font_size = 10
+text = "Impacto absorvido"
+horizontal_alignment = 1
+
+[node name="TurnsCard" type="PanelContainer" parent="ScrollContent/MainContainer/StatsGrid" unique_id=1881763633]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_stat_card")
+
+[node name="VBox" type="VBoxContainer" parent="ScrollContent/MainContainer/StatsGrid/TurnsCard" unique_id=357557144]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="ScrollContent/MainContainer/StatsGrid/TurnsCard/VBox" unique_id=1812887742]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.75, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "⏳ DURACAO"
+
+[node name="TurnsValue" type="Label" parent="ScrollContent/MainContainer/StatsGrid/TurnsCard/VBox" unique_id=65578962]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.95, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "1 Turno"
+horizontal_alignment = 1
+
+[node name="SubLabel" type="Label" parent="ScrollContent/MainContainer/StatsGrid/TurnsCard/VBox" unique_id=2067426966]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.75, 0.85, 1)
+theme_override_font_sizes/font_size = 10
+text = "Resolucao ninja"
+horizontal_alignment = 1
+
+[node name="RankCard" type="PanelContainer" parent="ScrollContent/MainContainer/StatsGrid" unique_id=1318020249]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_stat_card")
+
+[node name="VBox" type="VBoxContainer" parent="ScrollContent/MainContainer/StatsGrid/RankCard" unique_id=269964625]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="ScrollContent/MainContainer/StatsGrid/RankCard/VBox" unique_id=1341171438]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.25, 1)
+theme_override_font_sizes/font_size = 11
+text = "🎖️ CLASSIFICACAO"
+
+[node name="RankLetterLabel" type="Label" parent="ScrollContent/MainContainer/StatsGrid/RankCard/VBox" unique_id=1930499332]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 24
+text = "S"
+horizontal_alignment = 1
+
+[node name="RankTitleLabel" type="Label" parent="ScrollContent/MainContainer/StatsGrid/RankCard/VBox" unique_id=1741873439]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.2, 1)
+theme_override_font_sizes/font_size = 10
+text = "Lendario"
+horizontal_alignment = 1
+
+[node name="UnlockSection" type="VBoxContainer" parent="ScrollContent/MainContainer" unique_id=1109172958]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="UnlockHeaderPanel" type="PanelContainer" parent="ScrollContent/MainContainer/UnlockSection" unique_id=276841907]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_unlock_header")
+
+[node name="HBox" type="HBoxContainer" parent="ScrollContent/MainContainer/UnlockSection/UnlockHeaderPanel" unique_id=1383122110]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Icon" type="Label" parent="ScrollContent/MainContainer/UnlockSection/UnlockHeaderPanel/HBox" unique_id=408720895]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "✨"
+
+[node name="UnlockSectionTitle" type="Label" parent="ScrollContent/MainContainer/UnlockSection/UnlockHeaderPanel/HBox" unique_id=435917810]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.4, 1)
+theme_override_font_sizes/font_size = 12
+text = "NOVOS PERSONAGENS DESBLOQUEADOS PARA O MODO ROGUE LIKE!"
+
+[node name="UnlockCardsContainer" type="VBoxContainer" parent="ScrollContent/MainContainer/UnlockSection" unique_id=1171749734]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="Footer" type="HBoxContainer" parent="ScrollContent/MainContainer" unique_id=1399745315]
+layout_mode = 2
+alignment = 1
+
+[node name="ContinueButton" type="Button" parent="ScrollContent/MainContainer/Footer" unique_id=696545273]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(340, 44)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_continue_btn")
+theme_override_styles/hover = SubResource("StyleBoxFlat_continue_btn_hover")
+text = "RETORNAR AO MAPA DA HISTORIA"

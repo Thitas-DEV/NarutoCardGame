@@ -20,6 +20,8 @@ var enemy_shield: int = 0
 var player_vigor: int = 100
 var enemy_vigor: int = 100
 var is_combo_running: bool = false
+var battle_damage_dealt: int = 0
+var battle_damage_taken: int = 0
 
 # Reservas de Chakra Elemental (Estilo Pokémon TCG)
 # Mapeia ChakraElement.Type -> quantidade acumulada
@@ -716,6 +718,8 @@ func _execute_script(script: Dictionary, multiplier: float, is_player: bool = tr
 		"self_damage":
 			var dmg = int(value)
 			if dmg > 0:
+				if is_player:
+					battle_damage_taken += dmg
 				caster_data.current_hp = maxi(0, caster_data.current_hp - dmg)
 				caster_visual.spawn_floating_text("-%d" % dmg, Color(1.0, 0.2, 0.2))
 				if caster_visual.has_method("play_damage_animation"):
@@ -775,7 +779,39 @@ func _damage_character(target_data: CharacterData, target_visual: Node2D, amount
 			shake_arena(5.0, 0.3)
 			SoundManager.play_sfx("hit", 0.7)
 			target_visual.spawn_floating_text("PAREDE DE LAMA! 🪨 (BLOQUEADO)", Color(0.85, 0.65, 0.35))
+		elif trap.id == "armadilha_papel_bomba":
+			# Detonação explosiva do papel bomba plantado no chão!
+			var vfx = $Arena2D/BattleVFX if has_node("Arena2D/BattleVFX") else null
+			var attacker_visual = enemy_visual if is_target_player else player_visual
+			var attacker_data = enemy_data if is_target_player else player_data
+			
+			SoundManager.play_sfx("hit", 1.4)
+			shake_arena(9.0, 0.4)
+			target_visual.spawn_floating_text("PAPEL BOMBA DETONADO! 💥 (DEFESA)", Color(1.0, 0.6, 0.1))
+			
+			# Spawn de explosão e fumaça na posição da armadilha
+			if vfx:
+				var trap_pos = target_visual.global_position + (Vector2(40.0, 0.0) if is_target_player else Vector2(-40.0, 0.0))
+				vfx.spawn_explosion(trap_pos, Color(1.0, 0.45, 0.1), 60.0)
+				vfx.spawn_smoke_puff(trap_pos)
+			
+			# Causa contra-ataque explosivo no atacante com animação de impacto de explosão
+			if attacker_visual and attacker_data:
+				if attacker_visual.has_method("play_impact_explosion"):
+					attacker_visual.play_impact_explosion()
+				if vfx:
+					vfx.spawn_explosion(attacker_visual.global_position, Color(1.0, 0.35, 0.1), 50.0)
+					vfx.spawn_smoke_puff(attacker_visual.global_position)
+				attacker_visual.spawn_floating_text("EXPLOSÃO! -16 💥", Color(1.0, 0.3, 0.2))
+				attacker_data.current_hp = maxi(0, attacker_data.current_hp - 16)
+				if is_target_player:
+					battle_damage_dealt += 16
+				else:
+					battle_damage_taken += 16
+				if attacker_visual.has_method("play_damage_animation"):
+					attacker_visual.play_damage_animation()
 			_update_ui()
+			_check_battle_state()
 			return
 		else:
 			# Substituição padrão (Kawarimi)
@@ -783,6 +819,12 @@ func _damage_character(target_data: CharacterData, target_visual: Node2D, amount
 			_update_ui()
 			return
 		
+	# Registra dano nas estatísticas da batalha
+	if is_target_player:
+		battle_damage_taken += amount
+	else:
+		battle_damage_dealt += amount
+
 	# Absorção de escudo
 	if is_target_player and player_shield > 0:
 		if player_shield >= amount:
@@ -999,11 +1041,14 @@ func _trigger_victory() -> void:
 	# Salva o nó de história como concluído
 	if not GameManager.completed_nodes.has(GameManager.active_encounter_id):
 		GameManager.completed_nodes.append(GameManager.active_encounter_id)
+		
+	# Registra as estatísticas da batalha e desbloqueios para o modo Rogue Like
+	GameManager.record_battle_result(battle_damage_dealt, battle_damage_taken, turn_number)
 	
 	var tw = create_tween()
 	tw.tween_interval(1.5)
 	tw.tween_callback(func():
-		get_tree().change_scene_to_file("res://src/ui/RewardScreen.tscn")
+		get_tree().change_scene_to_file("res://src/ui/BattleEvaluationScreen.tscn")
 	)
 
 func _trigger_defeat() -> void:
