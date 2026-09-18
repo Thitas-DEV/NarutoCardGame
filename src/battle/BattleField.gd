@@ -179,6 +179,11 @@ func _setup_battle() -> void:
 	
 	_setup_background()
 	_reset_chakra_pools()
+	
+	if GameManager.infinite_mana_mode:
+		player_vigor = 999
+		for k in player_chakra_pool.keys():
+			player_chakra_pool[k] = 99
 
 ## Carrega o cenário de fundo com base no encontro ativo ou ID da fase
 func _setup_background() -> void:

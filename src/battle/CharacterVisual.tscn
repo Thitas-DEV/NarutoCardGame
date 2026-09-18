@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d3m7yqvf56u1n"]
 
 [ext_resource type="Script" uid="uid://ehlnloesiqey" path="res://src/battle/CharacterVisual.gd" id="1_cvs"]
-[ext_resource type="SpriteFrames" uid="uid://0ju0ldyqr44c" path="res://data/characters/naruto_frames.tres" id="2_nframes"]
+[ext_resource type="SpriteFrames" uid="uid://cjyrvmvg00ndh" path="res://data/characters/Sakura.tres" id="2_csocu"]
 [ext_resource type="SpriteFrames" uid="uid://csmpk7smoke01" path="res://data/vfx/clone_smoke_frames.tres" id="3_smoke"]
 [ext_resource type="SpriteFrames" uid="uid://rhise67t5447" path="res://data/vfx/rasengan_running_frames.tres" id="4_running"]
 [ext_resource type="SpriteFrames" uid="uid://b0uxc87ckj7xy" path="res://data/vfx/rasengan_explode_frames.tres" id="5_explode"]
@@ -43,8 +43,9 @@ scale = Vector2(2, 2)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VisualRoot" unique_id=348510650]
 position = Vector2(0, -28)
-sprite_frames = ExtResource("2_nframes")
-animation = &"naruto_holding_rasengan"
+sprite_frames = ExtResource("2_csocu")
+animation = &"walk"
+frame_progress = 0.4684341
 
 [node name="SmokeOverlay" type="AnimatedSprite2D" parent="VisualRoot" unique_id=348510651]
 visible = false

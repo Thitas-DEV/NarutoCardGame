@@ -8,6 +8,7 @@ signal story_progress_updated(stage_id: String)
 var active_hero: CharacterData
 var player_deck: Array[AbilityData] = []
 var player_collection: Array[AbilityData] = []
+var infinite_mana_mode: bool = false
 
 # Story campaign state
 var current_story_world: int = 1

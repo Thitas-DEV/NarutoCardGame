@@ -233,15 +233,34 @@ func _setup_character_animations(data: CharacterData) -> void:
 func play_custom_animation(anim_name: String) -> void:
 	if not animated_sprite or not animated_sprite.visible or not animated_sprite.sprite_frames:
 		return
+		
+	print("[DEBUG] CharacterVisual tentou tocar: ", anim_name)
+		
 	if animated_sprite.sprite_frames.has_animation(anim_name) and animated_sprite.sprite_frames.get_frame_count(anim_name) > 0:
 		animated_sprite.play(anim_name)
-	elif anim_name in ["guard", "defense", "kunai_defense"]:
-		for fallback in ["defense", "kunai_defense", "guard"]:
+		return
+		
+	if anim_name in ["run", "walk"]:
+		for fallback in ["run", "walk", "dash"]:
 			if animated_sprite.sprite_frames.has_animation(fallback) and animated_sprite.sprite_frames.get_frame_count(fallback) > 0:
 				animated_sprite.play(fallback)
 				return
-	elif anim_name != "damage" and anim_name != "idle" and animated_sprite.sprite_frames.has_animation("attack") and animated_sprite.sprite_frames.get_frame_count("attack") > 0:
+				
+	if anim_name == "damage":
+		for fallback in ["damage", "hard_hit", "soft_hit", "hit"]:
+			if animated_sprite.sprite_frames.has_animation(fallback) and animated_sprite.sprite_frames.get_frame_count(fallback) > 0:
+				animated_sprite.play(fallback)
+				return
+				
+	if anim_name in ["guard", "defense", "kunai_defense", "defence"]:
+		for fallback in ["defense", "defence", "kunai_defense", "guard"]:
+			if animated_sprite.sprite_frames.has_animation(fallback) and animated_sprite.sprite_frames.get_frame_count(fallback) > 0:
+				animated_sprite.play(fallback)
+				return
+				
+	if anim_name != "damage" and anim_name != "idle" and animated_sprite.sprite_frames.has_animation("attack") and animated_sprite.sprite_frames.get_frame_count("attack") > 0:
 		animated_sprite.play("attack")
+		return
 
 func play_celebration(on_finished: Callable = Callable()) -> void:
 	SoundManager.play_sfx("hit")
@@ -526,8 +545,8 @@ func _execute_melee_dash(ability: AbilityData, target_character: Node2D, on_hit:
 				SoundManager.play_sfx("hit")
 				_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 3.0)
 			)
-			# 3. Intervalo de impacto do golpe
-			tw.tween_interval(0.25)
+			# 3. Intervalo de impacto do golpe (dá tempo para a animação tocar antes de voltar pro idle)
+			tw.tween_interval(0.65)
 			# 4. Retorna para a posição base
 			tw.tween_property(self, "global_position", base_pos, 0.2).set_trans(Tween.TRANS_QUAD)
 			# 5. Volta à animação "idle" e finaliza estado de animação

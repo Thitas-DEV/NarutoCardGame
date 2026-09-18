@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3]
+[ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="1_abdt"]
+[resource]
+script = ExtResource("1_abdt")
+id = "sakura_healing"
+name = "Ninjutsu Médico"
+description = "Cura um pouco de HP."
+vigor_cost = 15
+element_cost = 1
+required_element = 4
+delivery_type = 5
+animation_key = "healing"
+screen_shake_intensity = 0.0
+scripts = Array[Dictionary]([{"effect": "heal", "trigger": "on_play", "value": 10}])

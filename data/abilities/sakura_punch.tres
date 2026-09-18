@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AbilityData" format=3]
+[ext_resource type="Script" uid="uid://dgwjinbc51f85" path="res://src/core/ability_data.gd" id="1_abdt"]
+[resource]
+script = ExtResource("1_abdt")
+id = "sakura_punch"
+name = "Soco Certeiro"
+description = "Um soco direto."
+vigor_cost = 10
+animation_key = "attack"
+screen_shake_intensity = 3.0
+scripts = Array[Dictionary]([{"combo": 1, "effect": "damage", "hits": 1, "trigger": "on_play", "value": 6}])
