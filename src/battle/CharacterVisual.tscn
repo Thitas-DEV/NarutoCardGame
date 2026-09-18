@@ -44,7 +44,7 @@ scale = Vector2(2, 2)
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VisualRoot" unique_id=348510650]
 position = Vector2(0, -28)
 sprite_frames = ExtResource("2_nframes")
-animation = &"idle"
+animation = &"naruto_holding_rasengan"
 
 [node name="SmokeOverlay" type="AnimatedSprite2D" parent="VisualRoot" unique_id=348510651]
 visible = false
