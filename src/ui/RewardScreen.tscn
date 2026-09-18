@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2m3k8v9l4p1x"]
+[gd_scene format=3 uid="uid://b2m3k8wal4p1x"]
 
-[ext_resource type="Script" path="res://src/ui/RewardScreen.gd" id="1_rw"]
+[ext_resource type="Script" uid="uid://mcdf1rby0ma" path="res://src/ui/RewardScreen.gd" id="1_rw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rw_bg"]
 bg_color = Color(0.06, 0.08, 0.12, 0.96)
@@ -12,7 +12,7 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="RewardScreen" type="Control"]
+[node name="RewardScreen" type="Control" unique_id=906573378]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,7 +21,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_rw")
 
-[node name="Background" type="Panel" parent="."]
+[node name="Background" type="Panel" parent="." unique_id=2108997249]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,7 +30,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_rw_bg")
 
-[node name="TitleLabel" type="Label" parent="."]
+[node name="TitleLabel" type="Label" parent="." unique_id=959677325]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -43,7 +43,7 @@ theme_override_font_sizes/font_size = 26
 text = "🏆 RECOMPENSA DE BATALHA: ESCOLHA UMA CARTA 🏆"
 horizontal_alignment = 1
 
-[node name="SubtitleLabel" type="Label" parent="."]
+[node name="SubtitleLabel" type="Label" parent="." unique_id=505158313]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -54,7 +54,7 @@ theme_override_font_sizes/font_size = 14
 text = "Clique em uma das cartas para adicioná-la permanentemente ao seu deck ninja:"
 horizontal_alignment = 1
 
-[node name="CardsContainer" type="HBoxContainer" parent="."]
+[node name="CardsContainer" type="HBoxContainer" parent="." unique_id=65888963]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -70,7 +70,7 @@ grow_vertical = 2
 theme_override_constants/separation = 40
 alignment = 1
 
-[node name="SkipButton" type="Button" parent="."]
+[node name="SkipButton" type="Button" parent="." unique_id=786884735]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

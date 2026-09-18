@@ -7,7 +7,7 @@
 [ext_resource type="Resource" path="res://data/abilities/sakura_flying_kick.tres" id="5_flying"]
 [ext_resource type="Resource" path="res://data/abilities/sakura_healing.tres" id="6_healing"]
 [ext_resource type="Resource" path="res://data/abilities/iron_guard.tres" id="7_guard"]
-[ext_resource type="SpriteFrames" path="res://data/characters/Sakura.tres" id="8_sakuraframes"]
+[ext_resource type="SpriteFrames" path="res://data/characters/sakura_frames.tres" id="8_sakuraframes"]
 
 [resource]
 script = ExtResource("1_chdt")

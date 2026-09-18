@@ -784,6 +784,8 @@ func _damage_character(target_data: CharacterData, target_visual: Node2D, amount
 			shake_arena(5.0, 0.3)
 			SoundManager.play_sfx("hit", 0.7)
 			target_visual.spawn_floating_text("PAREDE DE LAMA! 🪨 (BLOQUEADO)", Color(0.85, 0.65, 0.35))
+			_update_ui()
+			return
 		elif trap.id == "armadilha_papel_bomba":
 			# Detonação explosiva do papel bomba plantado no chão!
 			var vfx = $Arena2D/BattleVFX if has_node("Arena2D/BattleVFX") else null
