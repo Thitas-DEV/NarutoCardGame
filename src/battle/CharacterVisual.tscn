@@ -1,10 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://d3m7yqvf56u1n"]
+[gd_scene format=3 uid="uid://d3m7yqvf56u1n"]
 
 [ext_resource type="Script" uid="uid://ehlnloesiqey" path="res://src/battle/CharacterVisual.gd" id="1_cvs"]
 [ext_resource type="SpriteFrames" uid="uid://0ju0ldyqr44c" path="res://data/characters/naruto_frames.tres" id="2_nframes"]
-[ext_resource type="SpriteFrames" path="res://data/vfx/clone_smoke_frames.tres" id="3_smoke"]
-[ext_resource type="SpriteFrames" path="res://data/vfx/rasengan_running_frames.tres" id="4_running"]
-[ext_resource type="SpriteFrames" path="res://data/vfx/rasengan_explode_frames.tres" id="5_explode"]
+[ext_resource type="SpriteFrames" uid="uid://csmpk7smoke01" path="res://data/vfx/clone_smoke_frames.tres" id="3_smoke"]
+[ext_resource type="SpriteFrames" uid="uid://rhise67t5447" path="res://data/vfx/rasengan_running_frames.tres" id="4_running"]
+[ext_resource type="SpriteFrames" uid="uid://b0uxc87ckj7xy" path="res://data/vfx/rasengan_explode_frames.tres" id="5_explode"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hp_bg"]
 bg_color = Color(0.12, 0.12, 0.15, 0.85)
@@ -20,15 +20,15 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_shield_fill"]
-bg_color = Color(0.2, 0.55, 0.95, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vigor_fill"]
+bg_color = Color(0.95, 0.65, 0.15, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vigor_fill"]
-bg_color = Color(0.95, 0.65, 0.15, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_shield_fill"]
+bg_color = Color(0.2, 0.55, 0.95, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -117,7 +117,6 @@ offset_bottom = 47.0
 grow_horizontal = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_hp_bg")
 theme_override_styles/fill = SubResource("StyleBoxFlat_vigor_fill")
-max_value = 100.0
 value = 100.0
 show_percentage = false
 

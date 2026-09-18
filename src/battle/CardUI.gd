@@ -169,6 +169,10 @@ func set_hand_target(pos: Vector2, rot: float) -> void:
 		tw.tween_property(self, "position", pos, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		tw.tween_property(self, "rotation", rot, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		tw.tween_property(self, "scale", Vector2.ONE, 0.3)
+	else:
+		var tw = create_tween().set_parallel(true)
+		tw.tween_property(self, "position", pos + Vector2(0, -100), 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		tw.tween_property(self, "rotation", 0.0, 0.3).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 func _on_mouse_entered() -> void:
 	if is_dragging or is_targeting: return
@@ -177,9 +181,9 @@ func _on_mouse_entered() -> void:
 	
 	var is_in_container = get_parent() is Container
 	var tw = create_tween().set_parallel(true)
-	tw.tween_property(self, "scale", Vector2(1.15, 1.15), 0.15).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tw.tween_property(self, "scale", Vector2(1.3, 1.3), 0.15).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	if not is_in_container:
-		tw.tween_property(self, "position", original_pos + Vector2(0, -50), 0.15).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+		tw.tween_property(self, "position", original_pos + Vector2(0, -100), 0.15).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 		tw.tween_property(self, "rotation", 0.0, 0.15)
 	
 	SoundManager.play_sfx("card_hover", 0.5)

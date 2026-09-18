@@ -81,20 +81,20 @@ O sistema visual dos personagens em combate está centralizado em `CharacterVisu
 2. Abra a cena `res://src/battle/CharacterVisual.tscn` ou crie cenas herdadas para personagens específicos.
 3. No nó `VisualRoot/AnimatedSprite2D`, crie um novo **SpriteFrames** no Inspector:
    - Defina as seguintes animações recomendadas:
-     - `idle`: Animação de respiração / postura de combate em loop.
-     - `attack`: Golpe físico básico (soco ou chute).
-     - `charge`: Canalização de chakra (mãos em selo ninja com aura).
-     - `hit`: Reação ao tomar dano.
-     - `rasengan` / `chidori` / `jutsu`: Pose do jutsu característico.
-     - `kawarimi`: Tronco de madeira ou fumaça.
-     - `ko`: Personagem caído/derrotado.
+	 - `idle`: Animação de respiração / postura de combate em loop.
+	 - `attack`: Golpe físico básico (soco ou chute).
+	 - `charge`: Canalização de chakra (mãos em selo ninja com aura).
+	 - `hit`: Reação ao tomar dano.
+	 - `rasengan` / `chidori` / `jutsu`: Pose do jutsu característico.
+	 - `kawarimi`: Tronco de madeira ou fumaça.
+	 - `ko`: Personagem caído/derrotado.
 4. **Fallback Automático**: Se nenhuma textura ou `SpriteFrames` estiver atribuído ao nó, o jogo utiliza automaticamente a renderização procedural estilizada, permitindo testar o jogo mesmo antes dos sprites estarem prontos!
 
 ```gdscript
 # Exemplo de como disparar animações no CharacterVisual.gd:
 func play_custom_animation(anim_name: String) -> void:
-    if animated_sprite and animated_sprite.sprite_frames.has_animation(anim_name):
-        animated_sprite.play(anim_name)
+	if animated_sprite and animated_sprite.sprite_frames.has_animation(anim_name):
+		animated_sprite.play(anim_name)
 ```
 
 ---

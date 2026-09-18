@@ -96,12 +96,26 @@ var current_dialogue_index: int = 0
 const CARD_UI_SCENE = preload("res://src/battle/CardUI.tscn")
 
 func _ready() -> void:
-	# Add Line2D for targeting
 	target_arrow = Line2D.new()
-	target_arrow.width = 12.0
-	target_arrow.default_color = Color(1.0, 0.2, 0.2, 0.8)
+	target_arrow.width = 16.0
+	target_arrow.default_color = Color(1.0, 0.4, 0.2, 0.8)
+	var curve = Curve.new()
+	curve.add_point(Vector2(0.0, 0.2))
+	curve.add_point(Vector2(0.5, 0.6))
+	curve.add_point(Vector2(1.0, 1.0))
+	target_arrow.width_curve = curve
+	target_arrow.joint_mode = Line2D.LINE_JOINT_ROUND
+	target_arrow.begin_cap_mode = Line2D.LINE_CAP_ROUND
+	target_arrow.end_cap_mode = Line2D.LINE_CAP_ROUND
 	target_arrow.visible = false
 	target_arrow.z_index = 50
+	
+	var head = Polygon2D.new()
+	head.polygon = PackedVector2Array([Vector2(-15, -15), Vector2(15, 0), Vector2(-15, 15), Vector2(-5, 0)])
+	head.color = Color(1.0, 0.4, 0.2, 1.0)
+	head.name = "ArrowHead"
+	target_arrow.add_child(head)
+	
 	add_child(target_arrow)
 
 	phase_manager = ScriptedPhaseManager.new()
@@ -311,20 +325,28 @@ func _reorganize_hand() -> void:
 		return
 		
 	var center_x = hand_container.size.x / 2.0
-	var spacing = 120.0
+	var max_width = 800.0
+	var spacing = min(120.0, max_width / max(1, total - 1))
 	var total_w = (total - 1) * spacing
 	var start_x = center_x - (total_w / 2.0) - 80.0
 	
 	for i in range(total):
 		var card = hand_cards[i]
 		
-		# Curva da mão em leque
+		# Curva da mão em leque (Parábola)
 		var center_offset = float(i) - (float(total - 1) / 2.0)
-		var angle = center_offset * 0.1
-		var height_offset = abs(center_offset) * abs(center_offset) * 8.0
+		var angle_factor = 0.0
+		if total > 1:
+			angle_factor = center_offset / (float(total - 1) / 2.0) # -1.0 a 1.0
+			
+		var max_angle_deg = 20.0
+		var angle = deg_to_rad(angle_factor * max_angle_deg)
+		var height_offset = (angle_factor * angle_factor) * 60.0
 		
 		var x_pos = start_x + (i * spacing)
-		card.set_hand_target(Vector2(x_pos, height_offset), angle)
+		# Ajuste sutil em Y para que o arco não cruze muito a base
+		var y_pos = height_offset + 20.0
+		card.set_hand_target(Vector2(x_pos, y_pos), angle)
 		
 		# Validação de jogabilidade considerando Vigor, Chakra e Holders
 		var is_playable = false
@@ -358,18 +380,27 @@ func _on_target_drag_moved(card_node: Control, mouse_pos: Vector2) -> void:
 		
 	var start_pos = card_node.global_position + Vector2(card_node.size.x/2, 0)
 	
-	var points = PackedVector2Array()
-	points.append(start_pos)
+	# Cubic bezier for a nice Slay the Spire arch
+	var p0 = start_pos
+	var p3 = mouse_pos
+	var dist = p0.distance_to(p3)
+	var p1 = p0 + Vector2(0, -dist * 0.5)
+	var p2 = p3 + Vector2(0, dist * 0.2)
 	
-	# Curva de Bézier para a flecha
-	var control_point = Vector2(start_pos.x, mouse_pos.y)
-	for i in range(1, 11):
-		var t = float(i) / 10.0
-		var p1 = start_pos.lerp(control_point, t)
-		var p2 = control_point.lerp(mouse_pos, t)
-		points.append(p1.lerp(p2, t))
+	var points = PackedVector2Array()
+	var segments = 16
+	for i in range(segments + 1):
+		var t = float(i) / float(segments)
+		var t_inv = 1.0 - t
+		var pos = (t_inv * t_inv * t_inv * p0) + (3.0 * t_inv * t_inv * t * p1) + (3.0 * t_inv * t * t * p2) + (t * t * t * p3)
+		points.append(pos)
 		
 	target_arrow.points = points
+	
+	if target_arrow.has_node("ArrowHead"):
+		var head = target_arrow.get_node("ArrowHead")
+		head.position = points[points.size() - 1]
+		head.rotation = (points[points.size() - 1] - points[points.size() - 2]).angle()
 
 func has_player_clone() -> bool:
 	return player_clone_visual != null and is_instance_valid(player_clone_visual) and not player_clone_visual.is_queued_for_deletion()
@@ -802,6 +833,7 @@ func _on_end_turn_pressed() -> void:
 		return
 	
 	_start_enemy_turn()
+
 
 func _start_enemy_turn() -> void:
 	current_state = TurnState.ENEMY_TURN

@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dmv28p1j3mak1" path="res://src/battle/ComboMeter.tscn" id="3_cm"]
 [ext_resource type="PackedScene" uid="uid://ctvyu3c8q1n4p" path="res://src/battle/QTEOverlay.tscn" id="4_qte"]
 [ext_resource type="PackedScene" uid="uid://bhm2aux443fj6" path="res://src/ui/menu_pausa.tscn" id="5_kjftl"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/ninja_scroll_bg.jpg" id="ScrollBG"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slot"]
 bg_color = Color(0.12, 0.14, 0.2, 0.8)
@@ -188,6 +189,20 @@ theme_override_font_sizes/font_size = 28
 text = "TURNO DO JOGADOR"
 horizontal_alignment = 1
 
+[node name="ScrollBackground" type="TextureRect" parent="UI"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -320.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("ScrollBG")
+expand_mode = 1
+stretch_mode = 0
+mouse_filter = 2
+
 [node name="HandContainer" type="Control" parent="UI" unique_id=1655919754]
 layout_mode = 1
 anchors_preset = 12
@@ -211,6 +226,7 @@ grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bottom_bar")
+self_modulate = Color(1, 1, 1, 0)
 
 [node name="ChakraOrb" type="Panel" parent="UI/BottomBar" unique_id=1147740059]
 layout_mode = 1

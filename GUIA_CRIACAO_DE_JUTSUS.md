@@ -7,11 +7,11 @@ Este documento explica detalhadamente como criar, editar e configurar novas habi
 ## 1. Onde ficam salvos os Jutsus e os Ícones?
 
 *   **Definição das Cartas (Dados & Lógica)**:  
-    Ficam na pasta `res://data/abilities/` como arquivos de recurso `.tres` (ex: `katon_gokakyu.tres`, `rasengan.tres`, `chidori.tres`).
-    > O script `Database.gd` faz o escaneamento e carregamento automático de todos os arquivos `.tres` dessa pasta ao iniciar o jogo.
+	Ficam na pasta `res://data/abilities/` como arquivos de recurso `.tres` (ex: `katon_gokakyu.tres`, `rasengan.tres`, `chidori.tres`).
+	> O script `Database.gd` faz o escaneamento e carregamento automático de todos os arquivos `.tres` dessa pasta ao iniciar o jogo.
 *   **Imagens e Ilustrações das Cartas**:  
-    Ficam na pasta `res://assets/cards/` (em formato `.png` ou `.webp`).  
-    *Resolução recomendada para o ícone/arte*: **`256 x 256`** ou **`512 x 512`** pixels (quadrada) ou proporção **`4:3`** (ex: `400 x 300`).
+	Ficam na pasta `res://assets/cards/` (em formato `.png` ou `.webp`).  
+	*Resolução recomendada para o ícone/arte*: **`256 x 256`** ou **`512 x 512`** pixels (quadrada) ou proporção **`4:3`** (ex: `400 x 300`).
 
 ---
 
@@ -57,33 +57,33 @@ O sistema de batalha utiliza um **Motor de Triggers** (`scripts: Array[Dictionar
 ### Exemplos de Efeitos Comuns:
 
 *   **Dano Simples**:
-    ```json
-    {"trigger": "on_play", "effect": "damage", "value": 25, "combo": 1, "hits": 1}
-    ```
-    *   `value`: Quantidade de dano base causado ao alvo.
-    *   `combo`: Quantos pontos adiciona ao medidor de combo Storm 4.
-    *   `hits`: Número de golpes computados no contador de hits.
+	```json
+	{"trigger": "on_play", "effect": "damage", "value": 25, "combo": 1, "hits": 1}
+	```
+	*   `value`: Quantidade de dano base causado ao alvo.
+	*   `combo`: Quantos pontos adiciona ao medidor de combo Storm 4.
+	*   `hits`: Número de golpes computados no contador de hits.
 
 *   **Escudo / Guarda (Defesa)**:
-    ```json
-    {"trigger": "on_play", "effect": "shield", "value": 15}
-    ```
+	```json
+	{"trigger": "on_play", "effect": "shield", "value": 15}
+	```
 
 *   **Cura de Vida**:
-    ```json
-    {"trigger": "on_play", "effect": "heal", "value": 20}
-    ```
+	```json
+	{"trigger": "on_play", "effect": "heal", "value": 20}
+	```
 
 *   **Armadilha de Substituição (Kawarimi)**:
-    ```json
-    {"trigger": "on_play", "effect": "plant_trap", "value": "kawarimi"}
-    ```
+	```json
+	{"trigger": "on_play", "effect": "plant_trap", "value": "kawarimi"}
+	```
 
 *   **Jutsu Secreto / QTE com Sucesso e Falha** (ex: Chidori / Kirin):
-    ```json
-    {"trigger": "on_qte_success", "effect": "damage", "value": 50}
-    {"trigger": "on_qte_failure", "effect": "self_damage", "value": 10}
-    ```
+	```json
+	{"trigger": "on_qte_success", "effect": "damage", "value": 50}
+	{"trigger": "on_qte_failure", "effect": "self_damage", "value": 10}
+	```
 
 ---
 
@@ -104,7 +104,7 @@ Criando o jutsu **Katon: Chamas do Dragão** para o Sasuke:
    - **Target Type**: `SINGLE_ENEMY`
    - **Animation Key**: `katon`
    - **Scripts**:
-     - Entrada 0: `{"trigger": "on_play", "effect": "damage", "value": 26, "combo": 2, "hits": 3}`
+	 - Entrada 0: `{"trigger": "on_play", "effect": "damage", "value": 26, "combo": 2, "hits": 3}`
 
 ### Formato de Texto Direto do `.tres`:
 Se preferir criar ou editar diretamente em um editor de código (VS Code, Bloco de Notas):
