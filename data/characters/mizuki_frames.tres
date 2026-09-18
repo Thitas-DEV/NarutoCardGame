@@ -1,0 +1,524 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://b2edqljw4bnkb"]
+
+[ext_resource type="Texture2D" uid="uid://bt1koayobt12p" path="res://assets/characters/mizuki/Mizuki/idle/Idle_0-0.png" id="1_idle0"]
+[ext_resource type="Texture2D" uid="uid://ctk8a3n8liktx" path="res://assets/characters/mizuki/Mizuki/idle/Idle_0-1.png" id="2_idle1"]
+[ext_resource type="Texture2D" uid="uid://mjd7cqs8mspc" path="res://assets/characters/mizuki/Mizuki/idle/Idle_0-2.png" id="3_idle2"]
+[ext_resource type="Texture2D" uid="uid://cpeunablyx1ee" path="res://assets/characters/mizuki/Mizuki/idle/Idle_0-3.png" id="4_idle3"]
+[ext_resource type="Texture2D" uid="uid://cc7xo4s4fuuk1" path="res://assets/characters/mizuki/Mizuki/idle/Idle_0-4.png" id="5_idle4"]
+[ext_resource type="Texture2D" uid="uid://q1fspsej5ulj" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_200-0.png" id="6_atk0"]
+[ext_resource type="Texture2D" uid="uid://bsvyct46bglvb" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_200-1.png" id="7_atk1"]
+[ext_resource type="Texture2D" uid="uid://6x1mqdkqrluy" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_200-2.png" id="8_atk2"]
+[ext_resource type="Texture2D" uid="uid://dextev4tiwk7u" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_200-3.png" id="9_atk3"]
+[ext_resource type="Texture2D" uid="uid://b1f3115jsw3lx" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_200-4.png" id="10_atk4"]
+[ext_resource type="Texture2D" uid="uid://cy8lk5o467bls" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_200-5.png" id="11_atk5"]
+[ext_resource type="Texture2D" uid="uid://0jwlgr5m8jd1" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_200-6.png" id="12_atk6"]
+[ext_resource type="Texture2D" uid="uid://e4tlhytrvkty" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_200-7.png" id="13_atk7"]
+[ext_resource type="Texture2D" uid="uid://cjjyh6jjv4kac" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_200-8.png" id="14_atk8"]
+[ext_resource type="Texture2D" uid="uid://b1i5uc3tmdfme" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_200-9.png" id="15_atk9"]
+[ext_resource type="Texture2D" uid="uid://ctbw3bemrw7tx" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_200-10.png" id="16_atk10"]
+[ext_resource type="Texture2D" uid="uid://h2jucsguy0ea" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_200-21.png" id="17_atk21"]
+[ext_resource type="Texture2D" uid="uid://ctblxeprfvq4l" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_200-22.png" id="18_atk22"]
+[ext_resource type="Texture2D" uid="uid://dtu17sjso4ycc" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_300-0.png" id="19_atk300_0"]
+[ext_resource type="Texture2D" uid="uid://doqbu4uoqpyfn" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_300-1.png" id="20_atk300_1"]
+[ext_resource type="Texture2D" uid="uid://qyp62nqhajmq" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_300-2.png" id="21_atk300_2"]
+[ext_resource type="Texture2D" uid="uid://c17ui6fgf3vlw" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_300-3.png" id="22_atk300_3"]
+[ext_resource type="Texture2D" uid="uid://c3tpl0cp0m3fh" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_300-4.png" id="23_atk300_4"]
+[ext_resource type="Texture2D" uid="uid://cx4vuusw7apag" path="res://assets/characters/mizuki/Mizuki/Ataque/Ataque_300-5.png" id="24_atk300_5"]
+[ext_resource type="Texture2D" uid="uid://bc2rrkh524nr2" path="res://assets/characters/mizuki/Mizuki/Guard/Guard_120-0.png" id="25_grd0"]
+[ext_resource type="Texture2D" uid="uid://cqa116nyfwn6" path="res://assets/characters/mizuki/Mizuki/Guard/Guard_120-1.png" id="26_grd1"]
+[ext_resource type="Texture2D" uid="uid://bj332mpnjamlq" path="res://assets/characters/mizuki/Mizuki/Guard/Guard_120-2.png" id="27_grd2"]
+[ext_resource type="Texture2D" uid="uid://bfobsdlm1kw1n" path="res://assets/characters/mizuki/Mizuki/Guard/Guard_121-0.png" id="28_grd3"]
+[ext_resource type="Texture2D" uid="uid://c64q3uvqeup12" path="res://assets/characters/mizuki/Mizuki/Guard/Guard_121-1.png" id="29_grd4"]
+[ext_resource type="Texture2D" uid="uid://ycv7cigkfsv0" path="res://assets/characters/mizuki/Mizuki/Run/Run_20-0.png" id="30_run0"]
+[ext_resource type="Texture2D" uid="uid://buhvd70memh17" path="res://assets/characters/mizuki/Mizuki/Run/Run_20-1.png" id="31_run1"]
+[ext_resource type="Texture2D" uid="uid://8ulids8ghjho" path="res://assets/characters/mizuki/Mizuki/Run/Run_20-2.png" id="32_run2"]
+[ext_resource type="Texture2D" uid="uid://c2ppfca6qu2uu" path="res://assets/characters/mizuki/Mizuki/Run/Run_20-3.png" id="33_run3"]
+[ext_resource type="Texture2D" uid="uid://cswk6wpe2kn6v" path="res://assets/characters/mizuki/Mizuki/Run/Run_20-4.png" id="34_run4"]
+[ext_resource type="Texture2D" uid="uid://cnl5wt5i7a11k" path="res://assets/characters/mizuki/Mizuki/Run/Run_20-5.png" id="35_run5"]
+[ext_resource type="Texture2D" uid="uid://degxcdb7tp8lo" path="res://assets/characters/mizuki/Mizuki/Sinal de mão/handle_500-0.png" id="36_seal0"]
+[ext_resource type="Texture2D" uid="uid://b8sfwoxbr7of4" path="res://assets/characters/mizuki/Mizuki/Sinal de mão/handle_500-1.png" id="37_seal1"]
+[ext_resource type="Texture2D" uid="uid://dikyydr0x20td" path="res://assets/characters/mizuki/Mizuki/Sinal de mão/handle_500-2.png" id="38_seal2"]
+[ext_resource type="Texture2D" uid="uid://h0fof0sftalf" path="res://assets/characters/mizuki/Mizuki/Sinal de mão/handle_500-3.png" id="39_seal3"]
+[ext_resource type="Texture2D" uid="uid://bae56goff5svs" path="res://assets/characters/mizuki/Mizuki/Sinal de mão/handle_500-4.png" id="40_seal4"]
+[ext_resource type="Texture2D" uid="uid://b1nal3u54b1ni" path="res://assets/characters/mizuki/Mizuki/damage/damage_5010-21.png" id="41_dmg0"]
+[ext_resource type="Texture2D" uid="uid://bq7ondo1vxkss" path="res://assets/characters/mizuki/Mizuki/damage/damage_5020-21_5020-10.png" id="42_dmg1"]
+[ext_resource type="Texture2D" uid="uid://ddymr7fs1tlem" path="res://assets/characters/mizuki/Mizuki/damage/damage_5030-10.png" id="43_dmg2"]
+[ext_resource type="Texture2D" uid="uid://cocw3602qwe8e" path="res://assets/characters/mizuki/Mizuki/damage/damage_5030-20.png" id="44_dmg3"]
+[ext_resource type="Texture2D" uid="uid://d4bv3ra3obvpb" path="res://assets/characters/mizuki/Mizuki/damage/damage_5030-40.png" id="45_dmg4"]
+[ext_resource type="Texture2D" uid="uid://b3qk7umqkuya2" path="res://assets/characters/mizuki/Mizuki/damage/damage_5040-1.png" id="46_dmg5"]
+[ext_resource type="Texture2D" uid="uid://dc377nmp6uywh" path="res://assets/characters/mizuki/Mizuki/damage/damage_5040-10.png" id="47_dmg6"]
+[ext_resource type="Texture2D" uid="uid://cqmr2kb4ytqhf" path="res://assets/characters/mizuki/Mizuki/damage/damage_5040-11.png" id="48_dmg7"]
+[ext_resource type="Texture2D" uid="uid://cmnkuty4axa74" path="res://assets/characters/mizuki/Mizuki/damage/damage_5040-12.png" id="49_dmg8"]
+[ext_resource type="Texture2D" uid="uid://ir5ekkdrq0q8" path="res://assets/characters/mizuki/Mizuki/damage/damage_5040-13.png" id="50_dmg9"]
+[ext_resource type="Texture2D" uid="uid://g05g5apsaibe" path="res://assets/characters/mizuki/Mizuki/Floor/init_floor]_1100-0.png" id="51_flr0"]
+[ext_resource type="Texture2D" uid="uid://co7e3ig7bo08m" path="res://assets/characters/mizuki/Mizuki/Floor/init_floor]_1100-1.png" id="52_flr1"]
+[ext_resource type="Texture2D" uid="uid://dfsssftlak6cp" path="res://assets/characters/mizuki/Mizuki/Floor/init_floor]_1100-2.png" id="53_flr2"]
+[ext_resource type="Texture2D" uid="uid://cqa70lubd2b2o" path="res://assets/characters/mizuki/Mizuki/Floor/init_floor]_1100-3.png" id="54_flr3"]
+[ext_resource type="Texture2D" uid="uid://cf4cxmuxlcgds" path="res://assets/characters/mizuki/Mizuki/Floor/init_floor]_1100-4.png" id="55_flr4"]
+[ext_resource type="Texture2D" uid="uid://ciamy8psmyw42" path="res://assets/characters/mizuki/Mizuki/Floor/Floor_3000-0.png" id="56_flr5"]
+[ext_resource type="Texture2D" uid="uid://qtwgx4hb5mc3" path="res://assets/characters/mizuki/Mizuki/Floor/Floor_3000-1.png" id="57_flr6"]
+[ext_resource type="Texture2D" uid="uid://b5amf54fcu2gk" path="res://assets/characters/mizuki/Mizuki/Floor/Floor_3000-2.png" id="58_flr7"]
+[ext_resource type="Texture2D" uid="uid://bgctdu6t0a70n" path="res://assets/characters/mizuki/Mizuki/Floor/Floor_3000-3.png" id="59_flr8"]
+[ext_resource type="Texture2D" uid="uid://d1f68ttbrgqy" path="res://assets/characters/mizuki/Mizuki/Floor/Floor_3000-5.png" id="60_flr9"]
+[ext_resource type="Texture2D" uid="uid://tw6fyjwck40s" path="res://assets/characters/mizuki/Mizuki/Floor/Floor_3000-6.png" id="61_flr10"]
+[ext_resource type="Texture2D" uid="uid://btq724urakml3" path="res://assets/characters/mizuki/Mizuki/Floor/Floor_3000-7.png" id="62_flr11"]
+[ext_resource type="Texture2D" uid="uid://bxbewr73ej7a" path="res://assets/characters/mizuki/Mizuki/Kawarimi/Kawarimi_7500-0.png" id="63_kaw0"]
+[ext_resource type="Texture2D" uid="uid://cxcbg3poyogec" path="res://assets/characters/mizuki/Mizuki/Kawarimi/Kawarimi_7500-1.png" id="64_kaw1"]
+[ext_resource type="Texture2D" uid="uid://3ru8jknoreow" path="res://assets/characters/mizuki/Mizuki/Kawarimi/Kawarimi_7500-2.png" id="65_kaw2"]
+[ext_resource type="Texture2D" uid="uid://curfs3mjs80j2" path="res://assets/characters/mizuki/Mizuki/Kawarimi/Kawarimi_7500-3.png" id="66_kaw3"]
+[ext_resource type="Texture2D" uid="uid://dso1m20rq8gpy" path="res://assets/characters/mizuki/Mizuki/Kawarimi/Kawarimi_7500-4.png" id="67_kaw4"]
+[ext_resource type="Texture2D" uid="uid://b88uvq21oslqv" path="res://assets/characters/mizuki/Mizuki/Kawarimi/Kawarimi_7500-5.png" id="68_kaw5"]
+[ext_resource type="Texture2D" uid="uid://qccyqfhnme32" path="res://assets/characters/mizuki/Mizuki/Kawarimi/Kawarimi_7500-6.png" id="69_kaw6"]
+[ext_resource type="Texture2D" uid="uid://b6v0thlfbc8j5" path="res://assets/characters/mizuki/Mizuki/Kawarimi/Kawarimi_7500-7.png" id="70_kaw7"]
+[ext_resource type="Texture2D" uid="uid://bmcydy6338bng" path="res://assets/characters/mizuki/Mizuki/Kawarimi/Kawarimi_7500-8.png" id="71_kaw8"]
+[ext_resource type="Texture2D" uid="uid://bmxkl76fq536o" path="res://assets/characters/mizuki/Mizuki/Kawarimi/Kawarimi_7500-9.png" id="72_kaw9"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("25_grd0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_grd1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_grd2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_grd3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_grd4")
+}],
+"loop": 0,
+"name": &"Guard",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_idle0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_idle1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_idle2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_idle3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_idle4")
+}],
+"loop": 1,
+"name": &"Idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("63_kaw0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_kaw1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_kaw2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_kaw3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_kaw4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_kaw5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_kaw6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_kaw7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("71_kaw8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_kaw9")
+}],
+"loop": 0,
+"name": &"Kawarimi",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_atk3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_atk4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_atk5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_atk6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_atk7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_atk8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_atk9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_atk10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_atk3")
+}],
+"loop": 0,
+"name": &"Kunai_Attack",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("30_run0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_run1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_run2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_run3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_run4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_run5")
+}],
+"loop": 1,
+"name": &"Run",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_atk21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_atk22")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_atk300_0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_atk300_1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_atk300_2")
+}],
+"loop": 0,
+"name": &"Shuriken_Attack",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_atk0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_atk1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_atk2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_atk3")
+}],
+"loop": 0,
+"name": &"attack",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("41_dmg0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_dmg1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_dmg2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_dmg3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_dmg4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_dmg5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_dmg6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_dmg7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_dmg8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_dmg9")
+}],
+"loop": 0,
+"name": &"damage",
+"speed": 8.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_atk300_3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_atk300_4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_atk300_5")
+}],
+"loop": 0,
+"name": &"estrela_ninja",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("51_flr0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_flr1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_flr2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_flr3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_flr4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_flr5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_flr6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_flr7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_flr8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_flr9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_flr10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_flr11")
+}],
+"loop": 0,
+"name": &"floor_attack",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("25_grd0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_grd1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_grd2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_grd3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_grd4")
+}],
+"loop": 0,
+"name": &"guard",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_idle0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_idle1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_idle2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_idle3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_idle4")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("63_kaw0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_kaw1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_kaw2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_kaw3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_kaw4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_kaw5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_kaw6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_kaw7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("71_kaw8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_kaw9")
+}],
+"loop": 0,
+"name": &"kawarimi",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_atk3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_atk4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_atk5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_atk6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_atk7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_atk8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_atk9")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_atk10")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_atk3")
+}],
+"loop": 0,
+"name": &"kunai_attack",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("36_seal0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_seal1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_seal2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_seal3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_seal4")
+}],
+"loop": 0,
+"name": &"mud_wall",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("30_run0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_run1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_run2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_run3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_run4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_run5")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_atk21")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_atk22")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_atk300_0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_atk300_1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_atk300_2")
+}],
+"loop": 0,
+"name": &"shuriken_attack",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("36_seal0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_seal1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_seal2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_seal3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_seal4")
+}],
+"loop": 0,
+"name": &"sinal_de_mao",
+"speed": 6.0
+}]

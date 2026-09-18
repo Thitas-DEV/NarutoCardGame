@@ -1,9 +1,13 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://dgpxoh6k0kx88"]
 
 [ext_resource type="Texture2D" uid="uid://dqbakeuicqswn" path="res://assets/characters/kakashi/damage/5000-1.png" id="1_req43"]
+[ext_resource type="Texture2D" uid="uid://bdsg0gn8rpiai" path="res://assets/characters/kakashi/attack/attack1_4.png" id="1_wb2gj"]
+[ext_resource type="Texture2D" uid="uid://bb3lugvddh2ln" path="res://assets/characters/kakashi/attack/attack1_5.png" id="2_r5n6f"]
 [ext_resource type="Texture2D" uid="uid://b8r86a6j6amrx" path="res://assets/characters/kakashi/damage/5000-2.png" id="2_tm8fm"]
+[ext_resource type="Texture2D" uid="uid://c7vuk6gfdkyh2" path="res://assets/characters/kakashi/attack/attack1_6.png" id="3_2ptlj"]
 [ext_resource type="Texture2D" uid="uid://3m2kq2h0br5e" path="res://assets/characters/kakashi/damage/5000-3.png" id="3_ahr3s"]
 [ext_resource type="Texture2D" uid="uid://dkog003j66idn" path="res://assets/characters/kakashi/damage/5000-4.png" id="4_2nho5"]
+[ext_resource type="Texture2D" uid="uid://dxoyjli5nx1yq" path="res://assets/characters/kakashi/attack/attack1_7.png" id="4_pftum"]
 [ext_resource type="Texture2D" uid="uid://bgmnmqsulat3" path="res://assets/characters/kakashi/damage/5000-5.png" id="5_5e3rp"]
 [ext_resource type="Texture2D" uid="uid://ct4ups4x53i6d" path="res://assets/effects/jutsus/substituicao/substitution_jutsu_sheet.png" id="5_dibk4"]
 [ext_resource type="Texture2D" uid="uid://begrm685j6gvr" path="res://assets/characters/kakashi/damage/5000-6.png" id="6_aq8u7"]
@@ -57,7 +61,19 @@ region = Rect2(0, 768, 64, 96)
 
 [resource]
 animations = [{
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_wb2gj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_r5n6f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_2ptlj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_pftum")
+}],
 "loop": 1,
 "name": &"attack",
 "speed": 5.0
