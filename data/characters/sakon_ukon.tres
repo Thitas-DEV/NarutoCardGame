@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://src/core/character_data.gd" id="1_chdt"]
+[ext_resource type="Resource" path="res://data/abilities/naruto_punch.tres" id="2_naruto_punch"]
+[ext_resource type="Resource" path="res://data/abilities/rock_lee_kick.tres" id="3_rock_lee_kick"]
+[ext_resource type="Resource" path="res://data/abilities/kawarimi_trap.tres" id="4_kawarimi_trap"]
+[ext_resource type="Resource" path="res://data/abilities/iron_guard.tres" id="5_iron_guard"]
+[ext_resource type="Resource" path="res://data/abilities/holder_duplo.tres" id="6_holder_duplo"]
+
+[resource]
+script = ExtResource("1_chdt")
+id = "sakon_ukon"
+name = "Sakon e Ukon"
+title = "Portão Oeste do Quarteto do Som"
+tags = Array[String]([])
+max_hp = 90
+current_hp = 90
+max_vigor = 95
+current_vigor = 95
+attack_modifier = 1.0
+avatar_color = Color(0.5, 0.5, 0.6, 1)
+secondary_color = Color(0.25, 0.25, 0.35, 1)
+chakra_affinities = Array[int]([])
+starting_deck = Array[Resource("res://src/core/ability_data.gd")]([ExtResource("2_naruto_punch"), ExtResource("3_rock_lee_kick"), ExtResource("3_rock_lee_kick"), ExtResource("4_kawarimi_trap"), ExtResource("5_iron_guard"), ExtResource("6_holder_duplo")])

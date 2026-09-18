@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://src/core/character_data.gd" id="1_chdt"]
+[ext_resource type="Resource" path="res://data/abilities/rock_lee_kick.tres" id="2_rock_lee_kick"]
+[ext_resource type="Resource" path="res://data/abilities/naruto_punch.tres" id="3_naruto_punch"]
+[ext_resource type="Resource" path="res://data/abilities/dynamic_entry.tres" id="4_dynamic_entry"]
+[ext_resource type="Resource" path="res://data/abilities/kawarimi_trap.tres" id="5_kawarimi_trap"]
+[ext_resource type="Resource" path="res://data/abilities/iron_guard.tres" id="6_iron_guard"]
+
+[resource]
+script = ExtResource("1_chdt")
+id = "kiba"
+name = "Kiba Inuzuka"
+title = "Presa Sobre Presa (Gatsuga)"
+tags = Array[String]([])
+max_hp = 85
+current_hp = 85
+max_vigor = 100
+current_vigor = 100
+attack_modifier = 1.0
+avatar_color = Color(0.55, 0.35, 0.25, 1)
+secondary_color = Color(0.3, 0.15, 0.1, 1)
+chakra_affinities = Array[int]([4])
+starting_deck = Array[Resource("res://src/core/ability_data.gd")]([ExtResource("2_rock_lee_kick"), ExtResource("2_rock_lee_kick"), ExtResource("3_naruto_punch"), ExtResource("4_dynamic_entry"), ExtResource("5_kawarimi_trap"), ExtResource("6_iron_guard")])

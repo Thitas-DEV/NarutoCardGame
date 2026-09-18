@@ -1,37 +1,54 @@
 [gd_scene format=3 uid="uid://b7v2y3x8k2l1m"]
 
 [ext_resource type="Script" uid="uid://cjjms54q1cujb" path="res://src/map/StoryMap.gd" id="1_sm"]
-[ext_resource type="Script" uid="uid://16fy2d2808xi" path="res://src/map/ChibiPlayer.gd" id="2_cp"]
-[ext_resource type="PackedScene" uid="uid://bhm2aux443fj6" path="res://src/ui/menu_pausa.tscn" id="3_agohl"]
+[ext_resource type="PackedScene" uid="uid://bhm2aux443fj6" path="res://src/ui/menu_pausa.tscn" id="2_pause"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_map_bg"]
-bg_color = Color(0.1, 0.13, 0.18, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.06, 0.08, 0.12, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_top_bar"]
-bg_color = Color(0.06, 0.08, 0.12, 0.95)
+bg_color = Color(0.08, 0.1, 0.15, 0.98)
 border_width_bottom = 2
-border_color = Color(0.9, 0.6, 0.1, 0.8)
+border_color = Color(0.9, 0.6, 0.15, 0.9)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dlg"]
-bg_color = Color(0.07, 0.09, 0.14, 0.96)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.95, 0.6, 0.15, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_modal_panel"]
+bg_color = Color(0.08, 0.1, 0.15, 0.98)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.7, 0.2, 1)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
-shadow_color = Color(0, 0, 0, 0.7)
-shadow_size = 10
+shadow_color = Color(0, 0, 0, 0.8)
+shadow_size = 16
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_start"]
-bg_color = Color(0.85, 0.3, 0.1, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_info_card"]
+bg_color = Color(0.12, 0.14, 0.2, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.35, 0.45, 0.8)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_start_btn"]
+bg_color = Color(0.9, 0.45, 0.1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0.9, 0.45, 0.1, 0.4)
+shadow_size = 8
 
 [node name="StoryMap" type="Control" unique_id=955230207]
 layout_mode = 3
@@ -49,37 +66,56 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_map_bg")
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
 
 [node name="TopBar" type="Panel" parent="." unique_id=1274100920]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 65.0
+offset_bottom = 60.0
 grow_horizontal = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_top_bar")
 
-[node name="HeroInfo" type="VBoxContainer" parent="TopBar" unique_id=439472508]
+[node name="BackButton" type="Button" parent="TopBar" unique_id=1558221477]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 25.0
-offset_top = -22.5
-offset_right = 350.0
-offset_bottom = 22.5
+offset_left = 20.0
+offset_top = -18.0
+offset_right = 180.0
+offset_bottom = 18.0
 grow_vertical = 2
+text = "← MENU PRINCIPAL"
 
-[node name="HeroName" type="Label" parent="TopBar/HeroInfo" unique_id=339086367]
+[node name="ProgressInfo" type="VBoxContainer" parent="TopBar" unique_id=439472508]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -24.0
+offset_right = 250.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="TopBar/ProgressInfo" unique_id=339086367]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
 theme_override_font_sizes/font_size = 16
-text = "Naruto Uzumaki"
+text = "CRÔNICAS SHINOBI — MODO HISTÓRIA"
+horizontal_alignment = 1
 
-[node name="HPLabel" type="Label" parent="TopBar/HeroInfo" unique_id=1045014542]
+[node name="ProgressLabel" type="Label" parent="TopBar/ProgressInfo" unique_id=1045014542]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
 theme_override_font_sizes/font_size = 12
-text = "HP: 80 / 80 | Deck: 12 cartas"
+text = "Fases Concluídas: 0 / 24 (0%)"
+horizontal_alignment = 1
 
 [node name="DeckButton" type="Button" parent="TopBar" unique_id=278281616]
 layout_mode = 1
@@ -88,127 +124,343 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -260.0
-offset_top = -18.0
-offset_right = -120.0
-offset_bottom = 18.0
-grow_horizontal = 0
-grow_vertical = 2
-text = "🎴 EDITAR DECK"
-
-[node name="MenuButton" type="Button" parent="TopBar" unique_id=1558221477]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -105.0
+offset_left = -170.0
 offset_top = -18.0
 offset_right = -20.0
 offset_bottom = 18.0
 grow_horizontal = 0
 grow_vertical = 2
-text = "MENU"
+text = "🎴 DECK BUILDER"
 
-[node name="MapArea" type="Control" parent="." unique_id=1581587337]
+[node name="WorldTabs" type="HBoxContainer" parent="." unique_id=1914217173]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 25.0
+offset_top = 70.0
+offset_right = -25.0
+offset_bottom = 114.0
+grow_horizontal = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="WorldHeader" type="VBoxContainer" parent="." unique_id=1581587337]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 30.0
+offset_top = 122.0
+offset_right = -30.0
+offset_bottom = 168.0
+grow_horizontal = 2
+
+[node name="WorldTitle" type="Label" parent="WorldHeader" unique_id=1875461114]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.75, 0.2, 1)
+theme_override_font_sizes/font_size = 18
+text = "🏫 Mundo 1: Academia Ninja"
+
+[node name="WorldSubtitle" type="Label" parent="WorldHeader" unique_id=2079214303]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 13
+text = "Os Primeiros Passos de um Shinobi & País das Ondas"
+
+[node name="StageScroll" type="ScrollContainer" parent="." unique_id=303901662]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 65.0
+offset_left = 25.0
+offset_top = 175.0
+offset_right = -25.0
+offset_bottom = -15.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MapCanvas" type="Control" parent="MapArea" unique_id=303901662]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="StagesGrid" type="GridContainer" parent="StageScroll" unique_id=1083378029]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/h_separation = 16
+theme_override_constants/v_separation = 12
+columns = 2
 
-[node name="NodeButtons" type="Control" parent="MapArea" unique_id=1914217173]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ChibiPlayer" type="Node2D" parent="MapArea" unique_id=1083378029]
-position = Vector2(180, 480)
-script = ExtResource("2_cp")
-
-[node name="DialogueModal" type="Panel" parent="." unique_id=1356290403]
+[node name="BattlePrepModal" type="Control" parent="." unique_id=1356290403]
 visible = false
+z_index = 10
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Backdrop" type="ColorRect" parent="BattlePrepModal" unique_id=489571252]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="ModalPanel" type="Panel" parent="BattlePrepModal" unique_id=298564046]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -320.0
-offset_top = -140.0
-offset_right = 320.0
-offset_bottom = 140.0
+offset_left = -550.0
+offset_top = -310.0
+offset_right = 550.0
+offset_bottom = 310.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_dlg")
+theme_override_styles/panel = SubResource("StyleBoxFlat_modal_panel")
 
-[node name="Speaker" type="Label" parent="DialogueModal" unique_id=1875461114]
+[node name="Header" type="Control" parent="BattlePrepModal/ModalPanel" unique_id=1001]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 60.0
+grow_horizontal = 2
+
+[node name="StageTitle" type="Label" parent="BattlePrepModal/ModalPanel/Header" unique_id=1002]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_left = 25.0
-offset_top = 18.0
-offset_right = -25.0
-offset_bottom = 44.0
+offset_top = 10.0
+offset_right = -70.0
+offset_bottom = 34.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(1, 0.75, 0.2, 1)
-theme_override_font_sizes/font_size = 18
-text = "Kakashi Hatake"
+theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
+theme_override_font_sizes/font_size = 17
+text = "FASE 1.0 — Naruto e Iruka vs Mizuki"
 
-[node name="Text" type="RichTextLabel" parent="DialogueModal" unique_id=2079214303]
+[node name="StageSubtitle" type="Label" parent="BattlePrepModal/ModalPanel/Header" unique_id=1003]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 25.0
+offset_top = 34.0
+offset_right = -70.0
+offset_bottom = 54.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.7, 0.75, 0.85, 1)
+theme_override_font_sizes/font_size = 12
+text = "O Pergaminho Proibido (Tutorial do Jogo)"
+
+[node name="CloseBtn" type="Button" parent="BattlePrepModal/ModalPanel/Header" unique_id=1004]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -18.0
+offset_right = -15.0
+offset_bottom = 18.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "✕"
+
+[node name="Body" type="HBoxContainer" parent="BattlePrepModal/ModalPanel" unique_id=1005]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 25.0
-offset_top = 55.0
-offset_right = -25.0
-offset_bottom = -70.0
+offset_left = 20.0
+offset_top = 65.0
+offset_right = -20.0
+offset_bottom = -65.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/normal_font_size = 15
-text = "Texto do diálogo..."
+theme_override_constants/separation = 16
 
-[node name="StartBattleBtn" type="Button" parent="DialogueModal" unique_id=489571252]
+[node name="HeroColumn" type="VBoxContainer" parent="BattlePrepModal/ModalPanel/Body" unique_id=1006]
+custom_minimum_size = Vector2(330, 0)
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="BattlePrepModal/ModalPanel/Body/HeroColumn" unique_id=1007]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.7, 0.2, 1)
+theme_override_font_sizes/font_size = 13
+text = "🥋 SELECIONE SEU NINJA"
+
+[node name="HeroButtonsContainer" type="HBoxContainer" parent="BattlePrepModal/ModalPanel/Body/HeroColumn" unique_id=1008]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HeroInfoCard" type="PanelContainer" parent="BattlePrepModal/ModalPanel/Body/HeroColumn" unique_id=1009]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_info_card")
+
+[node name="VBox" type="VBoxContainer" parent="BattlePrepModal/ModalPanel/Body/HeroColumn/HeroInfoCard" unique_id=1010]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="HeroName" type="Label" parent="BattlePrepModal/ModalPanel/Body/HeroColumn/HeroInfoCard/VBox" unique_id=1011]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_font_sizes/font_size = 14
+text = "Naruto Uzumaki"
+
+[node name="HeroTitle" type="Label" parent="BattlePrepModal/ModalPanel/Body/HeroColumn/HeroInfoCard/VBox" unique_id=1012]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.75, 0.85, 1)
+theme_override_font_sizes/font_size = 11
+text = "O Garoto da Raposa"
+
+[node name="HeroStats" type="Label" parent="BattlePrepModal/ModalPanel/Body/HeroColumn/HeroInfoCard/VBox" unique_id=1013]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "❤️ HP: 85  |  🏃 Vigor: 100"
+
+[node name="HeroAffinities" type="HBoxContainer" parent="BattlePrepModal/ModalPanel/Body/HeroColumn/HeroInfoCard/VBox" unique_id=1014]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="SpritePreviewArea" type="Control" parent="BattlePrepModal/ModalPanel/Body/HeroColumn" unique_id=1015]
+custom_minimum_size = Vector2(300, 230)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EnemyColumn" type="VBoxContainer" parent="BattlePrepModal/ModalPanel/Body" unique_id=1016]
+custom_minimum_size = Vector2(330, 0)
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="BattlePrepModal/ModalPanel/Body/EnemyColumn" unique_id=1017]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.35, 0.35, 1)
+theme_override_font_sizes/font_size = 13
+text = "⚔️ OPONENTE & MISSÃO"
+
+[node name="EnemyInfoCard" type="PanelContainer" parent="BattlePrepModal/ModalPanel/Body/EnemyColumn" unique_id=1018]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_info_card")
+
+[node name="VBox" type="VBoxContainer" parent="BattlePrepModal/ModalPanel/Body/EnemyColumn/EnemyInfoCard" unique_id=1019]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="EnemyName" type="Label" parent="BattlePrepModal/ModalPanel/Body/EnemyColumn/EnemyInfoCard/VBox" unique_id=1020]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.4, 0.4, 1)
+theme_override_font_sizes/font_size = 14
+text = "Mizuki"
+
+[node name="EnemyTitle" type="Label" parent="BattlePrepModal/ModalPanel/Body/EnemyColumn/EnemyInfoCard/VBox" unique_id=1021]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.75, 0.85, 1)
+theme_override_font_sizes/font_size = 11
+text = "Ninja Renegado de Konoha"
+
+[node name="EnemyStats" type="Label" parent="BattlePrepModal/ModalPanel/Body/EnemyColumn/EnemyInfoCard/VBox" unique_id=1022]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "❤️ HP: 70  |  🏃 Vigor: 90"
+
+[node name="EnemyAffinities" type="HBoxContainer" parent="BattlePrepModal/ModalPanel/Body/EnemyColumn/EnemyInfoCard/VBox" unique_id=1023]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="BriefingBox" type="VBoxContainer" parent="BattlePrepModal/ModalPanel/Body/EnemyColumn" unique_id=1024]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 6
+
+[node name="StageDesc" type="RichTextLabel" parent="BattlePrepModal/ModalPanel/Body/EnemyColumn/BriefingBox" unique_id=1025]
+custom_minimum_size = Vector2(0, 65)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.85, 0.88, 0.95, 1)
+theme_override_font_sizes/normal_font_size = 11
+text = "Descrição da missão e contexto do confronto ninja..."
+
+[node name="DialogueScroll" type="ScrollContainer" parent="BattlePrepModal/ModalPanel/Body/EnemyColumn/BriefingBox" unique_id=1026]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DialogueContainer" type="VBoxContainer" parent="BattlePrepModal/ModalPanel/Body/EnemyColumn/BriefingBox/DialogueScroll" unique_id=1027]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="DeckColumn" type="VBoxContainer" parent="BattlePrepModal/ModalPanel/Body" unique_id=1028]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="DeckHeader" type="HBoxContainer" parent="BattlePrepModal/ModalPanel/Body/DeckColumn" unique_id=1029]
+layout_mode = 2
+
+[node name="DeckTitle" type="Label" parent="BattlePrepModal/ModalPanel/Body/DeckColumn/DeckHeader" unique_id=1030]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.3, 0.8, 1, 1)
+theme_override_font_sizes/font_size = 13
+text = "🎴 DECK PREVISTO"
+
+[node name="DeckCountLabel" type="Label" parent="BattlePrepModal/ModalPanel/Body/DeckColumn/DeckHeader" unique_id=1031]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.7, 0.8, 1)
+theme_override_font_sizes/font_size = 11
+text = "(0 CARTAS)"
+
+[node name="DeckScroll" type="ScrollContainer" parent="BattlePrepModal/ModalPanel/Body/DeckColumn" unique_id=1032]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DeckCardsContainer" type="VBoxContainer" parent="BattlePrepModal/ModalPanel/Body/DeckColumn/DeckScroll" unique_id=1033]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="Footer" type="Control" parent="BattlePrepModal/ModalPanel" unique_id=1034]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
+anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -220.0
-offset_top = -55.0
-offset_right = -25.0
-offset_bottom = -15.0
-grow_horizontal = 0
+offset_top = -60.0
+grow_horizontal = 2
 grow_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_btn_start")
-text = "⚔️ ENTRAR NA BATALHA"
 
-[node name="CancelBtn" type="Button" parent="DialogueModal" unique_id=298564046]
+[node name="BackBtn" type="Button" parent="BattlePrepModal/ModalPanel/Footer" unique_id=1035]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 offset_left = 25.0
-offset_top = -55.0
-offset_right = 130.0
-offset_bottom = -15.0
-grow_vertical = 0
-text = "VOLTAR"
+offset_top = -18.0
+offset_right = 140.0
+offset_bottom = 18.0
+grow_vertical = 2
+text = "← VOLTAR"
 
-[node name="Menu_pausa" parent="." unique_id=1831560146 instance=ExtResource("3_agohl")]
+[node name="StartBattleBtn" type="Button" parent="BattlePrepModal/ModalPanel/Footer" unique_id=1036]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -20.0
+offset_right = -25.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_start_btn")
+text = "⚔️ INICIAR BATALHA"
+
+[node name="Menu_pausa" parent="." unique_id=1831560146 instance=ExtResource("2_pause")]

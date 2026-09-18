@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/core/character_data.gd" id="1_chdt"]
+[ext_resource type="Resource" path="res://data/abilities/naruto_punch.tres" id="2_naruto_punch"]
+[ext_resource type="Resource" path="res://data/abilities/rock_lee_kick.tres" id="3_rock_lee_kick"]
+[ext_resource type="Resource" path="res://data/abilities/doton_wall.tres" id="4_doton_wall"]
+[ext_resource type="Resource" path="res://data/abilities/iron_guard.tres" id="5_iron_guard"]
+
+[resource]
+script = ExtResource("1_chdt")
+id = "jirobo"
+name = "Jirobo"
+title = "Portão Sul do Quarteto do Som (Doton)"
+tags = Array[String]([])
+max_hp = 105
+current_hp = 105
+max_vigor = 95
+current_vigor = 95
+attack_modifier = 1.0
+avatar_color = Color(0.7, 0.5, 0.3, 1)
+secondary_color = Color(0.35, 0.25, 0.15, 1)
+chakra_affinities = Array[int]([4])
+starting_deck = Array[Resource("res://src/core/ability_data.gd")]([ExtResource("2_naruto_punch"), ExtResource("3_rock_lee_kick"), ExtResource("4_doton_wall"), ExtResource("4_doton_wall"), ExtResource("5_iron_guard")])

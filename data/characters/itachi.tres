@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://src/core/character_data.gd" id="1_chdt"]
+[ext_resource type="Resource" path="res://data/abilities/katon_gokakyu.tres" id="2_katon_gokakyu"]
+[ext_resource type="Resource" path="res://data/abilities/sasuke_slash.tres" id="3_sasuke_slash"]
+[ext_resource type="Resource" path="res://data/abilities/suiton_suiryuudan.tres" id="4_suiton_suiryuudan"]
+[ext_resource type="Resource" path="res://data/abilities/kawarimi_trap.tres" id="5_kawarimi_trap"]
+[ext_resource type="Resource" path="res://data/abilities/iron_guard.tres" id="6_iron_guard"]
+
+[resource]
+script = ExtResource("1_chdt")
+id = "itachi"
+name = "Itachi Uchiha"
+title = "Prodígio do Sharingan & Mestre do Tsukuyomi"
+tags = Array[String]([])
+max_hp = 95
+current_hp = 95
+max_vigor = 85
+current_vigor = 85
+attack_modifier = 1.0
+avatar_color = Color(0.25, 0.2, 0.3, 1)
+secondary_color = Color(0.8, 0.15, 0.15, 1)
+chakra_affinities = Array[int]([2, 1])
+starting_deck = Array[Resource("res://src/core/ability_data.gd")]([ExtResource("2_katon_gokakyu"), ExtResource("2_katon_gokakyu"), ExtResource("3_sasuke_slash"), ExtResource("4_suiton_suiryuudan"), ExtResource("5_kawarimi_trap"), ExtResource("6_iron_guard")])

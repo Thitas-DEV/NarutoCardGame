@@ -241,6 +241,23 @@ func play_custom_animation(anim_name: String) -> void:
 	elif anim_name != "damage" and anim_name != "idle" and animated_sprite.sprite_frames.has_animation("attack") and animated_sprite.sprite_frames.get_frame_count("attack") > 0:
 		animated_sprite.play("attack")
 
+func play_celebration(on_finished: Callable = Callable()) -> void:
+	SoundManager.play_sfx("hit")
+	if animated_sprite and animated_sprite.visible and animated_sprite.sprite_frames:
+		if animated_sprite.sprite_frames.has_animation("attack") and animated_sprite.sprite_frames.get_frame_count("attack") > 0:
+			play_custom_animation("attack")
+	
+	var tw = create_tween()
+	var orig_y = position.y
+	tw.tween_property(self, "position:y", orig_y - 20.0, 0.12).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tw.tween_property(self, "position:y", orig_y, 0.18).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	tw.tween_interval(0.4)
+	tw.tween_callback(func():
+		play_custom_animation("idle")
+		if on_finished.is_valid():
+			on_finished.call()
+	)
+
 func update_stats(hp: int, max_hp: int, shield: int, chakra_pool: Dictionary = {}, vigor: int = -1, max_vigor: int = -1) -> void:
 	hp_bar.max_value = max_hp
 	hp_bar.value = hp

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/core/character_data.gd" id="1_chdt"]
+[ext_resource type="Resource" path="res://data/abilities/naruto_punch.tres" id="2_naruto_punch"]
+[ext_resource type="Resource" path="res://data/abilities/iron_guard.tres" id="3_iron_guard"]
+[ext_resource type="Resource" path="res://data/abilities/kawarimi_trap.tres" id="4_kawarimi_trap"]
+[ext_resource type="Resource" path="res://data/abilities/katon_gokakyu.tres" id="5_katon_gokakyu"]
+
+[resource]
+script = ExtResource("1_chdt")
+id = "iruka"
+name = "Iruka Umino"
+title = "Instrutor da Academia Ninja"
+tags = Array[String]([])
+max_hp = 75
+current_hp = 75
+max_vigor = 80
+current_vigor = 80
+attack_modifier = 1.0
+avatar_color = Color(0.45, 0.35, 0.25, 1)
+secondary_color = Color(0.25, 0.2, 0.15, 1)
+chakra_affinities = Array[int]([2, 1])
+starting_deck = Array[Resource("res://src/core/ability_data.gd")]([ExtResource("2_naruto_punch"), ExtResource("2_naruto_punch"), ExtResource("3_iron_guard"), ExtResource("3_iron_guard"), ExtResource("4_kawarimi_trap"), ExtResource("5_katon_gokakyu")])

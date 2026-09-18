@@ -30,6 +30,8 @@ func _pick_card(c_data: AbilityData) -> void:
 	_finish_rewards()
 
 func _finish_rewards() -> void:
+	GameManager.complete_active_stage()
 	# Heal hero a bit after battle
-	GameManager.active_hero.current_hp = mini(GameManager.active_hero.max_hp, GameManager.active_hero.current_hp + 20)
+	if GameManager.active_hero:
+		GameManager.active_hero.current_hp = mini(GameManager.active_hero.max_hp, GameManager.active_hero.current_hp + 20)
 	get_tree().change_scene_to_file("res://src/map/StoryMap.tscn")

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="CharacterData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://src/core/character_data.gd" id="1_chdt"]
+[ext_resource type="Resource" path="res://data/abilities/naruto_punch.tres" id="2_naruto_punch"]
+[ext_resource type="Resource" path="res://data/abilities/sasuke_slash.tres" id="3_sasuke_slash"]
+[ext_resource type="Resource" path="res://data/abilities/kawarimi_trap.tres" id="4_kawarimi_trap"]
+[ext_resource type="Resource" path="res://data/abilities/iron_guard.tres" id="5_iron_guard"]
+
+[resource]
+script = ExtResource("1_chdt")
+id = "mizuki"
+name = "Mizuki"
+title = "Chunin Renegado"
+tags = Array[String]([])
+max_hp = 70
+current_hp = 70
+max_vigor = 80
+current_vigor = 80
+attack_modifier = 1.0
+avatar_color = Color(0.6, 0.65, 0.7, 1)
+secondary_color = Color(0.3, 0.35, 0.4, 1)
+chakra_affinities = Array[int]([])
+starting_deck = Array[Resource("res://src/core/ability_data.gd")]([ExtResource("2_naruto_punch"), ExtResource("2_naruto_punch"), ExtResource("3_sasuke_slash"), ExtResource("3_sasuke_slash"), ExtResource("4_kawarimi_trap"), ExtResource("5_iron_guard")])
