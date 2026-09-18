@@ -27,4 +27,5 @@ func _on_sair_pressed() -> void:
 
 
 func _on_menu_principal_pressed() -> void:
-	get_tree().change_scene_to_file("res://src/ui/MainMenu.tscn")
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://src/ui/MainMenuRefactor.tscn")

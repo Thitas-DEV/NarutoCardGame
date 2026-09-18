@@ -64,7 +64,7 @@ res://
 │   ├── deck_builder/
 │   │   └── DeckBuilder.gd/.tscn # Interface de montagem e coleção de decks
 │   └── ui/
-│       ├── MainMenu.gd/.tscn    # Menu principal com seleção de heróis
+│       ├── MainMenuRefactor.gd/.tscn # Menu principal repaginado
 │       └── RewardScreen.gd/.tscn# Escolha de cartas pós-batalha
 └── project.godot
 ```

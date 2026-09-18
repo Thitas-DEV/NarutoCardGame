@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://dm8x1k4y2v9p0"]
+[gd_scene format=3 uid="uid://bb8h1d2exhidp"]
 
 [ext_resource type="Script" path="res://src/ui/MainMenu.gd" id="1_mm"]
+[ext_resource type="Texture2D" uid="uid://cl1413o8xrhio" path="res://assets/UI/shinobi-clash-logo.png" id="2_0ogta"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_menu_bg"]
 bg_color = Color(0.06, 0.08, 0.12, 1)
@@ -48,7 +49,7 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" unique_id=634123644]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -57,7 +58,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mm")
 
-[node name="Background" type="Panel" parent="."]
+[node name="Background" type="Panel" parent="." unique_id=1721078078]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -66,7 +67,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_menu_bg")
 
-[node name="TitleBox" type="VBoxContainer" parent="."]
+[node name="TitleBox" type="VBoxContainer" parent="." unique_id=1256531841]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -75,23 +76,13 @@ offset_bottom = 140.0
 grow_horizontal = 2
 alignment = 1
 
-[node name="MainTitle" type="Label" parent="TitleBox"]
+[node name="MainTitle" type="TextureRect" parent="TitleBox" unique_id=1391921186]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.65, 0.1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 38
-text = "NARUTO: SHINOBI CLASH"
-horizontal_alignment = 1
+texture = ExtResource("2_0ogta")
+expand_mode = 2
+stretch_mode = 3
 
-[node name="Subtitle" type="Label" parent="TitleBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.6, 0.85, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 16
-text = "JOGO DE CARTAS TÁTICO ESTILO SLAY THE SPIRE"
-horizontal_alignment = 1
-
-[node name="VBoxButtons" type="VBoxContainer" parent="."]
+[node name="VBoxButtons" type="VBoxContainer" parent="." unique_id=238020172]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -104,28 +95,28 @@ grow_vertical = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="StoryModeBtn" type="Button" parent="VBoxButtons"]
+[node name="StoryModeBtn" type="Button" parent="VBoxButtons" unique_id=666564471]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_story")
 text = "📜 MODO HISTÓRIA (NARUTO CLÁSSICO)"
 
-[node name="QuickBattleBtn" type="Button" parent="VBoxButtons"]
+[node name="QuickBattleBtn" type="Button" parent="VBoxButtons" unique_id=1715243462]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_sub")
 text = "⚡ BATALHA: LEE VS GAARA (5 PORTÕES)"
 
-[node name="DeckBuilderBtn" type="Button" parent="VBoxButtons"]
+[node name="DeckBuilderBtn" type="Button" parent="VBoxButtons" unique_id=1455192819]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_sub")
 text = "🎴 DECK BUILDER / COLEÇÃO"
 
-[node name="HeroSelect" type="Panel" parent="."]
+[node name="HeroSelect" type="Panel" parent="." unique_id=1945422758]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -140,7 +131,7 @@ grow_horizontal = 0
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_hero_box")
 
-[node name="Header" type="Label" parent="HeroSelect"]
+[node name="Header" type="Label" parent="HeroSelect" unique_id=1123648207]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -152,7 +143,7 @@ theme_override_font_sizes/font_size = 15
 text = "SELECIONE SEU NINJA INICIAL"
 horizontal_alignment = 1
 
-[node name="HBox" type="HBoxContainer" parent="HeroSelect"]
+[node name="HBox" type="HBoxContainer" parent="HeroSelect" unique_id=829482029]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -164,31 +155,31 @@ grow_horizontal = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="HeroNaruto" type="Button" parent="HeroSelect/HBox"]
+[node name="HeroNaruto" type="Button" parent="HeroSelect/HBox" unique_id=1908015149]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_hero_btn")
 text = "🍥 Naruto"
 
-[node name="HeroSasuke" type="Button" parent="HeroSelect/HBox"]
+[node name="HeroSasuke" type="Button" parent="HeroSelect/HBox" unique_id=357128011]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_hero_btn")
 text = "⚡ Sasuke"
 
-[node name="HeroLee" type="Button" parent="HeroSelect/HBox"]
+[node name="HeroLee" type="Button" parent="HeroSelect/HBox" unique_id=217377134]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_hero_btn")
 text = "🥋 Rock Lee"
 
-[node name="HeroGuy" type="Button" parent="HeroSelect/HBox"]
+[node name="HeroGuy" type="Button" parent="HeroSelect/HBox" unique_id=1107531470]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_hero_btn")
 text = "🍃 Might Guy"
 
-[node name="HeroDesc" type="RichTextLabel" parent="HeroSelect"]
+[node name="HeroDesc" type="RichTextLabel" parent="HeroSelect" unique_id=1435298459]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

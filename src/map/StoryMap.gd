@@ -98,7 +98,7 @@ var current_dlg_step: int = 0
 
 func _ready() -> void:
 	deck_btn.pressed.connect(func(): get_tree().change_scene_to_file("res://src/deck_builder/DeckBuilder.tscn"))
-	menu_btn.pressed.connect(func(): get_tree().change_scene_to_file("res://src/ui/MainMenu.tscn"))
+	menu_btn.pressed.connect(func(): get_tree().change_scene_to_file("res://src/ui/MainMenuRefactor.tscn"))
 	dlg_start_btn.pressed.connect(_on_dialogue_next_or_start)
 	dlg_cancel_btn.pressed.connect(func(): dialogue_modal.visible = false)
 	
