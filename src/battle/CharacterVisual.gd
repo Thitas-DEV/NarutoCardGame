@@ -93,9 +93,11 @@ func _setup_sprite_nodes() -> void:
 
 func setup_character(data: CharacterData) -> void:
 	character_data = data
-	name_label.text = data.name
+	if name_label:
+		name_label.text = data.name
 	_setup_character_animations(data)
-	update_stats(data.current_hp, data.max_hp, 0, {})
+	if hp_bar:
+		update_stats(data.current_hp, data.max_hp, 0, {})
 	queue_redraw()
 
 func play_smoke_overlay(on_finished: Callable = Callable()) -> void:

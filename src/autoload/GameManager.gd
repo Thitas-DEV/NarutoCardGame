@@ -23,6 +23,14 @@ var active_enemy_data: CharacterData = null
 var is_scripted_phase: bool = false
 var battle_reward_pool: Array[AbilityData] = []
 
+# Roguelike unlocked characters & battle tracking
+var roguelike_unlocked_characters: Array[String] = []
+var heroes_played_history: Array[String] = []
+var enemies_defeated_history: Array[String] = []
+
+# Últimas estatísticas da batalha para a tela de avaliação
+var last_battle_stats: Dictionary = {}
+
 func _ready() -> void:
 	# Atrasamos um pouco o init para garantir que o Database carregue antes
 	call_deferred("_init_player")
@@ -78,6 +86,68 @@ func complete_active_stage() -> void:
 		completed_stages.append(s_id)
 		completed_nodes.append(s_id)
 		story_progress_updated.emit(s_id)
+
+## Registra o resultado da batalha, compila estatísticas e calcula desbloqueios para o modo Rogue Like
+func record_battle_result(damage_dealt: int, damage_taken: int, turns: int) -> Dictionary:
+	var newly_unlocked: Array[Dictionary] = []
+	
+	# 1. Verifica se é a primeira vez jogando com o herói escolhido
+	if active_hero and active_hero.id != "":
+		var h_id = active_hero.id
+		if not heroes_played_history.has(h_id):
+			heroes_played_history.append(h_id)
+			if not roguelike_unlocked_characters.has(h_id):
+				roguelike_unlocked_characters.append(h_id)
+			newly_unlocked.append({
+				"id": h_id,
+				"name": active_hero.name,
+				"title": active_hero.title,
+				"reason": "hero",
+				"affinities": active_hero.chakra_affinities,
+				"character_data": active_hero
+			})
+	
+	# 2. Verifica se é a primeira vez derrotando o oponente
+	if active_enemy_data and active_enemy_data.id != "":
+		var e_id = active_enemy_data.id
+		if not enemies_defeated_history.has(e_id):
+			enemies_defeated_history.append(e_id)
+			var already_in_new = false
+			for u in newly_unlocked:
+				if u["id"] == e_id:
+					already_in_new = true
+					break
+			if not roguelike_unlocked_characters.has(e_id):
+				roguelike_unlocked_characters.append(e_id)
+			if not already_in_new:
+				newly_unlocked.append({
+					"id": e_id,
+					"name": active_enemy_data.name,
+					"title": active_enemy_data.title,
+					"reason": "enemy",
+					"affinities": active_enemy_data.chakra_affinities,
+					"character_data": active_enemy_data
+				})
+	
+	# 3. Armazena as estatísticas completas
+	var stage_title = active_stage_data.get("title", "Batalha Ninja")
+	var stage_num = active_stage_data.get("number", "")
+	var stage_id = active_stage_data.get("id", active_encounter_id)
+	
+	last_battle_stats = {
+		"damage_dealt": damage_dealt,
+		"damage_taken": damage_taken,
+		"turns_count": turns,
+		"hero": active_hero,
+		"enemy": active_enemy_data,
+		"stage_id": stage_id,
+		"stage_title": stage_title,
+		"stage_number": stage_num,
+		"stage_data": active_stage_data,
+		"newly_unlocked": newly_unlocked
+	}
+	
+	return last_battle_stats
 
 func start_story_battle(encounter_id: String) -> void:
 	active_encounter_id = encounter_id

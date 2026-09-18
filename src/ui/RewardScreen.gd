@@ -8,6 +8,11 @@ extends Control
 const CARD_UI_SCENE = preload("res://src/battle/CardUI.tscn")
 
 func _ready() -> void:
+	# No modo história, a tela de escolha de cartas foi substituída pela tela de avaliação de desempenho
+	if not GameManager.active_stage_data.is_empty() or not GameManager.last_battle_stats.is_empty():
+		get_tree().change_scene_to_file("res://src/ui/BattleEvaluationScreen.tscn")
+		return
+		
 	skip_btn.pressed.connect(_finish_rewards)
 	_generate_reward_cards()
 

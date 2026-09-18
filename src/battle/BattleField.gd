@@ -20,6 +20,8 @@ var enemy_shield: int = 0
 var player_vigor: int = 100
 var enemy_vigor: int = 100
 var is_combo_running: bool = false
+var battle_damage_dealt: int = 0
+var battle_damage_taken: int = 0
 
 # Reservas de Chakra Elemental (Estilo Pokémon TCG)
 # Mapeia ChakraElement.Type -> quantidade acumulada
@@ -716,6 +718,8 @@ func _execute_script(script: Dictionary, multiplier: float, is_player: bool = tr
 		"self_damage":
 			var dmg = int(value)
 			if dmg > 0:
+				if is_player:
+					battle_damage_taken += dmg
 				caster_data.current_hp = maxi(0, caster_data.current_hp - dmg)
 				caster_visual.spawn_floating_text("-%d" % dmg, Color(1.0, 0.2, 0.2))
 				if caster_visual.has_method("play_damage_animation"):
@@ -800,6 +804,10 @@ func _damage_character(target_data: CharacterData, target_visual: Node2D, amount
 					vfx.spawn_smoke_puff(attacker_visual.global_position)
 				attacker_visual.spawn_floating_text("EXPLOSÃO! -16 💥", Color(1.0, 0.3, 0.2))
 				attacker_data.current_hp = maxi(0, attacker_data.current_hp - 16)
+				if is_target_player:
+					battle_damage_dealt += 16
+				else:
+					battle_damage_taken += 16
 				if attacker_visual.has_method("play_damage_animation"):
 					attacker_visual.play_damage_animation()
 			_update_ui()
@@ -811,6 +819,12 @@ func _damage_character(target_data: CharacterData, target_visual: Node2D, amount
 			_update_ui()
 			return
 		
+	# Registra dano nas estatísticas da batalha
+	if is_target_player:
+		battle_damage_taken += amount
+	else:
+		battle_damage_dealt += amount
+
 	# Absorção de escudo
 	if is_target_player and player_shield > 0:
 		if player_shield >= amount:
@@ -1027,11 +1041,14 @@ func _trigger_victory() -> void:
 	# Salva o nó de história como concluído
 	if not GameManager.completed_nodes.has(GameManager.active_encounter_id):
 		GameManager.completed_nodes.append(GameManager.active_encounter_id)
+		
+	# Registra as estatísticas da batalha e desbloqueios para o modo Rogue Like
+	GameManager.record_battle_result(battle_damage_dealt, battle_damage_taken, turn_number)
 	
 	var tw = create_tween()
 	tw.tween_interval(1.5)
 	tw.tween_callback(func():
-		get_tree().change_scene_to_file("res://src/ui/RewardScreen.tscn")
+		get_tree().change_scene_to_file("res://src/ui/BattleEvaluationScreen.tscn")
 	)
 
 func _trigger_defeat() -> void:
