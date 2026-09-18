@@ -7,6 +7,7 @@ extends Control
 @onready var hero_naruto_btn: Button = $HeroSelect/HBox/HeroNaruto
 @onready var hero_sasuke_btn: Button = $HeroSelect/HBox/HeroSasuke
 @onready var hero_lee_btn: Button = $HeroSelect/HBox/HeroLee
+@onready var hero_guy_btn: Button = $HeroSelect/HBox/HeroGuy if has_node("HeroSelect/HBox/HeroGuy") else null
 @onready var hero_desc_label: RichTextLabel = $HeroSelect/HeroDesc
 
 func _ready() -> void:
@@ -17,6 +18,8 @@ func _ready() -> void:
 	hero_naruto_btn.pressed.connect(func(): _select_hero_ui("naruto"))
 	hero_sasuke_btn.pressed.connect(func(): _select_hero_ui("sasuke"))
 	hero_lee_btn.pressed.connect(func(): _select_hero_ui("rock_lee"))
+	if hero_guy_btn:
+		hero_guy_btn.pressed.connect(func(): _select_hero_ui("might_guy"))
 	
 	_select_hero_ui("naruto")
 
@@ -30,7 +33,9 @@ func _select_hero_ui(hero_id: String) -> void:
 		"sasuke":
 			hero_desc_label.text = "[b][color=#3388ff]SASUKE UCHIHA[/color][/b]\nEspecialidade: Katon Bola de Fogo, Chidori perfurante e esquivas com Sharingan.\n[color=#ff3333]Passiva:[/color] Sangramento e paralisia com jutsus relâmpago."
 		"rock_lee":
-			hero_desc_label.text = "[b][color=#33dd66]ROCK LEE[/color][/b]\nEspecialidade: Taijutsu puro, acúmulo veloz de Hits Storm 4 e Liberação dos 5 Portões Internos.\n[color=#ffff33]Passiva:[/color] Dano de combo amplificado ao extremo."
+			hero_desc_label.text = "[b][color=#33dd66]ROCK LEE[/color][/b]\nEspecialidade: Especialista em Taijutsu e Cartas Holder! Dispara combos múltiplos com -10% de vigor e acúmulo de +10% de dano.\n[color=#ffff33]Passiva:[/color] Inicia com 100% de Vigor Físico (recupera 50% do faltante por rodada)."
+		"might_guy":
+			hero_desc_label.text = "[b][color=#2ecc71]MIGHT GUY[/color][/b]\nEspecialidade: A Nobre Fera Verde de Konoha! Mestre Supremo de Taijutsu e Holders com 120 de Vigor e Entrada Dinâmica.\n[color=#ffff33]Passiva:[/color] Inicia com 100% de Vigor (120/120) e combos avassaladores."
 
 func _on_story_pressed() -> void:
 	SoundManager.play_sfx("chakra_charge", 1.2)

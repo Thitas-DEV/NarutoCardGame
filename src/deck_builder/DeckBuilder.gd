@@ -15,11 +15,14 @@ func _ready() -> void:
 	hero_selector.add_item("Naruto Uzumaki", 0)
 	hero_selector.add_item("Sasuke Uchiha", 1)
 	hero_selector.add_item("Rock Lee", 2)
+	hero_selector.add_item("Might Guy", 3)
 	
-	match GameManager.active_hero.id:
-		"naruto": hero_selector.select(0)
-		"sasuke": hero_selector.select(1)
-		"rock_lee": hero_selector.select(2)
+	if GameManager.active_hero:
+		match GameManager.active_hero.id:
+			"naruto": hero_selector.select(0)
+			"sasuke": hero_selector.select(1)
+			"rock_lee": hero_selector.select(2)
+			"might_guy": hero_selector.select(3)
 		
 	hero_selector.item_selected.connect(_on_hero_selected)
 	_refresh_views()
@@ -29,6 +32,7 @@ func _on_hero_selected(index: int) -> void:
 		0: GameManager.select_hero("naruto")
 		1: GameManager.select_hero("sasuke")
 		2: GameManager.select_hero("rock_lee")
+		3: GameManager.select_hero("might_guy")
 	_refresh_views()
 
 func _refresh_views() -> void:

@@ -1,9 +1,9 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://wivkex77fyoc"]
 
-[ext_resource type="Texture2D" uid="uid://dofkj66phn1hh" path="res://assets/characters/naruto/naruto/narut shipudeo/naruto senin/golpear/arriba/arriba 2.bmp" id="1_bg0ru"]
-[ext_resource type="Texture2D" uid="uid://bo8f4t24i1sgq" path="res://assets/characters/naruto/naruto/narut shipudeo/naruto senin/golpear/arriba/arriba 3.bmp" id="2_k521h"]
-[ext_resource type="Texture2D" uid="uid://drmnkpc7wwobe" path="res://assets/characters/naruto/naruto/narut shipudeo/naruto senin/golpear/arriba/arriba 4.bmp" id="3_62rgc"]
-[ext_resource type="Texture2D" uid="uid://pj6ddb4mg4hs" path="res://assets/characters/naruto/naruto/narut shipudeo/naruto senin/golpear/arriba/arriba.bmp" id="4_lqhg4"]
+[ext_resource type="Texture2D" uid="uid://cwvom4dr43c23" path="res://assets/characters/rock_lee/idle/rocklee_0-0.png" id="1_k521h"]
+[ext_resource type="Texture2D" uid="uid://dcnjrl0vtn6qx" path="res://assets/characters/rock_lee/idle/rocklee_0-1.png" id="2_62rgc"]
+[ext_resource type="Texture2D" uid="uid://drjfd7fsnj4m4" path="res://assets/characters/rock_lee/idle/rocklee_0-2.png" id="3_lqhg4"]
+[ext_resource type="Texture2D" uid="uid://cekgiw6yferxh" path="res://assets/characters/rock_lee/idle/rocklee_0-3.png" id="4_jk810"]
 [ext_resource type="Texture2D" uid="uid://ct4ups4x53i6d" path="res://assets/effects/jutsus/substituicao/substitution_jutsu_sheet.png" id="5_k521h"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_13hvk"]
@@ -61,16 +61,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_bg0ru")
+"texture": ExtResource("1_k521h")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_k521h")
+"texture": ExtResource("2_62rgc")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_62rgc")
+"texture": ExtResource("3_lqhg4")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_lqhg4")
+"texture": ExtResource("4_jk810")
 }],
 "loop": 1,
 "name": &"idle",

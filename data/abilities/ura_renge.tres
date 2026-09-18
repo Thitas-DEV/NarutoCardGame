@@ -9,6 +9,7 @@ name = "Lótus Oculta (5 Portões)"
 description = "Taijutsu supremo proibido em alta velocidade."
 required_element = 0
 element_cost = 0
+vigor_cost = 55
 is_exhaust = false
 ability_type = 5
 target_type = 0

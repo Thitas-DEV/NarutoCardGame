@@ -117,8 +117,15 @@ O jogo utiliza o sistema canônico das **5 Naturezas Básicas de Chakra** (*Goda
    - *Gaara*: Terra (*Doton*) e Vento (*Fuuton*).
    - *Zabuza*: Água (*Suiton*).
 2. **Geração por Turno**: A cada início de turno, o jogador ganha **1 carta** e sorteia **1 ponto de energia aleatório** dentre os elementos dominados por seu ninja (acumulado na reserva `player_chakra_pool`).
-3. **Taijutsu Universal**: Golpes de Taijutsu (`required_element = NONE`, `element_cost = 0`) não consomem chakra elemental e são básicos de todos os ninjas.
-4. **Condição de Lançamento**: Jutsus elementais só podem ser jogados se a reserva do elemento exigido for **igual ou maior** que o custo da carta (`reserva[elemento] >= element_cost`). Ao jogar, consome o chakra correspondente.
+3. **Vigor Físico de Taijutsu**: Golpes de Taijutsu e ataques corporais utilizam **Vigor Físico** (`vigor_cost`).
+   - **Vigor Inicial**: Especialistas em Taijutsu (*Rock Lee*, *Might Guy*) iniciam a batalha com **100% de Vigor**. Ninjas focados em Chakra iniciam com **50% de Vigor**.
+   - **Recarga por Rodada**: A cada nova rodada (início de turno), o ninja recarrega exatamente **50% do total faltante** para o seu limite máximo: $\lceil (\text{max\_vigor} - \text{current\_vigor}) \times 0.5 \rceil$.
+4. **Cartas Holders (Combos de Taijutsu)**:
+   - Personagens como *Rock Lee* e *Might Guy* podem usar cartas especiais chamadas **Holders** (`is_holder = true`).
+   - Os Holders atuam como espaços na mão para encaixar 2 ou mais golpes de Taijutsu (conforme o template do Holder).
+   - **Desconto de Vigor**: O Holder reduz **10% do custo de vigor** de cada ataque individual do combo.
+   - **Acúmulo de Dano**: Cada golpe consecutivo desferido no combo causa um **acúmulo de 10% de dano** (+10% no 1º, +20% no 2º, +30% no 3º...).
+5. **Condição de Lançamento**: Jutsus elementais só podem ser jogados se a reserva elemental for suficiente, e golpes físicos se o personagem possuir vigor suficiente. Holders requerem pelo menos 2 golpes encaixados.
 
 ---
 

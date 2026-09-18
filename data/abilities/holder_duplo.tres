@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="AbilityData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/core/ability_data.gd" id="1_abdt"]
+
+[resource]
+script = ExtResource("1_abdt")
+id = "holder_duplo"
+name = "Holder: Combo Duplo"
+description = "Espaço de combo para 2 golpes de Taijutsu. Reduz 10% do vigor de cada golpe e acumula +10% de dano consecutivo."
+required_element = 0
+element_cost = 0
+vigor_cost = 0
+is_exhaust = false
+ability_type = 6
+target_type = 0
+is_holder = true
+holder_capacity = 2
+delivery_type = 0
+screen_shake_intensity = 5.0
+qte_difficulty = 0
+support_name = ""
+allowed_character_ids = Array[String](["rock_lee", "might_guy"])
+allowed_tags = Array[String](["taijutsu_specialist", "holder_user"])
+scripts = Array[Dictionary]([])

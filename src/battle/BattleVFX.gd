@@ -15,8 +15,7 @@ var active_clones: Array[Dictionary] = []
 var active_summons: Array[Dictionary] = []
 # Lista de efeitos de impacto / explosões
 var active_explosions: Array[Dictionary] = []
-# Lista de paredes de terra (Doton)
-var active_earth_walls: Array[Dictionary] = []
+const PAREDE_DE_LAMA_FRAMES = preload("res://data/vfx/parede_de_lama_frames.tres")
 
 func _ready() -> void:
 	z_index = 20 # Renderiza acima dos personagens
@@ -114,25 +113,7 @@ func _process(delta: float) -> void:
 			active_explosions.remove_at(ex_idx)
 		ex_idx -= 1
 
-	# 6. Processar Parede de Terra (Doton)
-	var ew_idx = active_earth_walls.size() - 1
-	while ew_idx >= 0:
-		needs_redraw = true
-		var ew = active_earth_walls[ew_idx]
-		ew.time += delta
-		if ew.time < 0.2:
-			# Subindo do solo
-			ew.height_ratio = ew.time / 0.2
-		elif ew.time > ew.duration - 0.3:
-			# Afundando
-			ew.height_ratio = maxf(0.0, (ew.duration - ew.time) / 0.3)
-		else:
-			ew.height_ratio = 1.0
-			
-		if ew.time >= ew.duration:
-			active_earth_walls.remove_at(ew_idx)
-		ew_idx -= 1
-		
+
 	if needs_redraw:
 		queue_redraw()
 
@@ -217,15 +198,45 @@ func spawn_summon_strike(target_pos: Vector2, ability: AbilityData, on_impact: C
 	})
 	queue_redraw()
 
-func spawn_earth_wall(pos: Vector2) -> void:
-	active_earth_walls.append({
-		"pos": pos,
-		"time": 0.0,
-		"duration": 1.4,
-		"height_ratio": 0.0
-	})
-	_spawn_smoke_puff(pos + Vector2(0, 10))
-	queue_redraw()
+func spawn_earth_wall(pos: Vector2, is_player_side: bool = true, duration: float = 2.2) -> AnimatedSprite2D:
+	var wall_sprite = AnimatedSprite2D.new()
+	wall_sprite.sprite_frames = PAREDE_DE_LAMA_FRAMES
+	wall_sprite.animation = "rise"
+	wall_sprite.flip_h = not is_player_side
+	
+	# O sprite tem 87x152. Com o offset (pos.x, pos.y - 50.0),
+	# a base da parede de pedra fixa precisamente no chão da arena!
+	wall_sprite.position = Vector2(pos.x, pos.y - 50.0)
+	wall_sprite.z_index = 8
+	add_child(wall_sprite)
+	
+	# Poeira e estrondo sísmico na erupção do solo
+	_spawn_smoke_puff(pos + Vector2(-20, 15))
+	_spawn_smoke_puff(pos + Vector2(20, 15))
+	SoundManager.play_sfx("hit", 0.6)
+	
+	wall_sprite.play("rise")
+	wall_sprite.animation_finished.connect(func():
+		if is_instance_valid(wall_sprite) and wall_sprite.animation == "rise":
+			wall_sprite.play("idle")
+	, Object.CONNECT_ONE_SHOT)
+	
+	# Ciclo de persistência e colapso/afundamento suave
+	var tw = create_tween()
+	tw.tween_interval(duration)
+	tw.tween_callback(func():
+		if is_instance_valid(wall_sprite):
+			wall_sprite.play("collapse")
+			_spawn_smoke_puff(pos + Vector2(0, 15))
+	)
+	tw.tween_interval(0.5)
+	tw.tween_property(wall_sprite, "modulate:a", 0.0, 0.25)
+	tw.tween_callback(func():
+		if is_instance_valid(wall_sprite):
+			wall_sprite.queue_free()
+	)
+	
+	return wall_sprite
 
 func _spawn_explosion(pos: Vector2, color: Color, radius: float) -> void:
 	active_explosions.append({
@@ -258,18 +269,6 @@ func _spawn_smoke_puff(pos: Vector2) -> void:
 # ==================== RENDERIZAÇÃO VISUAL ====================
 
 func _draw() -> void:
-	# 1. Desenhar Paredes de Terra (Doton)
-	for ew in active_earth_walls:
-		var max_h = 55.0
-		var current_h = max_h * ew.height_ratio
-		var wall_w = 40.0
-		var r = Rect2(ew.pos.x - wall_w * 0.5, ew.pos.y - current_h, wall_w, current_h)
-		draw_rect(r, Color(0.48, 0.38, 0.28))
-		draw_rect(r, Color(0.32, 0.24, 0.16), false, 2.5)
-		# Rachaduras
-		if current_h > 20:
-			draw_line(Vector2(ew.pos.x - 10, ew.pos.y - current_h + 10), Vector2(ew.pos.x + 5, ew.pos.y - current_h + 25), Color(0.2, 0.15, 0.1), 2.0)
-			draw_line(Vector2(ew.pos.x + 5, ew.pos.y - current_h + 25), Vector2(ew.pos.x - 5, ew.pos.y - 5), Color(0.2, 0.15, 0.1), 2.0)
 
 	# 2. Desenhar Projéteis
 	for proj in active_projectiles:

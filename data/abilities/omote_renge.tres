@@ -9,6 +9,7 @@ name = "Lótus Primária"
 description = "Taijutsu acrobático avassalador que atira o oponente ao chão."
 required_element = 0
 element_cost = 0
+vigor_cost = 35
 is_exhaust = false
 ability_type = 0
 target_type = 0

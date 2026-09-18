@@ -9,6 +9,7 @@ name = "Ataque Rápido de Kunai"
 description = "Ataque cortante que pressiona o oponente."
 required_element = 0
 element_cost = 0
+vigor_cost = 12
 is_exhaust = false
 ability_type = 0
 target_type = 0

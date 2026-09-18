@@ -6,6 +6,7 @@ signal animation_finished(anim_name: String)
 @export var is_player: bool = true
 @export var is_clone: bool = false
 @export var character_name: String = "Naruto"
+@export var sprite_scale: float = 2.0
 
 var character_data: CharacterData
 var target_pos: Vector2
@@ -37,6 +38,8 @@ var status_dict: Dictionary = {} # { "burn": 2, "bleed": 1 }
 # UI elements
 @onready var hp_bar: ProgressBar = $UIContainer/HPBar
 @onready var hp_label: Label = $UIContainer/HPBar/HPLabel
+@onready var vigor_bar: ProgressBar = $UIContainer/VigorBar if has_node("UIContainer/VigorBar") else null
+@onready var vigor_label: Label = $UIContainer/VigorBar/VigorLabel if has_node("UIContainer/VigorBar/VigorLabel") else null
 @onready var shield_bar: ProgressBar = $UIContainer/ShieldBar
 @onready var name_label: Label = $UIContainer/NameLabel
 @onready var chakra_container: HBoxContainer = $UIContainer/ChakraContainer
@@ -51,6 +54,12 @@ func _ready() -> void:
 	queue_redraw()
 
 func _setup_sprite_nodes() -> void:
+	if has_node("VisualRoot"):
+		var v_root = $VisualRoot as Node2D
+		if v_root:
+			v_root.scale = Vector2(sprite_scale, sprite_scale)
+			v_root.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+
 	# Check if animated sprite exists or needs creation
 	if not animated_sprite and not sprite_2d:
 		if has_node("VisualRoot/AnimatedSprite2D"):
@@ -152,6 +161,8 @@ func setup_clone(data: CharacterData, on_player_side: bool) -> void:
 	hp_bar.max_value = 1
 	hp_bar.value = 1
 	hp_label.text = "1 / 1"
+	if vigor_bar:
+		vigor_bar.visible = false
 	shield_bar.visible = false
 	chakra_container.visible = false
 	if intent_container:
@@ -200,12 +211,20 @@ func _setup_character_animations(data: CharacterData) -> void:
 			animated_sprite.visible = true
 			animated_sprite.flip_h = not is_player
 			play_custom_animation("idle")
-	# 4. Naruto usa as animações padrões embutidas na cena
+	# 4. Might Guy compartilha o conjunto de animações do seu discípulo Rock Lee
+	elif data.id == "might_guy" and ResourceLoader.exists("res://data/characters/rock_lee_frames.tres"):
+		var frames = load("res://data/characters/rock_lee_frames.tres")
+		if frames:
+			animated_sprite.sprite_frames = frames
+			animated_sprite.visible = true
+			animated_sprite.flip_h = not is_player
+			play_custom_animation("idle")
+	# 5. Naruto usa as animações padrões embutidas na cena
 	elif data.id == "naruto":
 		animated_sprite.visible = true
 		animated_sprite.flip_h = not is_player
 		play_custom_animation("idle")
-	# 5. Caso ainda não haja sprites para o ninja, usa o desenho procedural estilizado
+	# 6. Caso ainda não haja sprites para o ninja, usa o desenho procedural estilizado
 	else:
 		animated_sprite.visible = false
 
@@ -214,14 +233,15 @@ func play_custom_animation(anim_name: String) -> void:
 		return
 	if animated_sprite.sprite_frames.has_animation(anim_name) and animated_sprite.sprite_frames.get_frame_count(anim_name) > 0:
 		animated_sprite.play(anim_name)
-	elif anim_name == "kunai_defense" and animated_sprite.sprite_frames.has_animation("guard") and animated_sprite.sprite_frames.get_frame_count("guard") > 0:
-		animated_sprite.play("guard")
-	elif anim_name == "guard" and animated_sprite.sprite_frames.has_animation("kunai_defense") and animated_sprite.sprite_frames.get_frame_count("kunai_defense") > 0:
-		animated_sprite.play("kunai_defense")
+	elif anim_name in ["guard", "defense", "kunai_defense"]:
+		for fallback in ["defense", "guard", "kunai_defense"]:
+			if animated_sprite.sprite_frames.has_animation(fallback) and animated_sprite.sprite_frames.get_frame_count(fallback) > 0:
+				animated_sprite.play(fallback)
+				return
 	elif anim_name != "damage" and anim_name != "idle" and animated_sprite.sprite_frames.has_animation("attack") and animated_sprite.sprite_frames.get_frame_count("attack") > 0:
 		animated_sprite.play("attack")
 
-func update_stats(hp: int, max_hp: int, shield: int, chakra_pool: Dictionary = {}) -> void:
+func update_stats(hp: int, max_hp: int, shield: int, chakra_pool: Dictionary = {}, vigor: int = -1, max_vigor: int = -1) -> void:
 	hp_bar.max_value = max_hp
 	hp_bar.value = hp
 	hp_label.text = "%d / %d" % [hp, max_hp]
@@ -229,6 +249,14 @@ func update_stats(hp: int, max_hp: int, shield: int, chakra_pool: Dictionary = {
 	shield_bar.max_value = max_hp
 	shield_bar.value = shield
 	shield_bar.visible = shield > 0
+	
+	if vigor_bar:
+		var effective_max_vigor = max_vigor if max_vigor > 0 else (character_data.max_vigor if character_data else 100)
+		var effective_vigor = vigor if vigor >= 0 else (character_data.current_vigor if character_data else effective_max_vigor)
+		vigor_bar.max_value = effective_max_vigor
+		vigor_bar.value = effective_vigor
+		if vigor_label:
+			vigor_label.text = "🏃 %d / %d" % [effective_vigor, effective_max_vigor]
 	
 	# Update chakra orbs / badges
 	for child in chakra_container.get_children():
@@ -614,17 +642,19 @@ func _execute_summon(ability: AbilityData, target_character: Node2D, on_hit: Cal
 	)
 
 func _execute_self_cast(ability: AbilityData, on_hit: Callable) -> void:
-	if ability.id == "kawarimi_trap":
-		# O ninja apenas prepara a armadilha no slot! A animação de Kawarimi NÃO toca agora!
-		play_custom_animation("idle")
-		spawn_floating_text("ARMADILHA PREPARADA!", Color(0.95, 0.8, 0.2))
+	if ability.ability_type == AbilityData.AbilityType.TRAP or ability.id in ["kawarimi_trap", "doton_wall"]:
+		var text = "DEFESA DOTON ARMADA! 🪨" if ability.id == "doton_wall" else "ARMADILHA PREPARADA!"
+		var anim = "defense" if ability.id == "doton_wall" else "idle"
+		play_custom_animation(anim)
+		spawn_floating_text(text, Color(0.85, 0.7, 0.2))
 		SoundManager.play_sfx("card_play")
 		if on_hit.is_valid():
 			on_hit.call()
 		var tw_trap = create_tween()
-		tw_trap.tween_interval(0.3)
+		tw_trap.tween_interval(0.35)
 		tw_trap.tween_callback(func():
 			is_animating = false
+			play_custom_animation("idle")
 			animation_finished.emit("trap_set")
 		)
 		return
@@ -633,13 +663,6 @@ func _execute_self_cast(ability: AbilityData, on_hit: Callable) -> void:
 	play_custom_animation(anim_key)
 	
 	match ability.id:
-		"doton_wall":
-			var vfx = _get_battle_vfx()
-			if vfx:
-				var flip = 1.0 if is_player else -1.0
-				vfx.spawn_earth_wall(global_position + Vector2(40 * flip, 0))
-				SoundManager.play_sfx("hit", 0.6)
-			_trigger_screen_shake(ability.screen_shake_intensity if ability.screen_shake_intensity > 0 else 4.0)
 		"kagebunshin":
 			SoundManager.play_sfx("kawarimi")
 		"iron_guard":

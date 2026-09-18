@@ -6,18 +6,18 @@
 [resource]
 script = ExtResource("1_abdt")
 id = "doton_wall"
-name = "Doton: Parede de Terra"
-description = "Ergue uma muralha sólida de pedra protetora."
+name = "Doton: Parede de Lama"
+description = "Armadilha defensiva. Ao ser atacado, a Parede de Lama ergue-se do solo, absorvendo completamente o impacto do golpe sem sofrer dano."
 icon = ExtResource("1_mv0kh")
 required_element = 4
 element_cost = 1
-ability_type = 1
+ability_type = 3
 target_type = 2
 delivery_type = 5
-screen_shake_intensity = 4.0
+screen_shake_intensity = 5.0
 scripts = Array[Dictionary]([{
-"effect": "shield",
+"effect": "plant_trap",
 "trigger": "on_play",
-"value": 16
+"value": "doton_wall"
 }])
-animation_key = "guard"
+animation_key = "defense"

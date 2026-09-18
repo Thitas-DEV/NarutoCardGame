@@ -17,6 +17,9 @@ var player_data: CharacterData
 var enemy_data: CharacterData
 var player_shield: int = 0
 var enemy_shield: int = 0
+var player_vigor: int = 100
+var enemy_vigor: int = 100
+var is_combo_running: bool = false
 
 # Reservas de Chakra Elemental (Estilo Pokémon TCG)
 # Mapeia ChakraElement.Type -> quantidade acumulada
@@ -68,6 +71,7 @@ var target_arrow: Line2D
 @onready var combo_meter: Control = $UI/ComboMeter
 @onready var qte_overlay: Control = $UI/QTEOverlay
 @onready var chakra_label: Label = $UI/BottomBar/ChakraOrb/ChakraLabel
+@onready var vigor_label: Label = $UI/BottomBar/VigorPanel/VigorLabel if has_node("UI/BottomBar/VigorPanel/VigorLabel") else null
 @onready var draw_pile_label: Label = $UI/BottomBar/DrawPile/Label
 @onready var discard_pile_label: Label = $UI/BottomBar/DiscardPile/Label
 @onready var end_turn_btn: Button = $UI/BottomBar/EndTurnButton
@@ -153,6 +157,10 @@ func _setup_battle() -> void:
 	player_visual.setup_character(player_data)
 	enemy_visual.setup_character(enemy_data)
 	
+	turn_number = 1
+	player_vigor = player_data.get_initial_vigor()
+	enemy_vigor = enemy_data.get_initial_vigor()
+	
 	_setup_background()
 	_reset_chakra_pools()
 
@@ -211,6 +219,14 @@ func _start_player_turn() -> void:
 	_animate_turn_banner()
 	
 	player_shield = 0 # Shield reseta a cada turno
+	
+	# Recarga de Vigor Físico: 50% do total faltante a cada rodada (a partir da rodada 2)
+	if turn_number > 1:
+		var missing_vigor = player_data.max_vigor - player_vigor
+		if missing_vigor > 0:
+			var recharge = int(ceil(missing_vigor * 0.5))
+			player_vigor = mini(player_data.max_vigor, player_vigor + recharge)
+			player_visual.spawn_floating_text("+%d Vigor 🏃 (50%%)" % recharge, Color(0.25, 0.9, 0.45))
 	
 	# Sorteia 1 energia elemental aleatória de acordo com as afinidades do ninja (Estilo Pokémon TCG)
 	_gain_random_chakra(true)
@@ -279,7 +295,15 @@ func _spawn_card_in_hand(c_data: AbilityData) -> void:
 	card_ui.card_played.connect(_on_card_played)
 	card_ui.target_drag_moved.connect(_on_target_drag_moved)
 	card_ui.target_drag_ended.connect(_on_target_drag_ended)
+	if card_ui.has_signal("holder_unslot_requested"):
+		card_ui.holder_unslot_requested.connect(_on_holder_unslot_requested)
 	hand_cards.append(card_ui)
+
+func _on_holder_unslot_requested(unslotted_data: AbilityData, _holder_node: Control) -> void:
+	_spawn_card_in_hand(unslotted_data)
+	SoundManager.play_sfx("card_hover", 0.9)
+	_reorganize_hand()
+	_update_ui()
 
 func _reorganize_hand() -> void:
 	var total = hand_cards.size()
@@ -302,13 +326,23 @@ func _reorganize_hand() -> void:
 		var x_pos = start_x + (i * spacing)
 		card.set_hand_target(Vector2(x_pos, height_offset), angle)
 		
-		# Validação de jogabilidade: Taijutsu não exige chakra elemental; Ninjutsu exige elemento >= custo
+		# Validação de jogabilidade considerando Vigor, Chakra e Holders
 		var is_playable = false
-		if card.card_data.required_element == ChakraElement.Type.NONE or card.card_data.element_cost == 0:
-			is_playable = true
+		if card.has_method("is_holder") and card.is_holder():
+			# Holder precisa de no mínimo 2 cartas de Taijutsu para ser lançado
+			if card.slotted_cards.size() >= 2:
+				var total_combo_vigor = card.get_total_holder_vigor()
+				is_playable = (player_vigor >= total_combo_vigor)
+			else:
+				is_playable = false
 		else:
-			var current_elem_chakra = player_chakra_pool.get(card.card_data.required_element, 0)
-			is_playable = (current_elem_chakra >= card.card_data.element_cost)
+			var has_chakra = true
+			if card.card_data.required_element != ChakraElement.Type.NONE and card.card_data.element_cost > 0:
+				var current_elem_chakra = player_chakra_pool.get(card.card_data.required_element, 0)
+				has_chakra = (current_elem_chakra >= card.card_data.element_cost)
+				
+			var has_vigor = (card.card_data.vigor_cost == 0 or player_vigor >= card.card_data.vigor_cost)
+			is_playable = has_chakra and has_vigor
 			
 		# Restrições de Clone das Sombras
 		if card.card_data.requires_clone and not has_player_clone():
@@ -344,6 +378,8 @@ func has_enemy_clone() -> bool:
 	return enemy_clone_visual != null and is_instance_valid(enemy_clone_visual) and not enemy_clone_visual.is_queued_for_deletion()
 
 func are_animations_running() -> bool:
+	if is_combo_running:
+		return true
 	var running = (player_visual != null and player_visual.is_busy()) or (enemy_visual != null and enemy_visual.is_busy())
 	if not running and has_player_clone() and player_clone_visual.is_busy():
 		running = true
@@ -384,14 +420,75 @@ func _on_target_drag_ended(card_node: Control, mouse_pos: Vector2) -> void:
 	if are_animations_running():
 		_reorganize_hand()
 		return
+		
+	# Verifica se foi solto sobre um Holder na mão
+	if not (card_node.has_method("is_holder") and card_node.is_holder()):
+		for other_card in hand_cards:
+			if other_card != card_node and other_card.has_method("is_holder") and other_card.is_holder():
+				var other_rect = other_card.get_global_rect()
+				if other_rect.has_point(mouse_pos):
+					_try_slot_card_into_holder(card_node, other_card)
+					return
+					
 	var enemy_rect = Rect2(enemy_visual.global_position - Vector2(120, 150), Vector2(240, 300))
 	if enemy_rect.has_point(mouse_pos):
 		_on_card_played(card_node.card_data, card_node)
+
+func _try_slot_card_into_holder(card_node: Control, holder_node: Control) -> void:
+	var c_data = card_node.card_data
+	if c_data.ability_type != AbilityData.AbilityType.TAIJUTSU and c_data.required_element != ChakraElement.Type.NONE:
+		player_visual.spawn_floating_text("Apenas Taijutsu no Holder!", Color(1.0, 0.4, 0.4))
+		_reorganize_hand()
+		return
+		
+	if not holder_node.can_add_card():
+		player_visual.spawn_floating_text("Holder Cheio!", Color(1.0, 0.4, 0.4))
+		_reorganize_hand()
+		return
+		
+	holder_node.add_slotted_card(c_data)
+	hand_cards.erase(card_node)
+	card_node.queue_free()
+	SoundManager.play_sfx("card_hover", 1.3)
+	player_visual.spawn_floating_text("ENCAIXADO! 🥋 (-10% Vigor)", Color(1.0, 0.85, 0.2))
+	_reorganize_hand()
+	_update_ui()
 
 func _on_card_played(c_data: AbilityData, card_node: Control) -> void:
 	# Não permite outro ataque enquanto qualquer animação estiver em execução
 	if current_state != TurnState.PLAYER_TURN or are_animations_running():
 		_reorganize_hand()
+		return
+		
+	# Validação e execução de Cartas do tipo Holder (Combo de Taijutsu)
+	if card_node.has_method("is_holder") and card_node.is_holder():
+		if card_node.slotted_cards.size() < 2:
+			player_visual.spawn_floating_text("MÍNIMO DE 2 GOLPES NO COMBO!", Color(1.0, 0.4, 0.4))
+			_reorganize_hand()
+			return
+			
+		var total_combo_vigor = card_node.get_total_holder_vigor()
+		if player_vigor < total_combo_vigor:
+			player_visual.spawn_floating_text("VIGOR INSUFICIENTE PARA O COMBO!", Color(1.0, 0.4, 0.4))
+			_reorganize_hand()
+			return
+			
+		player_vigor -= total_combo_vigor
+		var combo_cards: Array[AbilityData] = []
+		for sc in card_node.slotted_cards:
+			combo_cards.append(sc)
+			
+		hand_cards.erase(card_node)
+		card_node.queue_free()
+		
+		discard_pile.append(c_data)
+		for sc in combo_cards:
+			discard_pile.append(sc)
+			
+		SoundManager.play_sfx("combo_storm", 1.2)
+		_execute_holder_combo(c_data, combo_cards, true)
+		_reorganize_hand()
+		_update_ui()
 		return
 		
 	# Validação de Requisito de Clone
@@ -405,6 +502,14 @@ func _on_card_played(c_data: AbilityData, card_node: Control) -> void:
 		player_visual.spawn_floating_text("MÁXIMO DE 1 CLONE!", Color(1.0, 0.4, 0.4))
 		_reorganize_hand()
 		return
+		
+	# Validação de Vigor Físico em cartas comuns
+	if c_data.vigor_cost > 0:
+		if player_vigor < c_data.vigor_cost:
+			player_visual.spawn_floating_text("VIGOR INSUFICIENTE!", Color(1.0, 0.4, 0.4))
+			_reorganize_hand()
+			return
+		player_vigor -= c_data.vigor_cost
 		
 	# Validação de Custo Elemental
 	var has_chakra = false
@@ -443,6 +548,51 @@ func _on_card_played(c_data: AbilityData, card_node: Control) -> void:
 	_reorganize_hand()
 	_update_ui()
 
+## Execução encadeada do combo de Taijutsu a partir de um Holder
+func _execute_holder_combo(_holder_data: AbilityData, combo_cards: Array[AbilityData], is_player: bool = true) -> void:
+	is_combo_running = true
+	var caster_visual = player_visual if is_player else enemy_visual
+	var target_visual = enemy_visual if is_player else player_visual
+	var target_data = enemy_data if is_player else player_data
+	
+	for step_idx in range(combo_cards.size()):
+		if target_data.current_hp <= 0 or current_state == TurnState.GAME_OVER:
+			break
+			
+		var card = combo_cards[step_idx]
+		
+		# Acúmulo de dano de 10% por ataque consecutivo:
+		# Golpe 0: +10% (1.10x)
+		# Golpe 1: +20% (1.20x)
+		# Golpe 2: +30% (1.30x)
+		var accum_bonus_percent = (step_idx + 1) * 10
+		var accum_mult = 1.0 + (float(accum_bonus_percent) / 100.0)
+		var storm_mult = combo_meter.get_multiplier() if is_player else 1.0
+		var final_multiplier = accum_mult * storm_mult
+		
+		var on_impact = func():
+			for script in card.scripts:
+				if script.get("trigger", "on_play") == "on_play":
+					_execute_script(script, final_multiplier, is_player)
+					
+			if is_player:
+				player_visual.spawn_floating_text("COMBO #%d! (+%d%% ACÚMULO)" % [step_idx + 1, accum_bonus_percent], Color(1.0, 0.85, 0.1))
+			shake_arena(maxf(4.0, card.screen_shake_intensity + 2.0))
+			_update_ui()
+			_check_battle_state()
+			
+		caster_visual.execute_ability(card, target_visual, on_impact)
+		await caster_visual.animation_finished
+		
+		# Pequena pausa cadenciada entre cada golpe do combo
+		if step_idx < combo_cards.size() - 1 and target_data.current_hp > 0 and current_state != TurnState.GAME_OVER:
+			await get_tree().create_timer(0.2).timeout
+			
+	is_combo_running = false
+	_reorganize_hand()
+	_update_ui()
+	_check_battle_state()
+
 func _apply_card_effect(c_data: AbilityData, qte_multiplier: float = 1.0, triggers: Array[String] = ["on_play"], is_player: bool = true) -> void:
 	var combo_mult = combo_meter.get_multiplier() if is_player else 1.0
 	var final_multiplier = combo_mult * qte_multiplier
@@ -465,10 +615,7 @@ func _apply_card_effect(c_data: AbilityData, qte_multiplier: float = 1.0, trigge
 			
 			# Se for ataque físico do jogador e houver Clone em campo, o clone repete o ataque físico!
 			if is_player and has_player_clone() and c_data.ability_type == AbilityData.AbilityType.TAIJUTSU and c_data.delivery_type == AbilityData.DeliveryType.MELEE_DASH:
-				var on_original_finished: Callable
-				on_original_finished = func(anim_name: String):
-					if caster_visual.animation_finished.is_connected(on_original_finished):
-						caster_visual.animation_finished.disconnect(on_original_finished)
+				caster_visual.animation_finished.connect(func(_anim_name: String):
 					var target_current_hp = enemy_data.current_hp if is_player else player_data.current_hp
 					if has_player_clone() and target_current_hp > 0 and current_state != TurnState.GAME_OVER:
 						player_clone_visual.execute_ability(c_data, target_visual, func():
@@ -480,7 +627,7 @@ func _apply_card_effect(c_data: AbilityData, qte_multiplier: float = 1.0, trigge
 									combo_meter.add_combo(1, 1)
 							_check_battle_state()
 						)
-				caster_visual.animation_finished.connect(on_original_finished)
+				, Object.CONNECT_ONE_SHOT)
 			
 		AbilityData.AbilityType.GENJUTSU:
 			on_impact_callback.call()
@@ -577,16 +724,33 @@ func _damage_character(target_data: CharacterData, target_visual: Node2D, amount
 		target_visual.spawn_floating_text("PROTEGIDO!", Color(0.4, 0.8, 1.0))
 		return
 
-	# Armadilha de Substituição (Kawarimi) é acionada quando o ninja é atacado diretamente (sem clone)
-	if is_target_player and active_trap_card != null:
-		active_trap_card = null
-		trap_slot.visible = false
-		target_visual.trigger_kawarimi_substitution()
-		return
-	elif not is_target_player and active_enemy_trap_card != null:
-		active_enemy_trap_card = null
-		target_visual.trigger_kawarimi_substitution()
-		return
+	# Armadilha de Defesa (Parede de Lama / Doton) ou Substituição (Kawarimi)
+	var trap = active_trap_card if is_target_player else active_enemy_trap_card
+	if trap != null:
+		if is_target_player:
+			active_trap_card = null
+			trap_slot.visible = false
+		else:
+			active_enemy_trap_card = null
+			
+		if trap.id == "doton_wall":
+			# Ativa a Parede de Lama: ergue-se do solo e bloqueia completamente o ataque sem dano nem animação de dano!
+			var vfx = $Arena2D/BattleVFX if has_node("Arena2D/BattleVFX") else null
+			if vfx:
+				var flip = 1.0 if is_target_player else -1.0
+				var wall_pos = target_visual.global_position + Vector2(65.0 * flip, 0.0)
+				vfx.spawn_earth_wall(wall_pos, is_target_player, 2.0)
+				
+			shake_arena(5.0, 0.3)
+			SoundManager.play_sfx("hit", 0.7)
+			target_visual.spawn_floating_text("PAREDE DE LAMA! 🪨 (BLOQUEADO)", Color(0.85, 0.65, 0.35))
+			_update_ui()
+			return
+		else:
+			# Substituição padrão (Kawarimi)
+			target_visual.trigger_kawarimi_substitution()
+			_update_ui()
+			return
 		
 	# Absorção de escudo
 	if is_target_player and player_shield > 0:
@@ -616,7 +780,8 @@ func _damage_character(target_data: CharacterData, target_visual: Node2D, amount
 		
 	var shield = player_shield if is_target_player else enemy_shield
 	var pool = player_chakra_pool if is_target_player else enemy_chakra_pool
-	target_visual.update_stats(target_data.current_hp, target_data.max_hp, shield, pool)
+	var vig = player_vigor if is_target_player else enemy_vigor
+	target_visual.update_stats(target_data.current_hp, target_data.max_hp, shield, pool, vig, target_data.max_vigor)
 
 func _on_qte_finished(success: bool, multiplier: float) -> void:
 	current_state = TurnState.PLAYER_TURN
@@ -648,6 +813,13 @@ func _start_enemy_turn() -> void:
 	_enemy_draw_cards(1)
 	_gain_random_chakra(false)
 	
+	# Recarga de Vigor Físico do Inimigo: 50% do total faltante a cada rodada
+	var missing_enemy_vigor = enemy_data.max_vigor - enemy_vigor
+	if missing_enemy_vigor > 0:
+		var enemy_recharge = int(ceil(missing_enemy_vigor * 0.5))
+		enemy_vigor = mini(enemy_data.max_vigor, enemy_vigor + enemy_recharge)
+		enemy_visual.spawn_floating_text("+%d Vigor 🏃 (50%%)" % enemy_recharge, Color(0.25, 0.9, 0.45))
+	
 	var tw = create_tween()
 	tw.tween_interval(0.8)
 	tw.tween_callback(_play_next_enemy_card)
@@ -664,9 +836,14 @@ func _play_next_enemy_card() -> void:
 		tw_wait.tween_callback(_play_next_enemy_card)
 		return
 		
-	# Avalia cartas viáveis com base nas energias e Taijutsu
+	# Avalia cartas viáveis com base nas energias, vigor e Taijutsu
 	var playable: Array[AbilityData] = []
 	for c in enemy_hand_cards:
+		if c.is_holder:
+			continue
+		var has_vigor = (c.vigor_cost == 0 or enemy_vigor >= c.vigor_cost)
+		if not has_vigor:
+			continue
 		if c.required_element == ChakraElement.Type.NONE or c.element_cost == 0:
 			playable.append(c)
 		elif enemy_chakra_pool.get(c.required_element, 0) >= c.element_cost:
@@ -692,6 +869,10 @@ func _play_next_enemy_card() -> void:
 			best_score = score
 			best_card = c
 			
+	# Consome vigor da IA se for Taijutsu/físico
+	if best_card.vigor_cost > 0:
+		enemy_vigor = maxi(0, enemy_vigor - best_card.vigor_cost)
+		
 	# Consome chakra da IA se for elemental
 	if best_card.required_element != ChakraElement.Type.NONE and best_card.element_cost > 0:
 		enemy_chakra_pool[best_card.required_element] -= best_card.element_cost
@@ -768,8 +949,8 @@ func _show_current_dialogue() -> void:
 	else:
 		cutscene_panel.visible = false
 		phase_manager.apply_phase_buffs(player_data, enemy_data)
-		player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_chakra_pool)
-		enemy_visual.update_stats(enemy_data.current_hp, enemy_data.max_hp, enemy_shield, enemy_chakra_pool)
+		player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_chakra_pool, player_vigor, player_data.max_vigor)
+		enemy_visual.update_stats(enemy_data.current_hp, enemy_data.max_hp, enemy_shield, enemy_chakra_pool, enemy_vigor, enemy_data.max_vigor)
 		_start_player_turn()
 
 func _on_cutscene_next_pressed() -> void:
@@ -819,11 +1000,17 @@ func _update_ui() -> void:
 			chakra_strs.append("%s %s: %d" % [icon, short_name, count])
 			
 	chakra_label.text = "  |  ".join(chakra_strs)
+	
+	if vigor_label:
+		var missing = player_data.max_vigor - player_vigor
+		var next_recharge = int(ceil(missing * 0.5))
+		vigor_label.text = "🏃 VIGOR: %d/%d (+%d)" % [player_vigor, player_data.max_vigor, next_recharge]
+		
 	draw_pile_label.text = str(draw_pile.size())
 	discard_pile_label.text = str(discard_pile.size())
 	
-	player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_chakra_pool)
-	enemy_visual.update_stats(enemy_data.current_hp, enemy_data.max_hp, enemy_shield, enemy_chakra_pool)
+	player_visual.update_stats(player_data.current_hp, player_data.max_hp, player_shield, player_chakra_pool, player_vigor, player_data.max_vigor)
+	enemy_visual.update_stats(enemy_data.current_hp, enemy_data.max_hp, enemy_shield, enemy_chakra_pool, enemy_vigor, enemy_data.max_vigor)
 
 func _animate_turn_banner() -> void:
 	turn_banner.visible = true

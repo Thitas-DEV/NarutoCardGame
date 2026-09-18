@@ -1,9 +1,5 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://bxqy173qrfiyv"]
 
-[ext_resource type="Texture2D" uid="uid://dofkj66phn1hh" path="res://assets/characters/naruto/naruto/narut shipudeo/naruto senin/golpear/arriba/arriba 2.bmp" id="1_phfpc"]
-[ext_resource type="Texture2D" uid="uid://bo8f4t24i1sgq" path="res://assets/characters/naruto/naruto/narut shipudeo/naruto senin/golpear/arriba/arriba 3.bmp" id="2_yhs1b"]
-[ext_resource type="Texture2D" uid="uid://drmnkpc7wwobe" path="res://assets/characters/naruto/naruto/narut shipudeo/naruto senin/golpear/arriba/arriba 4.bmp" id="3_0x3vs"]
-[ext_resource type="Texture2D" uid="uid://pj6ddb4mg4hs" path="res://assets/characters/naruto/naruto/narut shipudeo/naruto senin/golpear/arriba/arriba.bmp" id="4_vjmps"]
 [ext_resource type="Texture2D" uid="uid://ct4ups4x53i6d" path="res://assets/effects/jutsus/substituicao/substitution_jutsu_sheet.png" id="5_yhs1b"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_13hvk"]
@@ -59,19 +55,7 @@ animations = [{
 "name": &"damage",
 "speed": 5.0
 }, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_phfpc")
-}, {
-"duration": 1.0,
-"texture": ExtResource("2_yhs1b")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_0x3vs")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_vjmps")
-}],
+"frames": [],
 "loop": 1,
 "name": &"idle",
 "speed": 5.0

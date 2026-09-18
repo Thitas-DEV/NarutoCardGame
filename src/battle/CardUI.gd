@@ -5,8 +5,12 @@ signal card_unselected(card_node: Control)
 signal card_played(card_data: AbilityData, card_node: Control)
 signal target_drag_moved(card_node: Control, mouse_pos: Vector2)
 signal target_drag_ended(card_node: Control, mouse_pos: Vector2)
+signal holder_unslot_requested(unslotted_data: AbilityData, holder_card_node: Control)
 
 @export var card_data: AbilityData
+
+## Cartas encaixadas caso esta carta seja um Holder
+var slotted_cards: Array[AbilityData] = []
 
 var is_hovered: bool = false
 var is_dragging: bool = false
@@ -39,6 +43,26 @@ func _ready() -> void:
 	if card_data:
 		update_card_display()
 
+func is_holder() -> bool:
+	return card_data != null and (card_data.is_holder or card_data.ability_type == AbilityData.AbilityType.HOLDER)
+
+func can_add_card() -> bool:
+	return is_holder() and slotted_cards.size() < card_data.holder_capacity
+
+func add_slotted_card(card: AbilityData) -> void:
+	slotted_cards.append(card)
+	update_card_display()
+
+func remove_slotted_card(card: AbilityData) -> void:
+	slotted_cards.erase(card)
+	update_card_display()
+
+func get_total_holder_vigor() -> int:
+	var tot = 0
+	for c in slotted_cards:
+		tot += int(round(c.vigor_cost * 0.9))
+	return tot
+
 func set_card_data(data: AbilityData) -> void:
 	card_data = data
 	update_card_display()
@@ -49,11 +73,14 @@ func update_card_display() -> void:
 		
 	title_label.text = card_data.name
 	if cost_label:
-		cost_label.text = card_data.get_cost_display()
+		if is_holder():
+			cost_label.text = str(get_total_holder_vigor()) if slotted_cards.size() > 0 else "COMBO"
+		else:
+			cost_label.text = card_data.get_cost_display()
 	
 	var elem_color = card_data.get_element_color()
 	
-	# Estiliza o selo de custo com a cor do elemento
+	# Estiliza o selo de custo com a cor do elemento/vigor
 	if cost_container:
 		var cost_sb = cost_container.get_theme_stylebox("panel")
 		if cost_sb is StyleBoxFlat:
@@ -61,31 +88,54 @@ func update_card_display() -> void:
 			new_cost_sb.bg_color = elem_color
 			cost_container.add_theme_stylebox_override("panel", new_cost_sb)
 			
-	# Atualiza a cor da borda da carta com a cor do elemento
+	# Atualiza a cor da borda da carta com a cor do elemento ou dourado de holder
 	if frame_panel:
 		var frame_sb = frame_panel.get_theme_stylebox("panel")
 		if frame_sb is StyleBoxFlat:
 			var new_frame_sb = frame_sb.duplicate() as StyleBoxFlat
-			new_frame_sb.border_color = elem_color
+			new_frame_sb.border_color = Color(1.0, 0.85, 0.2) if is_holder() else elem_color
 			frame_panel.add_theme_stylebox_override("panel", new_frame_sb)
 	
 	# Exibe o tipo e elemento na etiqueta de categoria
 	var base_type = card_data.get_type_name().to_upper()
 	if card_data.required_element != ChakraElement.Type.NONE:
 		base_type = "%s • %s" % [base_type, ChakraElement.get_element_short_name(card_data.required_element).to_upper()]
+	elif card_data.vigor_cost > 0:
+		base_type = "%s • 🏃 %d VIGOR" % [base_type, card_data.vigor_cost]
 	
-	if card_data.requires_clone:
-		type_label.text = "%s (👥 CLONE)" % base_type
-		desc_label.text = "[color=#ffd24d][b]👥 Requer Clone[/b][/color]\n" + card_data.description
+	if is_holder():
+		type_label.text = "🥋 HOLDER (%d/%d)" % [slotted_cards.size(), card_data.holder_capacity]
+		type_label.modulate = Color(1.0, 0.85, 0.2)
+		
+		var desc = "[color=#ffd700][b]🥋 HOLDER DE COMBO[/b][/color]\n"
+		desc += "Capacidade: [b]%d/%d[/b] golpes\n" % [slotted_cards.size(), card_data.holder_capacity]
+		desc += "[color=#2ecc71]Bônus: -10%% Vigor | +10%% Dano[/color]\n\n"
+		for s in range(card_data.holder_capacity):
+			if s < slotted_cards.size():
+				var sc = slotted_cards[s]
+				var disc_vig = int(round(sc.vigor_cost * 0.9))
+				var accum = (s + 1) * 10
+				desc += "[color=#ffffff][b]%d.[/b] %s[/color] [color=#2ecc71](%dV/+%d%%)[/color]\n" % [s + 1, sc.name, disc_vig, accum]
+			else:
+				desc += "[color=#888888][b]%d.[/b] [Vazio: solte Taijutsu][/color]\n" % [s + 1]
+		if slotted_cards.size() >= 2:
+			desc += "\n[color=#ffd700][b]▶ PRONTO PARA LANÇAR![/b][/color]"
+		elif slotted_cards.size() == 1:
+			desc += "\n[color=#aaaaaa]Encaixe mais 1 golpe![/color]"
+		desc_label.text = desc
 	else:
-		type_label.text = base_type
-		desc_label.text = card_data.description
-	type_label.modulate = card_data.get_type_color()
+		if card_data.requires_clone:
+			type_label.text = "%s (👥 CLONE)" % base_type
+			desc_label.text = "[color=#ffd24d][b]👥 Requer Clone[/b][/color]\n" + card_data.description
+		else:
+			type_label.text = base_type
+			desc_label.text = card_data.description
+		type_label.modulate = card_data.get_type_color()
 	
 	# Ícone do elemento no CostContainer junto ao custo
 	if element_icon_rect:
 		var elem_tex = card_data.get_element_texture()
-		if elem_tex:
+		if elem_tex and not is_holder():
 			element_icon_rect.texture = elem_tex
 			element_icon_rect.visible = true
 		else:
@@ -147,12 +197,28 @@ func _on_mouse_exited() -> void:
 		tw.tween_property(self, "rotation", original_rot, 0.2)
 
 func _gui_input(event: InputEvent) -> void:
+	# Clique com botão direito em Holder com cartas desencaixa a última carta
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		if is_holder() and slotted_cards.size() > 0:
+			var removed_card = slotted_cards.pop_back()
+			update_card_display()
+			holder_unslot_requested.emit(removed_card, self)
+			return
+			
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			var bf = get_tree().current_scene
 			if bf and bf.has_method("are_animations_running") and bf.are_animations_running():
 				return
-			if is_playable:
+			if is_holder():
+				if slotted_cards.size() >= 2 and is_playable:
+					is_targeting = true
+					card_selected.emit(self)
+				elif slotted_cards.size() < 2:
+					var bf_scene = get_tree().current_scene
+					if bf_scene and bf_scene.has_node("Arena2D/PlayerVisual"):
+						bf_scene.get_node("Arena2D/PlayerVisual").spawn_floating_text("Encaixe 2+ golpes no Holder!", Color(1.0, 0.85, 0.2))
+			elif is_playable:
 				if card_data.target_type == AbilityData.TargetType.SINGLE_ENEMY:
 					is_targeting = true
 					card_selected.emit(self)
@@ -172,6 +238,8 @@ func _gui_input(event: InputEvent) -> void:
 				z_index = 0
 				card_unselected.emit(self)
 				
+				# Emite target_drag_ended para verificar se foi solto sobre um Holder na mão
+				target_drag_ended.emit(self, get_global_mouse_position())
 				if global_position.y < get_viewport_rect().size.y / 2:
 					card_played.emit(card_data, self)
 				else:

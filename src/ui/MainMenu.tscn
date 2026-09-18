@@ -182,6 +182,12 @@ size_flags_horizontal = 3
 theme_override_styles/normal = SubResource("StyleBoxFlat_hero_btn")
 text = "🥋 Rock Lee"
 
+[node name="HeroGuy" type="Button" parent="HeroSelect/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_hero_btn")
+text = "🍃 Might Guy"
+
 [node name="HeroDesc" type="RichTextLabel" parent="HeroSelect"]
 layout_mode = 1
 anchors_preset = 15

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="CharacterData" load_steps=7 format=3]
+[gd_resource type="Resource" script_class="CharacterData" load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://src/core/character_data.gd" id="1_chdt"]
 [ext_resource type="Resource" path="res://data/abilities/iron_guard.tres" id="2_iron_guard"]
@@ -6,17 +6,21 @@
 [ext_resource type="Resource" path="res://data/abilities/omote_renge.tres" id="4_omote_renge"]
 [ext_resource type="Resource" path="res://data/abilities/rock_lee_kick.tres" id="5_rock_lee_kick"]
 [ext_resource type="Resource" path="res://data/abilities/ura_renge.tres" id="6_ura_renge"]
+[ext_resource type="Resource" path="res://data/abilities/holder_duplo.tres" id="7_holder_duplo"]
+[ext_resource type="Resource" path="res://data/abilities/holder_triplo.tres" id="8_holder_triplo"]
 
 [resource]
 script = ExtResource("1_chdt")
 id = "rock_lee"
 name = "Rock Lee"
 title = "Gênio do Esforço (Taijutsu Puro)"
-tags = Array[String]([])
+tags = Array[String](["taijutsu_specialist", "holder_user"])
 max_hp = 90
 current_hp = 90
+max_vigor = 100
+current_vigor = 100
 attack_modifier = 1.0
 avatar_color = Color(0.15, 0.65, 0.25, 1)
 secondary_color = Color(0.85, 0.45, 0.1, 1)
 chakra_affinities = Array[int]([])
-starting_deck = Array[Resource("res://src/core/ability_data.gd")]([ExtResource("5_rock_lee_kick"), ExtResource("5_rock_lee_kick"), ExtResource("5_rock_lee_kick"), ExtResource("5_rock_lee_kick"), ExtResource("2_iron_guard"), ExtResource("2_iron_guard"), ExtResource("3_kawarimi_trap"), ExtResource("4_omote_renge"), ExtResource("4_omote_renge"), ExtResource("6_ura_renge")])
+starting_deck = Array[Resource("res://src/core/ability_data.gd")]([ExtResource("5_rock_lee_kick"), ExtResource("5_rock_lee_kick"), ExtResource("5_rock_lee_kick"), ExtResource("7_holder_duplo"), ExtResource("8_holder_triplo"), ExtResource("2_iron_guard"), ExtResource("2_iron_guard"), ExtResource("3_kawarimi_trap"), ExtResource("4_omote_renge"), ExtResource("6_ura_renge")])

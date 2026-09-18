@@ -9,6 +9,7 @@ name = "Chute Furacão da Folha"
 description = "Chute veloz de Taijutsu puro que eleva o ritmo do combate."
 required_element = 0
 element_cost = 0
+vigor_cost = 15
 is_exhaust = false
 ability_type = 0
 target_type = 0

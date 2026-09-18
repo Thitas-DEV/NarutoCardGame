@@ -1,7 +1,7 @@
 class_name AbilityData
 extends Resource
 
-enum AbilityType { TAIJUTSU, NINJUTSU, GENJUTSU, TRAP, SUPPORT, ULTIMATE }
+enum AbilityType { TAIJUTSU, NINJUTSU, GENJUTSU, TRAP, SUPPORT, ULTIMATE, HOLDER }
 enum TargetType { SINGLE_ENEMY, ALL_ENEMIES, SELF, ALLY, NO_TARGET }
 enum DeliveryType {
 	MELEE_DASH,       ## Avanço físico até o alvo com golpe direto (ex: Soco, Rasengan, Chidori)
@@ -23,9 +23,17 @@ enum DeliveryType {
 @export var required_element: ChakraElement.Type = ChakraElement.Type.NONE
 ## Quantidade de pontos daquela natureza necessários para lançar
 @export var element_cost: int = 0
+## Custo de vigor físico (utilizado principalmente por golpes de Taijutsu)
+@export var vigor_cost: int = 0
 @export var is_exhaust: bool = false
 @export var ability_type: AbilityType = AbilityType.TAIJUTSU
 @export var target_type: TargetType = TargetType.SINGLE_ENEMY
+
+@export_group("Cartas Holder (Combos de Taijutsu)")
+## Define se a carta é um Holder com espaços de mão para acumular e disparar combos
+@export var is_holder: bool = false
+## Capacidade de cartas de Taijutsu que este holder pode acomodar (mínimo 2)
+@export var holder_capacity: int = 2
 
 @export_group("Estratégia de Execução Visual")
 ## Como a habilidade se manifesta visualmente no campo de batalha
@@ -65,6 +73,11 @@ enum DeliveryType {
 @export var allowed_tags: Array[String] = []
 
 func can_be_used_by(character: CharacterData) -> bool:
+	# Cartas Holder só podem ser usadas por especialistas em Taijutsu / holders
+	if is_holder or ability_type == AbilityType.HOLDER:
+		if not character.can_use_holders():
+			return false
+			
 	# Taijutsu / Neutro pode ser usado por todos
 	if required_element != ChakraElement.Type.NONE:
 		if not character.has_affinity(required_element):
@@ -85,6 +98,8 @@ func can_be_used_by(character: CharacterData) -> bool:
 	return true
 
 func get_type_name() -> String:
+	if is_holder or ability_type == AbilityType.HOLDER:
+		return "Holder (Combo)"
 	match ability_type:
 		AbilityType.TAIJUTSU: return "Taijutsu"
 		AbilityType.NINJUTSU: return "Ninjutsu"
@@ -95,6 +110,8 @@ func get_type_name() -> String:
 		_: return "Geral"
 
 func get_type_color() -> Color:
+	if is_holder or ability_type == AbilityType.HOLDER:
+		return Color(1.0, 0.85, 0.2)
 	match ability_type:
 		AbilityType.TAIJUTSU: return Color(0.95, 0.5, 0.2)
 		AbilityType.NINJUTSU: return ChakraElement.get_element_color(required_element) if required_element != ChakraElement.Type.NONE else Color(0.2, 0.6, 0.95)
@@ -105,6 +122,10 @@ func get_type_color() -> Color:
 		_: return Color.WHITE
 
 func get_element_color() -> Color:
+	if is_holder or ability_type == AbilityType.HOLDER:
+		return Color(1.0, 0.8, 0.15)
+	if vigor_cost > 0 and required_element == ChakraElement.Type.NONE:
+		return Color(0.2, 0.8, 0.4)
 	return ChakraElement.get_element_color(required_element)
 
 func get_element_texture() -> Texture2D:
@@ -118,14 +139,24 @@ func get_effective_icon() -> Texture2D:
 
 ## Retorna o valor numérico para o selo de custo na carta
 func get_cost_display() -> String:
+	if is_holder or ability_type == AbilityType.HOLDER:
+		return "COMBO"
+	if vigor_cost > 0 and (required_element == ChakraElement.Type.NONE or element_cost == 0):
+		return str(vigor_cost)
 	if required_element == ChakraElement.Type.NONE or element_cost == 0:
 		return "0"
 	return str(element_cost)
 
-## Retorna a descrição completa do custo com ícone e nome do elemento
+## Retorna a descrição completa do custo com ícone e nome do elemento/vigor
 func get_cost_full_display() -> String:
+	if is_holder or ability_type == AbilityType.HOLDER:
+		return "🥋 HOLDER (%d SLOTS)" % holder_capacity
+	if vigor_cost > 0 and (required_element == ChakraElement.Type.NONE or element_cost == 0):
+		return "🏃 %d VIGOR" % vigor_cost
 	if required_element == ChakraElement.Type.NONE or element_cost == 0:
 		return "TAIJUTSU (0)"
 	var icon_sym = ChakraElement.get_element_icon(required_element)
 	var short_name = ChakraElement.get_element_short_name(required_element)
+	if vigor_cost > 0:
+		return "%s %d %s | 🏃 %d" % [icon_sym, element_cost, short_name.to_upper(), vigor_cost]
 	return "%s %d %s" % [icon_sym, element_cost, short_name.to_upper()]
